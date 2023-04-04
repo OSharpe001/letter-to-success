@@ -3,14 +3,11 @@ import { Link } from "react-router-dom";
 
 export default function Header() {
   return (
-    <>
+    <header>
         <h1>The Letter To Success!</h1>
         <nav>
-          <button>
-          <Link aria-label="On Click" to="/settings" className="nav-item">Let's Climb the Letter To Success</Link>
-          </button>
-        
+          <Link aria-label="On Click" to="/settings" className="nav-item">PLAY!</Link>
         </nav>
-    </>
+    </header>
   )
 }

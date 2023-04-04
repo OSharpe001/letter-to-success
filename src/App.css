@@ -1,27 +1,65 @@
 .App {
+  margin: 0;
+  padding: 0;
+  height:100vh;
   text-align: center;
+  font-size: 16pt;
+  --primaryColor: rgb(32, 78, 32);
+  --secondaryColor: rgb(247, 230, 196);
+  background-color: var(--secondaryColor)
+}
+header {
+  background-color: var(--primaryColor);
+  height: 7vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  /* font-size: calc(10px + 2vmin); */
+  color: var(--secondaryColor);
+}
+header a, .button {
+  font-size: 16pt;
+  font-weight: bold;
+  /* height: 30px; */
+  padding: 10px;
+  margin: 5vh auto;
+  border-radius: 20px;
+  color: var(--secondaryColor);
+  background-color: var(--primaryColor);
+  border:ridge 2px var(--secondaryColor);
+}
+header a:hover, .button:hover {
+  color: var(--primaryColor);
+  background-color: var(--secondaryColor);
+  border:ridge 2px var(--primaryColor);
+}
+form {
+  /* justify-content: center; */
+  display: flex;
+  flex-direction: column;
+}
+form input {
+  /* justify-self: center; */
+  text-align: center;
+  align-self: center;
+  width: 20vw;
+  margin: 1vh auto 1vh;
+}
+form label {
+  margin-top: 2vh
+}
+.error-message {
+  color: red;
+  margin-bottom: 3vh;
+  /* font-size: 16pt; */
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
 .App-link {
