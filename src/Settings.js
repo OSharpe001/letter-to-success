@@ -1,31 +1,31 @@
-import { useState } from 'react'
+// import { useState } from 'react'
 
 export default function Settings(props) {
 
     // const [humanPlayerAmount, setHumanPlayerAmount] = useState(1);
     // const [computerPlayerAmount, setComputerPlayerAmount] = useState(0);
-    const [humanPlayerAmountError, setHumanPlayerAmountError] = useState("");
-    const [computerPlayerAmountError, setComputerPlayerAmountError] = useState("");
+    // const [humanPlayerAmountError, setHumanPlayerAmountError] = useState("");
+    // const [computerPlayerAmountError, setComputerPlayerAmountError] = useState("");
     // const [player1Name, setPlayer1Name] = useState("");
-    const [player1NameError, setPlayer1NameError] = useState("");
+    // const [player1NameError, setPlayer1NameError] = useState("");
     // const [player2Name, setPlayer2Name] = useState("");
-    const [player2NameError, setPlayer2NameError] = useState("");
+    // const [player2NameError, setPlayer2NameError] = useState("");
     // const [player3Name, setPlayer3Name] = useState("");
-    const [player3NameError, setPlayer3NameError] = useState("");
-    const [computerDifficultyLevel, setComputerDifficultyLevel] = useState(1);
+    // const [player3NameError, setPlayer3NameError] = useState("");
+    // const [computerDifficultyLevel, setComputerDifficultyLevel] = useState(1);
 
 
-    const playerNameError = "Human players need a name."
+    // const playerNameError = "Human players need a name."
 
     const handleHumanPlayerAmountChange = (e) => {
         props.setHumanPlayerAmount(e.target.value);
         if (e.target.value < 1) {
-            setHumanPlayerAmountError("We need at least one Human Player...");
+            props.setHumanPlayerAmountError("We need at least one Human Player...");
             return;
         } else if (e.target.value >3) {
-            setHumanPlayerAmountError("Sorry. There's a max of three players per game");
+            props.setHumanPlayerAmountError("Sorry. There's a max of three players per game");
         } else {
-            setHumanPlayerAmountError("");
+            props.setHumanPlayerAmountError("");
         };
     };
 
@@ -34,90 +34,90 @@ export default function Settings(props) {
         // console.log("COMPUTER PLAYER AMOUNT: ", parseInt(e.target.value))
         // console.log("ADDITION OF TOTAL PLAYER AMOUNT: ", parseInt(humanPlayerAmount)+parseInt(e.target.value))
         if (parseInt(props.humanPlayerAmount)<1 || parseInt(props.humanPlayerAmount)>3) {
-            setComputerPlayerAmountError("Please set proper amount of Human Players, first.")
+            props.setComputerPlayerAmountError("Please set proper amount of Human Players, first.")
         } else if (parseInt(e.target.value) + parseInt(props.humanPlayerAmount)<2) {
-            setComputerPlayerAmountError("We need at least two players");
+            props.setComputerPlayerAmountError("We need at least two players");
             return;
         } else if (parseInt(e.target.value.toNumber) + parseInt(props.humanPlayerAmount)>3) {
             // console.log("TOTAL PLAYER AMOUNT: ", e.target.value + humanPlayerAmount)
-            setComputerPlayerAmountError("Sorry. There's a max of three players per game");
+            props.setComputerPlayerAmountError("Sorry. There's a max of three players per game");
         } else {
-            setComputerPlayerAmountError("");
+            props.setComputerPlayerAmountError("");
         };
     };
 
     const handleP1NameChange = (e) => {
         props.setPlayer1Name(e.target.value);
         if (e.target.value.length>0) {
-            setPlayer1NameError("")
+            props.setPlayer1NameError("")
         };
     };
     const handleP2NameChange = (e) => {
         props.setPlayer2Name(e.target.value);
         if (e.target.value.length>0) {
-            setPlayer2NameError("")
+            props.setPlayer2NameError("")
         };
     };
     const handleP3NameChange = (e) => {
         props.setPlayer3Name(e.target.value);
         if (e.target.value.length>0) {
-            setPlayer3NameError("")
+            props.setPlayer3NameError("")
         };
     };
 
-    const disabled= !!humanPlayerAmountError || !!computerPlayerAmountError || !!player1NameError || !!player2NameError || !!player3NameError;
-    const gotRequiredInfo = !!props.humanPlayerAmount && (props.humanPlayerAmount+props.computerPlayerAmount<4) && (props.humanPlayerAmount+props.computerPlayerAmount>1)
+    const disabled= !!props.humanPlayerAmountError || !!props.computerPlayerAmountError || !!props.player1NameError || !!props.player2NameError || !!props.player3NameError;
+    // const gotRequiredInfo = !!props.humanPlayerAmount && (props.humanPlayerAmount+props.computerPlayerAmount<4) && (props.humanPlayerAmount+props.computerPlayerAmount>1)
 
-    const clearForm = () => {
-        props.setHumanPlayerAmount(0);
-        props.setComputerPlayerAmount(0);
-        props.setPlayer1Name("");
-        props.setPlayer2Name("");
-        props.setPlayer3Name("");
-    };
+    // const clearForm = () => {
+    //     props.setHumanPlayerAmount(0);
+    //     props.setComputerPlayerAmount(0);
+    //     props.setPlayer1Name("");
+    //     props.setPlayer2Name("");
+    //     props.setPlayer3Name("");
+    // };
 
-    const setSubmissionErrors = () => {
-        if (props.humanPlayerAmount===0){
-            setHumanPlayerAmountError("We need at least one Human Player.")
-        };
-        if (props.player1Name === "") {
-            setPlayer1NameError(playerNameError);
-        };
-        if (props.humanPlayerAmount>1 && props.player2Name === ""){
-            setPlayer2NameError(playerNameError);
-        };
-        if (props.humanPlayerAmount>2 && props.player3Name === ""){
-            setPlayer3NameError(playerNameError);
-        };
-        if (props.humanPlayerAmount<2 && props.computerPlayerAmount===0){
-            setComputerPlayerAmountError("We need at least two players.")
-        }
-    };
+    // const setSubmissionErrors = () => {
+    //     if (props.humanPlayerAmount===0){
+    //         setHumanPlayerAmountError("We need at least one Human Player.")
+    //     };
+    //     if (props.player1Name === "") {
+    //         setPlayer1NameError(playerNameError);
+    //     };
+    //     if (props.humanPlayerAmount>1 && props.player2Name === ""){
+    //         setPlayer2NameError(playerNameError);
+    //     };
+    //     if (props.humanPlayerAmount>2 && props.player3Name === ""){
+    //         setPlayer3NameError(playerNameError);
+    //     };
+    //     if (props.humanPlayerAmount<2 && props.computerPlayerAmount===0){
+    //         setComputerPlayerAmountError("We need at least two players.")
+    //     }
+    // };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (!gotRequiredInfo) {
-            setSubmissionErrors();
-            return
-        } else {
-                props.submitForm({
-                    "human-player-amount":props.humanPlayerAmount,
-                    "computer-player-amount":props.computerPlayerAmount,
-                    "player1-name":props.player1Name,
-                    "player2-name":props.player2Name,
-                    "player3-name":props.player3Name,
-                });
-                clearForm();
-        };
-    };
+    // const handleSettingsSubmit = (e) => {
+    //     e.preventDefault();
+    //     if (!gotRequiredInfo) {
+    //         setSubmissionErrors();
+    //         return
+    //     } else {
+    //             props.submitForm({
+    //                 "human-player-amount":props.humanPlayerAmount,
+    //                 "computer-player-amount":props.computerPlayerAmount,
+    //                 "player1-name":props.player1Name,
+    //                 "player2-name":props.player2Name,
+    //                 "player3-name":props.player3Name,
+    //             });
+    //             clearForm();
+    //     };
+    // };
 
     // console.log("PLAYER 1'S NAME: ", player1Name)
-    console.log('"DISABLED" VALUE', disabled)
+    // console.log(`SETTINGS.JS' "DISABLED" VALUE`, disabled)
 
   return (
     <form
     className="form"
-    onSubmit={handleSubmit}
+    onSubmit={props.handleSubmit}
     >
         <h1>Initial Settings</h1>
         <label htmlFor="number-of-human-players" >How many human players?</label>
@@ -130,7 +130,7 @@ export default function Settings(props) {
         value={props.humanPlayerAmount}
         onChange= {e => handleHumanPlayerAmountChange(e)}
         ></input>
-        {humanPlayerAmountError?<p className="error-message">{humanPlayerAmountError}</p>:null}
+        {props.humanPlayerAmountError?<p className="error-message">{props.humanPlayerAmountError}</p>:null}
 
         <label htmlFor="player1name" >First player's name?</label>
         <input
@@ -142,7 +142,7 @@ export default function Settings(props) {
         value={props.player1Name}
         onChange={handleP1NameChange}
         />
-        {player1NameError?<p className="error-message">{player1NameError}</p>:null}
+        {props.player1NameError?<p className="error-message">{props.player1NameError}</p>:null}
 
 
         {props.humanPlayerAmount>1?
@@ -157,7 +157,7 @@ export default function Settings(props) {
             value={props.player2Name}
             onChange={handleP2NameChange}
             />
-            {player2NameError?<p className="error-message">{player2NameError}</p>:null}
+            {props.setHumanPlayerAmountErrorplayer2NameError?<p className="error-message">{props.setHumanPlayerAmountErrorplayer2NameError}</p>:null}
         </>
         : null}
 
@@ -173,7 +173,7 @@ export default function Settings(props) {
             value={props.player3Name}
             onChange={handleP3NameChange}
             />
-            {player3NameError?<p className="error-message">{player3NameError}</p>:null}
+            {props.setHumanPlayerAmountErrorplayer3NameError?<p className="error-message">{props.setHumanPlayerAmountErrorplayer3NameError}</p>:null}
         </>
         : null}
 
@@ -189,7 +189,7 @@ export default function Settings(props) {
             value={props.computerPlayerAmount}
             onChange= {e => handleComputerPlayerAmountChange(e)}
             ></input>
-            {computerPlayerAmountError?<p className="error-message">{computerPlayerAmountError}</p>:null}
+            {props.setHumanPlayerAmountErrorcomputerPlayerAmountError?<p className="error-message">{props.computerPlayerAmountError}</p>:null}
         </>
         : null}
 
@@ -202,10 +202,10 @@ export default function Settings(props) {
             max="10"
             name="computer-difficulty-level"
             id="computer-difficulty-level"
-            value={computerDifficultyLevel}
-            onChange= {(e) => setComputerDifficultyLevel(e.target.value)}
+            value={props.computerDifficultyLevel}
+            onChange= {(e) => props.setComputerDifficultyLevel(e.target.value)}
             ></input>
-            {computerDifficultyLevel<1 || computerDifficultyLevel>10?<p className="error-message">"Pick a number from 1 - 10"</p>:null}
+            {props.computerDifficultyLevel<1 || props.computerDifficultyLevel>10?<p className="error-message">"Pick a number from 1 - 10"</p>:null}
         </>
         :null}
 
