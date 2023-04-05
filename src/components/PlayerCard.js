@@ -5,6 +5,10 @@ export default function PlayerCard(props) {
     // const [playerName, setPlayerName] = useState("Player");
     // const [playerScore, setPlayerScore] =useState(0);
     // const [playerPrizes, setPlayerPrizes] = useState([]);
+
+    console.log("PLAYERCARD.JS' PROPS: ", props)
+
+
   return (
     <>
         <div>PlayerCard</div>

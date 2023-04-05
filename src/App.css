@@ -10,7 +10,7 @@
 }
 header {
   background-color: var(--primaryColor);
-  height: 7vh;
+  height: 60px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -62,14 +62,28 @@ form label {
   align-self: center;
   align-content: center;
 } */
-.home-page .wheel {
-  height: 54vh;
-  width: 50vh;
-  /* background-color: grey; */
+.wheel {
+  margin: 0 auto 0;
+  height: 400px;
+  width: 365px;
+  background-color: lightgrey;
   list-style-type: none;
   border-radius: 50%;
   border: 5px solid black;
-  animation-name: wheel;
+  /* animation-name: wheel;
+  animation-duration: 100s;
+  animation-iteration-count: infinite ;
+  animation-timing-function: linear; */
+}
+.home-page .wheel {
+  margin: 20vh auto 0;
+  height: 400px;
+  width: 365px;
+  background-color: lightgrey;
+  list-style-type: none;
+  border-radius: 50%;
+  border: 5px solid black;
+  animation-name: homepage_wheel;
   animation-duration: 100s;
   animation-iteration-count: infinite ;
   animation-timing-function: linear;
@@ -120,7 +134,7 @@ form label {
   transform: rotate(332.3deg);
 }
 /**/
-@keyframes wheel {
+@keyframes homepage_wheel {
   0% {
     transform: rotate(0deg);
   }
@@ -128,4 +142,6 @@ form label {
     transform: rotate(360deg);
   }
 }
-
+.players {
+  list-style-type: none;
+}

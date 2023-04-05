@@ -15,7 +15,7 @@ export default function Settings(props) {
     // const [computerDifficultyLevel, setComputerDifficultyLevel] = useState(1);
 
 
-    // const playerNameError = "Human players need a name."
+    const playerNameError = "Human players need a name."
 
     const handleHumanPlayerAmountChange = (e) => {
         props.setHumanPlayerAmount(e.target.value);
@@ -66,157 +66,165 @@ export default function Settings(props) {
     };
 
     const disabled= !!props.humanPlayerAmountError || !!props.computerPlayerAmountError || !!props.player1NameError || !!props.player2NameError || !!props.player3NameError;
-    // const gotRequiredInfo = !!props.humanPlayerAmount && (props.humanPlayerAmount+props.computerPlayerAmount<4) && (props.humanPlayerAmount+props.computerPlayerAmount>1)
+    const gotRequiredInfo = !!props.humanPlayerAmount && (parseInt(props.humanPlayerAmount)+parseInt(props.computerPlayerAmount)<4) && (parseInt(props.humanPlayerAmount)+parseInt(props.computerPlayerAmount)>1)
 
-    // const clearForm = () => {
-    //     props.setHumanPlayerAmount(0);
-    //     props.setComputerPlayerAmount(0);
-    //     props.setPlayer1Name("");
-    //     props.setPlayer2Name("");
-    //     props.setPlayer3Name("");
-    // };
+    const clearForm = () => {
+        props.setHumanPlayerAmount(0);
+        props.setComputerPlayerAmount(0);
+        props.setComputerDifficultyLevel(1);
+        props.setPlayer1Name("");
+        props.setPlayer2Name("");
+        props.setPlayer3Name("");
+    };
 
-    // const setSubmissionErrors = () => {
-    //     if (props.humanPlayerAmount===0){
-    //         setHumanPlayerAmountError("We need at least one Human Player.")
-    //     };
-    //     if (props.player1Name === "") {
-    //         setPlayer1NameError(playerNameError);
-    //     };
-    //     if (props.humanPlayerAmount>1 && props.player2Name === ""){
-    //         setPlayer2NameError(playerNameError);
-    //     };
-    //     if (props.humanPlayerAmount>2 && props.player3Name === ""){
-    //         setPlayer3NameError(playerNameError);
-    //     };
-    //     if (props.humanPlayerAmount<2 && props.computerPlayerAmount===0){
-    //         setComputerPlayerAmountError("We need at least two players.")
-    //     }
-    // };
+    const setSubmissionErrors = () => {
+        if (props.humanPlayerAmount===0){
+            props.setHumanPlayerAmountError("We need at least one Human Player.")
+        };
+        if (props.player1Name === "") {
+            props.setPlayer1NameError(playerNameError);
+        };
+        if (props.humanPlayerAmount>1 && props.player2Name === ""){
+            props.setPlayer2NameError(playerNameError);
+        };
+        if (props.humanPlayerAmount>2 && props.player3Name === ""){
+            props.setPlayer3NameError(playerNameError);
+        };
+        if (props.humanPlayerAmount<2 && props.computerPlayerAmount===0){
+            props.setComputerPlayerAmountError("We need at least two players.")
+        }
+    };
 
-    // const handleSettingsSubmit = (e) => {
-    //     e.preventDefault();
-    //     if (!gotRequiredInfo) {
-    //         setSubmissionErrors();
-    //         return
-    //     } else {
-    //             props.submitForm({
-    //                 "human-player-amount":props.humanPlayerAmount,
-    //                 "computer-player-amount":props.computerPlayerAmount,
-    //                 "player1-name":props.player1Name,
-    //                 "player2-name":props.player2Name,
-    //                 "player3-name":props.player3Name,
-    //             });
-    //             clearForm();
-    //     };
-    // };
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (!gotRequiredInfo) {
+            setSubmissionErrors();
+            return
+        } else {
+            // console.log("SETTINGS.JS' INFO FOR FORM SUBMITION: ",
+            // props.humanPlayerAmount, props.computerPlayerAmount,
+            // props.computerDifficultyLevel, props.player1Name,
+            // props.player2Name, props.player3Name);
+            props.submitForm({
+                "human_player_amount":props.humanPlayerAmount,
+                "computer_player_amount":props.computerPlayerAmount,
+                "computer_difficulty_level":props.computerDifficultyLevel,
+                "player1_name":props.player1Name,
+                "player2_name":props.player2Name,
+                "player3_name":props.player3Name
+            });
+            clearForm();
+        };
+    };
 
     // console.log("PLAYER 1'S NAME: ", player1Name)
     // console.log(`SETTINGS.JS' "DISABLED" VALUE`, disabled)
+    // console.log("SETTINGS.JS' PROPS: ", props)
+    // console.log("SETTINGS.JS' GOTREQUIREDINFO: ", gotRequiredInfo)
 
-  return (
-    <form
-    className="form"
-    onSubmit={props.handleSubmit}
-    >
-        <h1>Initial Settings</h1>
-        <label htmlFor="number-of-human-players" >How many human players?</label>
-        <input
-        type="number"
-        min="1"
-        max="3"
-        name="number-of-human-players"
-        id="number-of-human-players"
-        value={props.humanPlayerAmount}
-        onChange= {e => handleHumanPlayerAmountChange(e)}
-        ></input>
-        {props.humanPlayerAmountError?<p className="error-message">{props.humanPlayerAmountError}</p>:null}
-
-        <label htmlFor="player1name" >First player's name?</label>
-        <input
-        type="text"
-        minLength="1"
-        max="7"
-        name="player1name"
-        id="player1name"
-        value={props.player1Name}
-        onChange={handleP1NameChange}
-        />
-        {props.player1NameError?<p className="error-message">{props.player1NameError}</p>:null}
-
-
-        {props.humanPlayerAmount>1?
-        <>
-            <label htmlFor="player2name" >Second player's name?</label>
-            <input
-            type="text"
-            minLength="1"
-            max="7"
-            name="player2name"
-            id="player2name"
-            value={props.player2Name}
-            onChange={handleP2NameChange}
-            />
-            {props.setHumanPlayerAmountErrorplayer2NameError?<p className="error-message">{props.setHumanPlayerAmountErrorplayer2NameError}</p>:null}
-        </>
-        : null}
-
-        {props.humanPlayerAmount>2?
-        <>
-            <label htmlFor="player3name" >Third player's name?</label>
-            <input
-            type="text"
-            minLength="1"
-            max="7"
-            name="player3name"
-            id="player3name"
-            value={props.player3Name}
-            onChange={handleP3NameChange}
-            />
-            {props.setHumanPlayerAmountErrorplayer3NameError?<p className="error-message">{props.setHumanPlayerAmountErrorplayer3NameError}</p>:null}
-        </>
-        : null}
-
-        {props.humanPlayerAmount<3?
-        <>
-            <label htmlFor="number-of-computer-players" >How many computer players?</label>
-            <input
-            type="number"
-            min={props.humanPlayerAmount<2?1:0}
-            max={3-props.humanPlayerAmount}
-            name="number-of-computer-players"
-            id="number-of-computer-players"
-            value={props.computerPlayerAmount}
-            onChange= {e => handleComputerPlayerAmountChange(e)}
-            ></input>
-            {props.setHumanPlayerAmountErrorcomputerPlayerAmountError?<p className="error-message">{props.computerPlayerAmountError}</p>:null}
-        </>
-        : null}
-
-        {props.computerPlayerAmount>0?
-        <>
-        <label htmlFor="computer-difficulty-level" >Computer player(s) difficulty level?</label>
+    return (
+        <form
+        className="form"
+        onSubmit={handleSubmit}
+        >
+            <h1>Initial Settings</h1>
+            <label htmlFor="number-of-human-players" >How many human players?</label>
             <input
             type="number"
             min="1"
-            max="10"
-            name="computer-difficulty-level"
-            id="computer-difficulty-level"
-            value={props.computerDifficultyLevel}
-            onChange= {(e) => props.setComputerDifficultyLevel(e.target.value)}
-            ></input>
-            {props.computerDifficultyLevel<1 || props.computerDifficultyLevel>10?<p className="error-message">"Pick a number from 1 - 10"</p>:null}
-        </>
-        :null}
+            max="3"
+            name="number-of-human-players"
+            id="number-of-human-players"
+            value={props.humanPlayerAmount}
+            onChange= {e => handleHumanPlayerAmountChange(e)}
+            />
+            {props.humanPlayerAmountError?<p className="error-message">{props.humanPlayerAmountError}</p>:null}
 
-        <input
-                style={disabled?{border: "1px solid #999999", backgroundColor: "#cccccc", color: "#666666", cursor: "not-allowed"}:null}
-                disabled={disabled}
-                className="button"
-                type="submit"
-                value="Let's Begin!"
-                aria-label="On Click"
+            <label htmlFor="player1name" >First player's name?</label>
+            <input
+            type="text"
+            minLength="1"
+            max="7"
+            name="player1name"
+            id="player1name"
+            value={props.player1Name}
+            onChange={handleP1NameChange}
+            />
+            {props.player1NameError?<p className="error-message">{props.player1NameError}</p>:null}
+
+
+            {props.humanPlayerAmount>1?
+            <>
+                <label htmlFor="player2name" >Second player's name?</label>
+                <input
+                type="text"
+                minLength="1"
+                max="7"
+                name="player2name"
+                id="player2name"
+                value={props.player2Name}
+                onChange={handleP2NameChange}
                 />
-    </form>
-  )
-}
+                {props.setHumanPlayerAmountErrorplayer2NameError?<p className="error-message">{props.setHumanPlayerAmountErrorplayer2NameError}</p>:null}
+            </>
+            : null}
+
+            {props.humanPlayerAmount>2?
+            <>
+                <label htmlFor="player3name" >Third player's name?</label>
+                <input
+                type="text"
+                minLength="1"
+                max="7"
+                name="player3name"
+                id="player3name"
+                value={props.player3Name}
+                onChange={handleP3NameChange}
+                />
+                {props.setHumanPlayerAmountErrorplayer3NameError?<p className="error-message">{props.setHumanPlayerAmountErrorplayer3NameError}</p>:null}
+            </>
+            : null}
+
+            {props.humanPlayerAmount<3?
+            <>
+                <label htmlFor="number-of-computer-players" >How many computer players?</label>
+                <input
+                type="number"
+                min={props.humanPlayerAmount<2?1:0}
+                max={3-props.humanPlayerAmount}
+                name="number-of-computer-players"
+                id="number-of-computer-players"
+                value={props.computerPlayerAmount}
+                onChange= {e => handleComputerPlayerAmountChange(e)}
+                />
+                {props.setHumanPlayerAmountErrorcomputerPlayerAmountError?<p className="error-message">{props.computerPlayerAmountError}</p>:null}
+            </>
+            : null}
+
+            {props.computerPlayerAmount>0?
+            <>
+                <label htmlFor="computer-difficulty-level" >Computer player(s) difficulty level?</label>
+                <input
+                type="number"
+                min="1"
+                max="10"
+                name="computer-difficulty-level"
+                id="computer-difficulty-level"
+                value={props.computerDifficultyLevel}
+                onChange= {(e) => props.setComputerDifficultyLevel(e.target.value)}
+                />
+                {props.computerDifficultyLevel<1 || props.computerDifficultyLevel>10?<p className="error-message">"Pick a number from 1 - 10"</p>:null}
+            </>
+            :null}
+
+            <input
+            style={disabled?{border: "1px solid #999999", backgroundColor: "#cccccc", color: "#666666", cursor: "not-allowed"}:null}
+            disabled={disabled}
+            className="button"
+            type="submit"
+            value="Let's Begin!"
+            aria-label="On Click"
+            />
+        </form>
+    );
+};
