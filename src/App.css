@@ -54,61 +54,34 @@ form label {
   margin-bottom: 3vh;
   /* font-size: 16pt; */
 }
-.home-page {
+/* .home-page {
   justify-content: center;
   justify-self: center;
   justify-items: center;
   align-content: center;
   align-self: center;
   align-content: center;
-}
+} */
 .home-page .wheel {
-  /* justify-content: center;
-  justify-self: center;
-  justify-items: center;
-  align-content: center;
-  align-self: center;
-  align-content: center; */
   height: 54vh;
   width: 50vh;
   /* background-color: grey; */
   list-style-type: none;
   border-radius: 50%;
   border: 5px solid black;
-  /**/
   animation-name: wheel;
-  animation-duration: 10s;
-  animation-iteration-count: infinite;
-  animation-timing-function: wheel-segmentar;
-  /**/
-  /* background-image: conic-gradient(
-    gold 0 7.7%,
-    silver 7.7% 15.4%,
-    grey 15.4% 23.1%,
-    green 23.1% 30.8%,
-    red 30.8% 38.5%,
-    blue 38.5% 46.2%,
-    orange 46.2% 53.8%,
-    purple 53.8% 61.5%,
-    brown 61.5% 69.2%,
-    violet 69.2% 76.9%,
-    yellow 76.9% 84.6%,
-    teal 84.6% 92.3%,
-    black 92.3% 100%,
-  ) */
+  animation-duration: 100s;
+  animation-iteration-count: infinite ;
+  animation-timing-function: linear;
 }
 .wheel-segment {
-  /* border-top: 5px solid black;
-  border-left: 5px solid black; */
-  /**/
   background-color: black;
   width: 50%;
-  height: 2px;
+  height: 5px;
   position: absolute;
   top: 50%;
   left: 50%;
   transform-origin: 0% 0%;
-  /**/
 }
 .wheel-segment:nth-of-type(2) {
   transform: rotate(27.7deg);
@@ -155,24 +128,4 @@ form label {
     transform: rotate(360deg);
   }
 }
-/**/
 
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s wheel-segmentar;
-  }
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}

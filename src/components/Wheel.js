@@ -6,8 +6,11 @@ export default function Wheel() {
         <h1>Wheel...</h1>
 
         <ul className="wheel">
-          {WheelSegments.map(item => 
-            <li  key={item.text} className="wheel-segment">{item.text}</li>
+          {WheelSegments.map(item =>
+            <>
+              <li  key={item.text} className="wheel-segment">{item.text}</li>
+              {/* <div className="pin"></div> */}
+            </>
           )}
         </ul>
     </>
