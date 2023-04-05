@@ -1,8 +1,8 @@
-[
+export const WheelSegments= [
     {
         "type": "cash",
-        "text": "$950",
-        "value": 950,
+        "text": "$1000",
+        "value": 1000,
         "prize": "A trip to Ann Arbor!"
     },
     {
@@ -23,20 +23,20 @@
     },
     {
         "type": "cash",
-        "text": "$900",
-        "value": 900,
+        "text": "$950",
+        "value": 950,
         "prize": false
     },
     {
         "type": "cash",
-        "text": "$700",
-        "value": 700,
+        "text": "$750",
+        "value": 750,
         "prize": false
     },
     {
         "type": "cash",
-        "text": "$600",
-        "value": 600,
+        "text": "$500",
+        "value": 500,
         "prize": false
     },
     {
