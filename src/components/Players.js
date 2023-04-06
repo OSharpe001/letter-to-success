@@ -15,28 +15,25 @@ export default function Players(props) {
     console.log("PLAYERS.JS' COMPUTERPLAYERNAMES: ", computerPlayerNames);
 
   return (
-    <>
-        <h1>Players</h1>
-        <ul className="players">
-            {props.playerNames.filter(player=>player!=="").map(player =>
-                <li key = {player} className="player">
-                    <PlayerCard
-                        name={player}
-                        // score={player.score}
-                        // prizes={player.prizes}
-                    />
-                </li>
-            )}
-            {computerPlayerNames.map(player =>
-                <li key = {player} className="player">
-                    <PlayerCard
-                        name={player}
-                        // score={player.score}
-                        // prizes={player.prizes}
-                    />
-                </li>
-            )}
-        </ul>
-    </>
+    <ul className="players">
+        {props.playerNames.filter(player=>player!=="").map(player =>
+            <li key = {player} className="player">
+                <PlayerCard
+                    name={player}
+                    // score={player.score}
+                    // prizes={player.prizes}
+                />
+            </li>
+        )}
+        {computerPlayerNames.map(player =>
+            <li key = {player} className="player">
+                <PlayerCard
+                    name={player}
+                    // score={player.score}
+                    // prizes={player.prizes}
+                />
+            </li>
+        )}
+    </ul>
   )
 }

@@ -58,6 +58,7 @@ export default function Settings(props) {
             props.setPlayer2NameError("")
         };
     };
+
     const handleP3NameChange = (e) => {
         props.setPlayer3Name(e.target.value);
         if (e.target.value.length>0) {
@@ -66,7 +67,10 @@ export default function Settings(props) {
     };
 
     const disabled= !!props.humanPlayerAmountError || !!props.computerPlayerAmountError || !!props.player1NameError || !!props.player2NameError || !!props.player3NameError;
-    const gotRequiredInfo = !!props.humanPlayerAmount && (parseInt(props.humanPlayerAmount)+parseInt(props.computerPlayerAmount)<4) && (parseInt(props.humanPlayerAmount)+parseInt(props.computerPlayerAmount)>1)
+    const gotRequiredInfo = !!props.humanPlayerAmount && (parseInt(props.humanPlayerAmount)
+        + parseInt(props.computerPlayerAmount)<4) && (parseInt(props.humanPlayerAmount) + 
+        parseInt(props.computerPlayerAmount)>1)&&(props.player1Name!=="")//NEED TO FINISH THIS
+            // "SECURITY CHECK FOR THE NAMES OF HUMAN PLAYERS"
 
     const clearForm = () => {
         props.setHumanPlayerAmount(0);

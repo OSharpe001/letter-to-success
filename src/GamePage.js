@@ -11,8 +11,10 @@ export default function GamePage(props) {
   return (
     <>
         <h1>GamePage...</h1>
-        <Board />
-        <Wheel />
+        <div className="game-page">
+          <Board />
+          <Wheel />
+        </div>
         <Players
           playerNames={playerNames}
           computer_player_amount={props.settingsData.computer_player_amount}

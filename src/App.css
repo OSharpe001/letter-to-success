@@ -142,7 +142,12 @@ form label {
     transform: rotate(360deg);
   }
 }
+.game-page {
+  display: flex;
+  flex-direction: row;
+}
 .players {
+  margin-top:10vh;
   list-style-type: none;
   display: flex;
   justify-content: space-around;
@@ -151,6 +156,8 @@ form label {
   border-left: 10px solid black;
   border-right: 10px solid black;
   border-top: 20px solid black;
+  border-radius: 10px;
+  width: 320px;
   /* padding: 30px 30px 0; */
 }
 .player-name {
@@ -160,10 +167,12 @@ form label {
   background-color: grey;
 }
 .player-score {
+  font-weight: bold;
   padding: 20px;
   background-color: green;
 }
 .player-prizes {
+  font-weight: bold;
   padding: 20px;
   background-color: silver;
 }

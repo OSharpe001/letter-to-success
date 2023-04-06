@@ -12,7 +12,7 @@ export default function PlayerCard(props) {
   return (
     <div className="players-box">
         <div className="player-name" >{props.name}</div>
-        <div className="player-score" >{playerScore}</div>
+        <div className="player-score" >$ {playerScore}</div>
         <div className="player-prizes" >{playerPrizes}</div>
     </div>
   );
