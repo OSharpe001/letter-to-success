@@ -70,10 +70,10 @@ form label {
   list-style-type: none;
   border-radius: 50%;
   border: 5px solid black;
-  /* animation-name: wheel;
+  animation-name: homepage_wheel;
   animation-duration: 100s;
   animation-iteration-count: infinite ;
-  animation-timing-function: linear; */
+  animation-timing-function: linear;
 }
 .home-page .wheel {
   margin: 20vh auto 0;
@@ -144,4 +144,26 @@ form label {
 }
 .players {
   list-style-type: none;
+  display: flex;
+  justify-content: space-around;
+}
+.player {
+  border-left: 10px solid black;
+  border-right: 10px solid black;
+  border-top: 20px solid black;
+  /* padding: 30px 30px 0; */
+}
+.player-name {
+  padding: 30px;
+  font-size: 20pt;
+  font-weight: bold;
+  background-color: grey;
+}
+.player-score {
+  padding: 20px;
+  background-color: green;
+}
+.player-prizes {
+  padding: 20px;
+  background-color: silver;
 }

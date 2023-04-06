@@ -2,17 +2,37 @@ import PlayerCard from './PlayerCard'
 
 export default function Players(props) {
 
-    console.log("PLAYERS.JS' PROPS: ", props.playerNames)
+    const computerPlayerAmount=parseInt(props.computer_player_amount);
+    const computerPlayerNames=[];
+
+    for (let i=0; i<computerPlayerAmount; i++) {
+        computerPlayerNames.push("Computer"+(i+1))
+        console.log("Computer"+(i+1))
+    };
+
+    console.log("PLAYERS.JS' PROPS: ", props);
+    console.log("PLAYERS.JS' COMPUTERPLAYERAMOUNT: ", computerPlayerAmount);
+    console.log("PLAYERS.JS' COMPUTERPLAYERNAMES: ", computerPlayerNames);
+
   return (
     <>
         <h1>Players</h1>
         <ul className="players">
-            {props.playerNames.map(player =>
-                <li key = {player.name} >
+            {props.playerNames.filter(player=>player!=="").map(player =>
+                <li key = {player} className="player">
                     <PlayerCard
-                        name={player.name}
-                        score={player.score}
-                        prizes={player.prizes}
+                        name={player}
+                        // score={player.score}
+                        // prizes={player.prizes}
+                    />
+                </li>
+            )}
+            {computerPlayerNames.map(player =>
+                <li key = {player} className="player">
+                    <PlayerCard
+                        name={player}
+                        // score={player.score}
+                        // prizes={player.prizes}
                     />
                 </li>
             )}

@@ -15,6 +15,7 @@ export default function GamePage(props) {
         <Wheel />
         <Players
           playerNames={playerNames}
+          computer_player_amount={props.settingsData.computer_player_amount}
           />
     </>
   )
