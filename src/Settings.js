@@ -2,28 +2,37 @@
 
 export default function Settings(props) {
 
-    // const [humanPlayerAmount, setHumanPlayerAmount] = useState(1);
-    // const [computerPlayerAmount, setComputerPlayerAmount] = useState(0);
-    // const [humanPlayerAmountError, setHumanPlayerAmountError] = useState("");
-    // const [computerPlayerAmountError, setComputerPlayerAmountError] = useState("");
-    // const [player1Name, setPlayer1Name] = useState("");
-    // const [player1NameError, setPlayer1NameError] = useState("");
-    // const [player2Name, setPlayer2Name] = useState("");
-    // const [player2NameError, setPlayer2NameError] = useState("");
-    // const [player3Name, setPlayer3Name] = useState("");
-    // const [player3NameError, setPlayer3NameError] = useState("");
-    // const [computerDifficultyLevel, setComputerDifficultyLevel] = useState(1);
-
 
     const playerNameError = "Human players need a name."
 
     const handleHumanPlayerAmountChange = (e) => {
         props.setHumanPlayerAmount(e.target.value);
-        if (e.target.value < 1) {
+        if (parseInt(e.target.value) < 1) {
+            // console.log("SETTINGS.JS HANDLEHUMANPLAYERAMOUNTCHANGE'S E.TARGETVALUE: ", e.target.value)
             props.setHumanPlayerAmountError("We need at least one Human Player...");
             return;
-        } else if (e.target.value >3) {
+        } else if (parseInt(e.target.value)===3) {
+            // console.log("SETTINGS.JS HANDLEHUMANPLAYERAMOUNTCHANGE'S E.TARGETVALUE: ", e.target.value)
+            props.setComputerPlayerAmount(0);
+            props.setComputerPlayerAmountError("");
+            props.setHumanPlayerAmountError("");
+        } else if (parseInt(e.target.value) >3) {
+            // console.log("SETTINGS.JS HANDLEHUMANPLAYERAMOUNTCHANGE'S E.TARGETVALUE: ", e.target.value)
             props.setHumanPlayerAmountError("Sorry. There's a max of three players per game");
+            props.setComputerPlayerAmountError("");
+        } else if (parseInt(e.target.value)<2) {
+            // console.log("SETTINGS.JS HANDLEHUMANPLAYERAMOUNTCHANGE'S E.TARGETVALUE: ", e.target.value)
+            props.setPlayer2Name("");
+            props.setPlayer2NameError("");
+            props.setPlayer3Name("");
+            props.setPlayer3NameError("");
+            props.setHumanPlayerAmountError("");
+        } else if (parseInt(e.target.value)<3) {
+            // console.log("SETTINGS.JS HANDLEHUMANPLAYERAMOUNTCHANGE'S E.TARGETVALUE: ", e.target.value)
+            props.setPlayer3Name("");
+            props.setPlayer3NameError("");
+            props.setComputerPlayerAmountError("");
+            props.setHumanPlayerAmountError("");
         } else {
             props.setHumanPlayerAmountError("");
         };
@@ -67,10 +76,8 @@ export default function Settings(props) {
     };
 
     const disabled= !!props.humanPlayerAmountError || !!props.computerPlayerAmountError || !!props.player1NameError || !!props.player2NameError || !!props.player3NameError;
-    const gotRequiredInfo = !!props.humanPlayerAmount && (parseInt(props.humanPlayerAmount)
-        + parseInt(props.computerPlayerAmount)<4) && (parseInt(props.humanPlayerAmount) + 
-        parseInt(props.computerPlayerAmount)>1)&&(props.player1Name!=="")//NEED TO FINISH THIS
-            // "SECURITY CHECK FOR THE NAMES OF HUMAN PLAYERS"
+    const gotRequiredInfo = !!props.humanPlayerAmount && (parseInt(props.humanPlayerAmount) + parseInt(props.computerPlayerAmount)<4) && (parseInt(props.humanPlayerAmount) + parseInt(props.computerPlayerAmount)>1) && (props.player1Name!=="")
+        && (parseInt(props.humanPlayerAmount)<2 || props.player2Name!=="") && (parseInt(props.humanPlayerAmount)<3 || props.player3Name!=="")
 
     const clearForm = () => {
         props.setHumanPlayerAmount(0);
@@ -88,13 +95,16 @@ export default function Settings(props) {
         if (props.player1Name === "") {
             props.setPlayer1NameError(playerNameError);
         };
-        if (props.humanPlayerAmount>1 && props.player2Name === ""){
+        if (parseInt(props.humanPlayerAmount)>1 && props.player2Name === "") {
             props.setPlayer2NameError(playerNameError);
         };
-        if (props.humanPlayerAmount>2 && props.player3Name === ""){
+        if (parseInt(props.humanPlayerAmount)===3 && props.player2Name === "") {
+            props.setPlayer2NameError(playerNameError);
+        };
+        if (parseInt(props.humanPlayerAmount)===3 && props.player3Name === "") {
             props.setPlayer3NameError(playerNameError);
         };
-        if (props.humanPlayerAmount<2 && props.computerPlayerAmount===0){
+        if (parseInt(props.humanPlayerAmount)===1 && parseInt(props.computerPlayerAmount)===0){
             props.setComputerPlayerAmountError("We need at least two players.")
         }
     };
@@ -169,7 +179,7 @@ export default function Settings(props) {
                 value={props.player2Name}
                 onChange={handleP2NameChange}
                 />
-                {props.setHumanPlayerAmountErrorplayer2NameError?<p className="error-message">{props.setHumanPlayerAmountErrorplayer2NameError}</p>:null}
+                {props.player2NameError?<p className="error-message">{props.player2NameError}</p>:null}
             </>
             : null}
 
@@ -185,7 +195,7 @@ export default function Settings(props) {
                 value={props.player3Name}
                 onChange={handleP3NameChange}
                 />
-                {props.setHumanPlayerAmountErrorplayer3NameError?<p className="error-message">{props.setHumanPlayerAmountErrorplayer3NameError}</p>:null}
+                {props.player3NameError?<p className="error-message">{props.player3NameError}</p>:null}
             </>
             : null}
 
@@ -201,7 +211,7 @@ export default function Settings(props) {
                 value={props.computerPlayerAmount}
                 onChange= {e => handleComputerPlayerAmountChange(e)}
                 />
-                {props.setHumanPlayerAmountErrorcomputerPlayerAmountError?<p className="error-message">{props.computerPlayerAmountError}</p>:null}
+                {props.computerPlayerAmountError?<p className="error-message">{props.computerPlayerAmountError}</p>:null}
             </>
             : null}
 
