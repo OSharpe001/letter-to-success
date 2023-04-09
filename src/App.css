@@ -176,3 +176,32 @@ form label {
   padding: 20px;
   background-color: silver;
 }
+.board {
+  width: 75%;
+}
+.phrase {
+  width: 75%;
+  display: flex;
+  flex-direction: row;
+  list-style-type: none;
+}
+.letter-card {
+  /* display: flex; */
+  /* flex-direction: row; */
+  /* list-style-type: none; */
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 40pt;
+  width:1em;
+  font-weight: bold;
+  border: 5px solid black;
+  /* border-radius: 16px; */
+/*   
+  margin: 0;
+  padding: 0; */
+}
+.hidden {
+  width: 1em;
+  margin: 1em;
+  /* display:none; */
+  /* border: none; */
+}

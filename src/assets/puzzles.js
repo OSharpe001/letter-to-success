@@ -1,4 +1,6 @@
-{"Star & Role": [
+export const Puzzles = [
+    {type:"Star & Role",
+    phrases: [
     "Adam Sandler As Happy Gilmore",
     "Anthony Hopkins As Nixon",
     "Bob Denver As Gilligan",
@@ -22,8 +24,9 @@
     "Tom Hanks As Forrest Gump",
     "Tom Selleck As Magnum P.I.",
     "Val Kilmer As Batman"
-],
-"Title": [
+]},
+{type:"Title",
+phrases: [
     "A Christmas Carol",
     "A Few Good Men",
     "A Passage To India",
@@ -498,8 +501,9 @@
     "Working Girl",
     "Yellow Submarine",
     "You Can't Hurry Love"
-],
-"Headline": [
+]},
+{type:"Headline",
+phrases: [
     "Bill Clinton Elected For Second Term",
     "Charles & Diana Finalize Divorce",
     "Elvis Enlists In The U.S. Army",
@@ -512,8 +516,9 @@
     "U.S. Sends Chimp Into Outer Space",
     "Watergate Scandal Forces Nixon To Resign",
     "Yankees Defeat Braves To Win The World Series"
-],
-"Things": [
+]},
+{type:"Things",
+phrases: [
     "Action-Adventure Films",
     "Alfalfa Sprouts",
     "Asterisks",
@@ -681,8 +686,9 @@
     "Written Estimates",
     "Yellow Daisies",
     "Zoo Animals"
-],
-"Artist & Song": [
+]},
+{type:"Artist & Song",
+phrases: [
     "Barbra Streisand's Memory",
     "Barbra Streisand's The Way We Were",
     "Billy Joel's The Piano Man",
@@ -691,7 +697,7 @@
     "Bruce Springsteen's Born In The USA",
     "Elton John's Goodbye Yellow Brick Road",
     "Frank Sinatra's My Way",
-    "James Taylor's Yo've Got A Friend",
+    "James Taylor's You've Got A Friend",
     "John Lennon's Imagine",
     "Judy Garland's Over The Rainbow",
     "Liza Minelli's New York New York",
@@ -700,8 +706,9 @@
     "The Beatles' Hey Jude",
     "The Village People's YMCA",
     "Whitney Houston's I Will Always Love You"
-],
-"Fictional Character": [
+]},
+{type:"Fictional Character",
+phrases: [
     "Aphrodite",
     "Babar King Of The Elephants",
     "Batman",
@@ -744,8 +751,9 @@
     "Wilma Flintstone",
     "Wise Old Owl",
     "Yosemite Sam"
-],
-"The Seventies": [
+]},
+{type:"The Seventies",
+phrases: [
     "Apple Starts Producing Personal Computers",
     "Egypt & Israel Sign Historic Peace Treaty",
     "Evita & A Chorus Line Are Broadway Hits",
@@ -753,8 +761,9 @@
     "Mark Spitz Wins Seven Olympic Gold Medals",
     "The U.S. Celebrates Its Bicentennial",
     "U.S. Signs Treaty Returning Panama Canal"
-],
-"Show Biz": [
+]},
+{type:"Show Biz",
+phrases: [
     "Audrey Hepburn Has Breakfast At Tiffany's",
     "Bob Hope Entertains The Troops",
     "Bob Hope & Bing Crosby Star In Road Movies",
@@ -764,15 +773,17 @@
     "Sylvester Stallone Makes Five Rocky Movies",
     "The Beatles Appear On The Ed Sullivan Show",
     "The Muppets Get Their Own TV Show"
-],
-"The Sixties": [
+]},
+{type:"The Sixties",
+phrases: [
     "Lyndon Johnson Re-Elected As President",
     "Medicare Provides Aid To The Elderly",
     "National Organization For Women Founded",
     "Soviets Erect Berlin Wall",
     "Thousands Attend Concert At Woodstock"
-],
-"Classic TV": [
+]},
+{type:"Classic TV",
+phrases: [
     "Charlie Brown & Snoopy Come To Television",
     "Gilligan & Friends Take A Three-Hour Tour",
     "Gunsmoke Rawhide & Bonanza",
@@ -791,8 +802,9 @@
     "The Lone Ranger & Tonto",
     "The Munsters & The Addams Family",
     "Wheel Of Fortune Debuts On Nighttime Television"
-],
-"Same Name": [
+]},
+{type:"Same Name",
+phrases: [
     "Barnaby & Me And Mrs Jones",
     "Barney & Mitch Miller",
     "Bird's & Empty Nest",
@@ -844,8 +856,9 @@
     "Sweet & Field Of Dreams",
     "The Deer & Holly Hunter",
     "The Lone & Park Ranger"
-],
-"Author & Title": [
+]},
+{type:"Author & Title",
+phrases: [
     "For Whom The Bell Tolls By Ernest Hemingway",
     "Pride & Prejudice By Jane Austen",
     "Tales Of The South Pacific By James Michener",
@@ -854,8 +867,9 @@
     "The Right Stuff By Tom Wolfe",
     "The Tale Of Peter Rabbit By Beatrix Potter",
     "The World According To Garp By John Irving"
-],
-"Song/Show": [
+]},
+{type:"Song/Show",
+phrases: [
     "A Whole New World From Aladdin",
     "Colors Of The World From Pocahontas",
     "Don't Cry For Me Argentina From Evita",
@@ -865,8 +879,9 @@
     "Memory From Cats",
     "Under The Sea From The Little Mermaid",
     "What I Did For Love From A Chorus Line"
-],
-"Husband & Wife": [
+]},
+{type:"Husband & Wife",
+phrases: [
     "Al & Tipper Gore",
     "Arnold Schwarzenegger & Maria Shriver",
     "Bill & Hillary Rodham Clinton",
@@ -881,8 +896,9 @@
     "Steven Spielberg & Kate Capshaw",
     "Ted Turner & Jane Fonda",
     "Warren Beatty & Annette Bening"
-],
-"Nickname": [
+]},
+{type:"Nickname",
+phrases: [
     "Billy The Kid",
     "Calamity Jane",
     "Ivan The Terrible",
@@ -902,8 +918,9 @@
     "The Wild West",
     "Tin Pan Alley",
     "Whirlybird"
-],
-"Quotation": [
+]},
+{type:"Quotation",
+phrases: [
     "A Bicycle Built For Two",
     "A Legend In His Own Time",
     "A Pocket Full Of Posies",
@@ -981,14 +998,16 @@
     "Where Seldom Is Heard",
     "Wherefore Art Thou Romeo",
     "Workers Of The World Unite"
-],
-"The Eighties": [
+]},
+{type:"The Eighties",
+phrases: [
     "East & West Germany Reunite",
     "John McEnroe Wins Three Wimbledon Titles",
     "MTV Debuts All-Music Format",
     "The Soviet Union Collapses"
-],
-"Places": [
+]},
+{type:"Places",
+phrases: [
     "Baggage Claim Areas",
     "Canadian Provinces",
     "Canary Islands",
@@ -1002,8 +1021,9 @@
     "The Windward Islands",
     "The Four Corners Of The Earth",
     "Virgin Islands"
-],
-"Person - Proper Name": [
+]},
+{type:"Person - Proper Name",
+phrases: [
     "Abraham Lincoln",
     "Actor Director Clint Eastwood",
     "Actor Ernest Borgnine",
@@ -1151,8 +1171,9 @@
     "Wynonna Judd",
     "Yoko Ono",
     "Zsa Zsa Gabor"
-],
-"Person": [
+]},
+{type:"Person",
+phrases: [
     "A Good Soldier",
     "A Handsome Man",
     "A Mature Individual",
@@ -1334,8 +1355,9 @@
     "Virtuoso",
     "Weight-Lifter",
     "Young Man"
-],
-"Before & After": [
+]},
+{type:"Before & After",
+phrases: [
     "A Blast From The Past Tense",
     "A Long Shot In The Dark",
     "A Marked Man Of The World",
@@ -1498,8 +1520,9 @@
     "West Point Of View",
     "When You Wish Upon A Star Trek",
     "Whitney Houston Texas"
-],
-"Place": [
+]},
+{type:"Place",
+phrases: [
     "Aberdeen Scotland",
     "Adriatic Sea",
     "Aegean Sea",
@@ -1971,8 +1994,9 @@
     "Yuma Arizona",
     "Zermatt Switzerland",
     "Zimbabwe"
-],
-"Landmark": [
+]},
+{type:"Landmark",
+phrases: [
     "Acadia National Park",
     "Bermuda's Pink Sand Beaches",
     "Big Bend National Park",
@@ -2042,8 +2066,9 @@
     "Westminster Abbey",
     "Winchester Cathedral",
     "Windsor Castle"
-],
-"Fictional Characters": [
+]},
+{type:"Fictional Characters",
+phrases: [
     "Beavis & Butthead",
     "Big Bird Bert & Ernie",
     "Gumby & Pokey",
@@ -2057,8 +2082,9 @@
     "The Hardy Boys",
     "The Simpsons",
     "Tom And Jerry"
-],
-"Family": [
+]},
+{type:"Family",
+phrases: [
     "Blythe Danner & Gwyneth Paltrow",
     "Bruce & Laura Dern",
     "Judy Garland & Liza Minelli",
@@ -2069,8 +2095,9 @@
     "Vanessa & Lynn Redgrave",
     "Warren Beatty & Shirley Maclaine",
     "William Stephen & Alec Baldwin"
-],
-"Thing": [
+]},
+{type:"Thing",
+phrases: [
     "A Glass Of Chablis",
     "A Kind Word",
     "A Lump Of Coal In Your Stocking",
@@ -2896,8 +2923,9 @@
     "Wristwatch",
     "Writer's Cramp",
     "Yellow-Bellied Sapsucker"
-],
-"People": [
+]},
+{type:"People",
+phrases: [
     "A Foursome For Golf",
     "Abbott And Costello",
     "Absentee Voters",
@@ -3042,8 +3070,9 @@
     "U.S. Navy Seals",
     "Vikings",
     "Winners And Losers"
-],
-"Phrase": [
+]},
+{type:"Phrase",
+phrases: [
     "A Momentary Lapse",
     "A Reflection Of Our Times",
     "A Cursory Glance",
@@ -3694,8 +3723,9 @@
     "Your Number's Up",
     "Your Place Or Mine",
     "Yours Truly"
-],
-"Event": [
+]},
+{type:"Event",
+phrases: [
     "A Face-Off In Hockey",
     "A Game Of Canasta",
     "A Game Of Simon Says",
@@ -3827,8 +3857,9 @@
     "Yacht Race",
     "Yalta Conference",
     "Yearly Check-Up"
-],
-"Occupation": [
+]},
+{type:"Occupation",
+phrases: [
     "Ambassador",
     "Anthropologist",
     "Architect",
@@ -3936,3 +3967,4 @@
     "Writer"
 ]
 }
+]
