@@ -153,9 +153,9 @@ form label {
   justify-content: space-around;
 }
 .player {
-  border-left: 10px solid black;
-  border-right: 10px solid black;
-  border-top: 20px solid black;
+  border-left: 10px double black;
+  border-right: 10px double black;
+  border-top: 20px double black;
   border-radius: 10px;
   width: 320px;
   /* padding: 30px 30px 0; */
@@ -177,17 +177,23 @@ form label {
   background-color: silver;
 }
 .board {
-  width: 75%;
+  width: 55%;
+  border: 2px solid red;
 }
 .phrase {
-  width: 75%;
+  display: flex;
+  flex-direction: column;
+  border: solid 2px blue;
+}
+.word {
   display: flex;
   flex-direction: row;
   list-style-type: none;
+  margin: 2vh auto;
+  padding: 0;
+  /* border: 2px solid red; */
 }
 .letter-card {
-  /* display: flex; */
-  /* flex-direction: row; */
   /* list-style-type: none; */
   font-family: 'Times New Roman', Times, serif;
   font-size: 40pt;
@@ -195,13 +201,13 @@ form label {
   font-weight: bold;
   border: 5px solid black;
   /* border-radius: 16px; */
-/*   
-  margin: 0;
-  padding: 0; */
+  /* margin: 0; */
+  /* padding: 0; */
 }
-.hidden {
-  width: 1em;
-  margin: 1em;
-  /* display:none; */
-  /* border: none; */
+.board h3 {
+  text-align: left;
+  width:fit-content;
+  padding: 0;
+  margin: 0 50px;
+  border: 2px solid red;
 }

@@ -6,7 +6,7 @@ export default function Board() {
   const puzzleChoice = Puzzles[Math.floor(Math.random()*Puzzles.length)];
   const puzzleType = puzzleChoice.type;
   const puzzlePhrase = puzzleChoice.phrases[Math.floor(Math.random()*puzzleChoice.phrases.length)]
-  const puzzlePhraseLetters=[...puzzlePhrase]
+  // const puzzlePhraseLetters=[...puzzlePhrase]
 
   // console.log("BOARD.JS CURRENT RANDOM PUZZLECHOICE: ", puzzleChoice);
   // console.log("BOARD.JS CURRENT RANDOM PUZZLETYPE: ", puzzleType);
@@ -15,15 +15,18 @@ export default function Board() {
 
   return (
     <div className="board">
-        <ul className="phrase">
-          {puzzlePhraseLetters.map(letter =>
-            <li key={letter}>
-              <LetterCard
-                letter={letter.toUpperCase()}
-              />
-            </li>
-          )}
-        </ul>
+      {puzzlePhrase}
+      <div className="phrase">
+        {puzzlePhrase.split(" ").map(word =>
+          <ul className="word">
+            {word.split("").map((letter,index) =>
+              <li key={index}>
+                <LetterCard
+                  letter={letter.toUpperCase()}
+                />
+              </li>)}   
+          </ul>)} 
+        </div>
         <h3>{puzzleType}</h3>
     </div>
   );
