@@ -24,8 +24,8 @@ export default function Board() {
                 <LetterCard
                   letter={letter.toUpperCase()}
                 />
-              </li>)}   
-          </ul>)} 
+              </li>)}
+          </ul>)}
         </div>
         <h3>{puzzleType}</h3>
     </div>

@@ -1,5 +1,6 @@
 import Board from "./components/Board"
 import Wheel from "./components/Wheel"
+import Pointer from "./components/Pointer"
 import Players from "./components/Players"
 
 export default function GamePage(props) {
@@ -14,6 +15,7 @@ export default function GamePage(props) {
         <div className="game-page">
           <Board />
           <Wheel />
+          <Pointer />
         </div>
         <Players
           playerNames={playerNames}
