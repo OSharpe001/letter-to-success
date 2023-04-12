@@ -2,6 +2,7 @@ import HomePage from "./HomePage"
 import Settings from "./Settings"
 import GamePage from "./GamePage"
 import Results from "./Results"
+import { Puzzles } from './assets/puzzles'
 import { useNavigate } from "react-router-dom";
 import { Routes, Route } from "react-router-dom";
 import { useState } from "react";
@@ -30,13 +31,15 @@ export default function Main() {
     navigate("/game_page");
   };
 
+  const puzzleChoice = Puzzles[Math.floor(Math.random()*Puzzles.length)];
+  const puzzleType = puzzleChoice.type;
+  const puzzlePhrase = puzzleChoice.phrases[Math.floor(Math.random()*puzzleChoice.phrases.length)].toUpperCase()
   // console.log("MAIN.JS' SETTINGS FORM DATA: ", settingsData)
   return (
     <>
         <Routes>
             <Route path="/" element={<HomePage />}/>
             <Route path="/settings" element={<Settings
-                                              // submitForm={submitSettingsForm}
                                               humanPlayerAmount={humanPlayerAmount}
                                               humanPlayerAmountError={humanPlayerAmountError}
                                               setHumanPlayerAmountError={setHumanPlayerAmountError}
@@ -62,7 +65,10 @@ export default function Main() {
                                               setComputerDifficultyLevel={setComputerDifficultyLevel}
                                               />}/>
             <Route path="/game_page" element={<GamePage
-                                                settingsData={settingsData}/>}/>
+                                                settingsData={settingsData}
+                                                puzzlePhrase={puzzlePhrase}
+                                                puzzleType={puzzleType}
+                                                />}/>
             <Route path="/results" element={<Results />}/>
         </Routes>
     </>

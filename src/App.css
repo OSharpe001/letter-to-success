@@ -265,6 +265,32 @@ form label {
   transform: rotate(90deg);
   /* border: 2px solid red; */
 }
+.spinning {
+  margin:  auto;
+  width: 35%;
+  height: 37vw;
+  /* background-color: lightgrey; */
+  list-style-type: none;
+  border-radius: 50%;
+  border: 5px solid black;
+  animation-name: spinning;
+  animation-duration: 5s;
+  animation-iteration-count:infinite;
+  animation-timing-function:linear;
+  overflow: hidden;
+}
+.moving {
+  font-size:40pt;
+  font-weight: bold;
+  margin: 0 0 0 -5vw;
+  height: fit-content;
+  align-self:center;
+  transform: rotate(90deg);
+  animation-name: moving;
+  animation-duration: 5s;
+  animation-iteration-count: infinite ;
+  animation-timing-function: linear;
+}
 /**/
 @keyframes homepage_wheel {
   0% {
@@ -280,6 +306,85 @@ form label {
   }
   100% {
     transform: rotate(0deg);
+  }
+}
+@keyframes spinning {
+  0% {
+    transform: rotate(0deg);
+  }
+  30% {
+    transform: rotate(720deg);
+  }
+  80% {
+    transform: rotate(1080deg);
+  }
+  90% {
+    transform: rotate(1095deg);
+  }
+  100% {
+    transform: rotate(1110deg);
+  }
+}
+@keyframes moving {
+  0% {
+    transform: rotate(110deg);
+  }
+  5% {
+    transform: rotate(70deg);
+  }
+  10% {
+    transform: rotate(110deg);
+  }
+  15% {
+    transform: rotate(70deg);
+  }
+  20% {
+    transform: rotate(110deg);
+  }
+  25% {
+    transform: rotate(70deg);
+  }
+  30% {
+    transform: rotate(110deg);
+  }
+  35% {
+    transform: rotate(70deg);
+  }
+  40% {
+    transform: rotate(110deg);
+  }
+  45% {
+    transform: rotate(70deg);
+  }
+  50% {
+    transform: rotate(110deg);
+  }
+  55% {
+    transform: rotate(70deg);
+  }
+  60% {
+    transform: rotate(110deg);
+  }
+  65% {
+    transform: rotate(70deg);
+  }
+  70% {
+    transform: rotate(110deg);
+  }
+  75% {
+    transform: rotate(70deg);
+  }
+  80% {
+    transform: rotate(110deg);
+  }
+  /* 85% {
+    transform: rotate(70deg);
+  } */
+  90% {
+    transform: rotate(70deg);
+  }
+  100% {
+    transform: rotate(90deg);
   }
 }
 .game-page {
@@ -321,18 +426,20 @@ form label {
 }
 .board {
   width: 55%;
-  /* border: 2px solid red; */
+  border: 2px solid red;
 }
 .phrase {
   display: flex;
   flex-direction: column;
-  /* border: solid 2px blue; */
+  margin:auto;
+  width: 90%;
+  border: solid 2px blue;
 }
 .word {
   display: flex;
   flex-direction: row;
   list-style-type: none;
-  margin: 2vh auto;
+  margin: 0;
   padding: 0;
   /* width: 100%; */
   /* border: 2px solid red; */

@@ -1,9 +1,9 @@
 import {WheelSegments} from '../assets/wheelSegments'
 
-export default function Wheel() {
+export default function Wheel(props) {
   return (
     <>
-      <ul className="wheel">
+      <ul className={props.isSpinning?"spinning": "wheel"}>
           {WheelSegments.map(item =>
               <li  key={item.text} className="wheel-segment">
                 <div className="segment-content">

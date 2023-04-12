@@ -6,7 +6,7 @@ export default function PlayerCard(props) {
     const [playerScore, setPlayerScore] =useState(0);
     const [playerPrizes, setPlayerPrizes] = useState([]);
 
-    console.log("PLAYERCARD.JS' PROPS: ", props)
+    // console.log("PLAYERCARD.JS' PROPS: ", props)
 
 
   return (
