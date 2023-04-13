@@ -3,7 +3,7 @@ export const WheelSegments= [
         "type": "cash",
         "text": "$1000",
         "value": 1000,
-        "prize": "A trip to Jamaica!"
+        "prize": "Trip to Jamaica!"
     },
     {
         "type": "bankrupt",
@@ -38,7 +38,7 @@ export const WheelSegments= [
         "type": "cash",
         "text": "$800",
         "value": 800,
-        "prize": false
+        "prize": "New Car!"
     },
     {
         "type": "loseturn",
@@ -55,11 +55,11 @@ export const WheelSegments= [
         "type": "cash",
         "text": "$650",
         "value": 650,
-        "prize": "A new car!"
+        "prize": false
     },
     {
         "type": "cash",
-        "text": "900",
+        "text": "$900",
         "value": 900,
         "prize": false
     },

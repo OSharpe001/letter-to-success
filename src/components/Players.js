@@ -1,17 +1,22 @@
-import PlayerCard from './PlayerCard'
+import PlayerCard from './PlayerCard';
+import { useState } from 'react';
 
 export default function Players(props) {
 
-    console.log("PLAYERS.JS' PROPS: ", props);
+    const [playerScore, setPlayerScore] =useState(0);
+    const [playerPrizes, setPlayerPrizes] = useState([]);
+
+
+    console.log("PLAYERS.JS' PROPS: ", props.players);
 
   return (
     <ul className="players">
-        {props.playerNames.map(player =>
-            <li key = {player} className="player">
+        {props.players.map(player =>
+            <li key = {player.name} className={player.name===props.currentPlayer?"player turn":"player"}>
                 <PlayerCard
-                    name={player}
-                    // score={player.score}
-                    // prizes={player.prizes}
+                    name={player.name}
+                    score={player.score}
+                    prizes={player.prizes}
                 />
             </li>
         )}

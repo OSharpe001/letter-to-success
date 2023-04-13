@@ -90,7 +90,7 @@ form label {
   animation-timing-function: linear;
 }
 .wheel-segment {
-  background-color: lightgrey;
+  /* background-color: black; */
   text-align:end;
   font-weight: bold;
   width: 50%;
@@ -230,11 +230,12 @@ form label {
 .value {
   width: 10rem;
   /* height: fit-content; */
-  transform: rotate(106deg);
+  transform: rotate(105deg);
   margin-top: 27%;
-  margin-left: 53%;
+  margin-left: 80%;
   align-self: center;
   text-align: center;
+  overflow: hidden;
   /* margin: 0 20px 0 0; */
   /* border: 2px solid red; */
   /* align-content: center; */
@@ -245,16 +246,24 @@ form label {
 }
 .prize {
   background-color: gold;
-  /* transform: rotate(27deg); */
-  align-self: center;
-  /* align-content: flex-end; */
-  /* align-items: flex-end; */
-  /* justify-content: flex-end; */
-  /* justify-self: flex-end; */
-  /* justify-items: flex-end; */
-  /* text-align: flex-end; */
+  /* align-self: center; */
+  transform: rotate(155deg) skew(37deg);
+  width: 55%;
+  padding: 0;
+  /* align-content: start; */
+  /* align-items: start; */
+  /* justify-content: start; */
+  /* justify-self: start; */
+  /* justify-items: start; */
+  text-align: center;
   /* margin: auto; */
-  /* margin-top: 28%; */
+  margin-top: -21%;
+  margin-left:6%;
+  overflow: hidden;
+  /* border: 2px solid red; */
+
+  /* margin-right: 1%; */
+  
 }
 .pointer {
   font-size:40pt;
@@ -449,6 +458,7 @@ form label {
   font-family: 'Times New Roman', Times, serif;
   font-size: 40pt;
   width:1em;
+  height: 90%;
   font-weight: bold;
   background-color:aliceblue;
   border: 5px solid black;

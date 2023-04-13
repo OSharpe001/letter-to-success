@@ -3,7 +3,7 @@
 export default function Settings(props) {
 
 
-    const playerNameError = "Human players need a name."
+    const playerNameError = "Human players need a unique name."
 
     const handleHumanPlayerAmountChange = (e) => {
         props.setHumanPlayerAmount(e.target.value);
@@ -57,27 +57,27 @@ export default function Settings(props) {
 
     const handleP1NameChange = (e) => {
         props.setPlayer1Name(e.target.value);
-        if (e.target.value.length>0) {
+        if (e.target.value.length>0 || e.target.value!==props.player2Name || e.target.value!==props.player3Name) {
             props.setPlayer1NameError("")
         };
     };
     const handleP2NameChange = (e) => {
         props.setPlayer2Name(e.target.value);
-        if (e.target.value.length>0) {
+        if (e.target.value.length>0 || e.target.value!==props.player1Name || e.target.value!==props.player3Name) {
             props.setPlayer2NameError("")
         };
     };
 
     const handleP3NameChange = (e) => {
         props.setPlayer3Name(e.target.value);
-        if (e.target.value.length>0) {
+        if (e.target.value.length>0 || e.target.value!==props.player1Name || e.target.value!==props.player2Name) {
             props.setPlayer3NameError("")
         };
     };
 
     const disabled= !!props.humanPlayerAmountError || !!props.computerPlayerAmountError || !!props.player1NameError || !!props.player2NameError || !!props.player3NameError;
     const gotRequiredInfo = !!props.humanPlayerAmount && (parseInt(props.humanPlayerAmount) + parseInt(props.computerPlayerAmount)<4) && (parseInt(props.humanPlayerAmount) + parseInt(props.computerPlayerAmount)>1) && (props.player1Name!=="")
-        && (parseInt(props.humanPlayerAmount)<2 || props.player2Name!=="") && (parseInt(props.humanPlayerAmount)<3 || props.player3Name!=="")
+        && (parseInt(props.humanPlayerAmount)<2 || (props.player2Name!=="" && props.player2Name!==props.player1Name)) && (parseInt(props.humanPlayerAmount)<3 || (props.player3Name!=="" && props.player3Name!==props.player2Name && props.player3Name!==props.player1Name))
 
     const clearForm = () => {
         props.setHumanPlayerAmount(0);
@@ -92,16 +92,16 @@ export default function Settings(props) {
         if (props.humanPlayerAmount===0){
             props.setHumanPlayerAmountError("We need at least one Human Player.")
         };
-        if (props.player1Name === "") {
+        if (props.player1Name === "" || props.player1Name=== props.player2Name || props.player1Name=== props.player3Name) {
             props.setPlayer1NameError(playerNameError);
         };
-        if (parseInt(props.humanPlayerAmount)>1 && props.player2Name === "") {
+        if (parseInt(props.humanPlayerAmount)>1 && (props.player2Name === "" || props.player2Name=== props.player1Name || props.player2Name=== props.player3Name)) {
             props.setPlayer2NameError(playerNameError);
         };
-        if (parseInt(props.humanPlayerAmount)===3 && props.player2Name === "") {
+        if (parseInt(props.humanPlayerAmount)===3 && (props.player2Name === "" || props.player2Name=== props.player1Name || props.player2Name=== props.player3Name)) {
             props.setPlayer2NameError(playerNameError);
         };
-        if (parseInt(props.humanPlayerAmount)===3 && props.player3Name === "") {
+        if (parseInt(props.humanPlayerAmount)===3 && (props.player3Name === "" || props.player3Name=== props.player1Name || props.player3Name=== props.player2Name)) {
             props.setPlayer3NameError(playerNameError);
         };
         if (parseInt(props.humanPlayerAmount)===1 && parseInt(props.computerPlayerAmount)===0){
@@ -133,7 +133,7 @@ export default function Settings(props) {
 
     // console.log("PLAYER 1'S NAME: ", player1Name)
     // console.log(`SETTINGS.JS' "DISABLED" VALUE`, disabled)
-    // console.log("SETTINGS.JS' PROPS: ", props)
+    console.log("SETTINGS.JS' PROPS: ", props)
     // console.log("SETTINGS.JS' GOTREQUIREDINFO: ", gotRequiredInfo)
 
     return (
