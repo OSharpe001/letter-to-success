@@ -57,21 +57,27 @@ export default function Settings(props) {
 
     const handleP1NameChange = (e) => {
         props.setPlayer1Name(e.target.value);
-        if (e.target.value.length>0 || e.target.value!==props.player2Name || e.target.value!==props.player3Name) {
-            props.setPlayer1NameError("")
+        if (e.target.value.length>0 && (e.target.value!==props.player2Name || e.target.value!==props.player3Name)) {
+            props.setPlayer1NameError("");
+            props.setPlayer2NameError("");
+            props.setPlayer3NameError("");
         };
     };
     const handleP2NameChange = (e) => {
         props.setPlayer2Name(e.target.value);
         if (e.target.value.length>0 || e.target.value!==props.player1Name || e.target.value!==props.player3Name) {
-            props.setPlayer2NameError("")
+            props.setPlayer1NameError("");
+            props.setPlayer2NameError("");
+            props.setPlayer3NameError("");
         };
     };
 
     const handleP3NameChange = (e) => {
         props.setPlayer3Name(e.target.value);
         if (e.target.value.length>0 || e.target.value!==props.player1Name || e.target.value!==props.player2Name) {
-            props.setPlayer3NameError("")
+            props.setPlayer1NameError("");
+            props.setPlayer2NameError("");
+            props.setPlayer3NameError("");
         };
     };
 
@@ -92,16 +98,13 @@ export default function Settings(props) {
         if (props.humanPlayerAmount===0){
             props.setHumanPlayerAmountError("We need at least one Human Player.")
         };
-        if (props.player1Name === "" || props.player1Name=== props.player2Name || props.player1Name=== props.player3Name) {
+        if (props.player1Name === "") {
             props.setPlayer1NameError(playerNameError);
         };
-        if (parseInt(props.humanPlayerAmount)>1 && (props.player2Name === "" || props.player2Name=== props.player1Name || props.player2Name=== props.player3Name)) {
+        if (parseInt(props.humanPlayerAmount)>1 && (props.player2Name === "" || props.player2Name=== props.player1Name)) {
             props.setPlayer2NameError(playerNameError);
         };
-        if (parseInt(props.humanPlayerAmount)===3 && (props.player2Name === "" || props.player2Name=== props.player1Name || props.player2Name=== props.player3Name)) {
-            props.setPlayer2NameError(playerNameError);
-        };
-        if (parseInt(props.humanPlayerAmount)===3 && (props.player3Name === "" || props.player3Name=== props.player1Name || props.player3Name=== props.player2Name)) {
+        if (parseInt(props.humanPlayerAmount)>2 && (props.player3Name === "" || props.player3Name=== props.player1Name || props.player3Name=== props.player2Name)) {
             props.setPlayer3NameError(playerNameError);
         };
         if (parseInt(props.humanPlayerAmount)===1 && parseInt(props.computerPlayerAmount)===0){

@@ -1,13 +1,14 @@
 import PlayerCard from './PlayerCard';
-import { useState } from 'react';
+// import { useState } from 'react';
 
 export default function Players(props) {
 
-    const [playerScore, setPlayerScore] =useState(0);
-    const [playerPrizes, setPlayerPrizes] = useState([]);
+    // const [playerScore, setPlayerScore] =useState(0);
+    // const [playerPrizes, setPlayerPrizes] = useState([]);
 
 
-    console.log("PLAYERS.JS' PROPS: ", props.players);
+    // console.log("PLAYERS.JS' PROPS.PLAYERS: ", props.players);
+    console.log("PLAYERS.JS' PROPS: ", props);
 
   return (
     <ul className="players">

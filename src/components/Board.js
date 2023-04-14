@@ -20,12 +20,12 @@ export default function Board(props) {
     <div className="board">
       {props.puzzlePhrase}
       <div className="phrase">
-        {props.puzzlePhrase.split(" ").map(word =>
-          <ul className="word">
+        {props.puzzlePhrase.split(" ").map((word,index) =>
+          <ul key={index} className="word">
             {word.split("").map((letter,index) =>
               <li key={index}>
                 <LetterCard
-                  letter={props.guessedLetters.indexOf(letter)<0?" ":letter}
+                  letter={props.guessedLetters.indexOf(letter)>=0 || props.allLetters.indexOf(letter)<0?letter:" "}
                 />
               </li>)}
           </ul>)}
