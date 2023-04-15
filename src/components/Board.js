@@ -30,7 +30,7 @@ export default function Board(props) {
               </li>)}
           </ul>)}
         </div>
-        <h3>{props.puzzleType}</h3>
+        <h3 className="puzzle-type">{props.puzzleType}</h3>
     </div>
   );
 };
