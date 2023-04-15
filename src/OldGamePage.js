@@ -1,4 +1,8 @@
+// COULDN'T GET USEREDUCER TO HELP.
+
 // TODO:
+// 
+// 2-SET STATE TO KEEP TRACK OF PLAYERS' NAMES, SCORES AND PRIZES
 // 3-SETUP A BETTER PUZZLE DESIGN WITH MORE WORDS ON A SINGLE LINE AND
 //    A SET OF GREEN BACKGROUND BRICKS
 
@@ -7,7 +11,26 @@ import Board from "./components/Board";
 import Wheel from "./components/Wheel";
 import Pointer from "./components/Pointer";
 import Players from "./components/Players";
-import { useState/*, useEffect */} from "react";
+import { useState, useReducer, /*useEffect*/ } from "react";
+
+const reducer1 = (state, action) => {
+  if (action.type ==="bankrupt") {console.log("REDUCER1 STATE: ", state); console.log("REDUCER1 ACTION: ", action); return (state[action.payload.player].score=0, state[action.payload.player].prizes=[])};
+  if (action.type ==="correct" && !!(action.payload.prize))  {
+    console.log("REDUCER1 STATE: ", state);
+    console.log("REDUCER1 ACTION: ", action);
+    state[action.payload.player].score+=action.payload.cash;
+    state[action.payload.player].prizes.push(action.payload.prize);
+    return state;
+    };
+  if (action.type ==="correct" && !(action.payload.prize))  {
+    console.log("REDUCER1 INFO TO CHANGE SCORE:",state[action.payload.player].score);
+    console.log("REDUCER1 STATE: ", state);
+    console.log("REDUCER1 ACTION.PAYLOAD: ", action.payload);
+    state[action.payload.player].score+=action.payload.cash;
+    return state
+  };
+  return state
+}/** */
 
 export default function GamePage(props) {
 
@@ -25,6 +48,16 @@ export default function GamePage(props) {
   const [guessedLetters, setGuessedLetters] = useState([]);
   const [isSpinning, setIsSpinning] = useState(false);
   const [turnCount, setTurnCount] = useState(0);
+  const currentPlayer = playerNames[(turnCount)%(playerNames.length)];
+
+  const initialPlayers2 = playerNames.map(player => (
+    {
+      "name":player,
+      "score":0,
+      "prizes":[]
+    }
+    ));
+  const [players2, dispatch] = useReducer(reducer1, initialPlayers2);
   const [players, setPlayers]= useState(playerNames.map(player => (
     {
       "name":player,
@@ -36,8 +69,7 @@ export default function GamePage(props) {
   const consonants=["B", "C", "D", "F", "G", "H", "J", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "V", "W", "X", "Y", "Z"];
   const vowels=["A", "E", "I", "O", "U"];
   const allLetters= vowels + consonants;
-  // const vowelCost= 250;
-  const currentPlayer = playerNames[(turnCount)%(playerNames.length)];
+//   const vowelCost= 250;
 
   const stopSpinning = () => {
     setIsSpinning(false);
@@ -45,31 +77,27 @@ export default function GamePage(props) {
   const spinIt = () =>{
     setIsSpinning(!isSpinning);
     setTimeout(stopSpinning,5000);
-    const newSpin=WheelSegments[Math.floor(Math.random()*WheelSegments.length)];
-    if (newSpin.type==="bankrupt") {
-        console.log("NEWSPIN WAS A 'BANKRUPT'")
-        let newList=[...players];
-        newList[(turnCount)%(playerNames.length)].score=0;
-        newList[(turnCount)%(playerNames.length)].prizes=[];
-        setWheelInfo(["", 0, false]);
-        setPlayers(newList)//()=> {
-          // let newList=[...players];
-          // newList[(turnCount)%(playerNames.length)].score=0;
-          // newList[(turnCount)%(playerNames.length)].prizes=[];
-          // setWheelInfo(["", 0, false]);
-          // return newList
-        // });
-        changeTurn();
-        setWheelInfo(["", 0, false]);
-        return
+    setWheelInfo(()=>{
+      const newSpin=WheelSegments[Math.floor(Math.random()*WheelSegments.length)];
+      if (newSpin.type==="bankrupt") {
+          console.log("NEWSPIN WAS A 'BANKRUPT'")
+          dispatch({type: "bankrupt", payload:{player:(turnCount)%(playerNames.length)}})
+          setPlayers(()=> {
+            let newList=[...players];
+            newList[(turnCount)%(playerNames.length)].score=0;
+            newList[(turnCount)%(playerNames.length)].prizes=[];
+            setWheelInfo(["", 0, false]);
+            return newList
+          });
+          changeTurn();
+        }
+        if (newSpin.type==="loseturn") {
+          console.log("NEWSPIN WAS A 'LOSETURN'")
+          changeTurn();
       }
-    if (newSpin.type==="loseturn") {
-      console.log("NEWSPIN WAS A 'LOSETURN'")
-      changeTurn();
-      setWheelInfo(["", 0, false]);
-      return
-    }
-    setWheelInfo([newSpin.type, newSpin.value, newSpin.prize])
+      return [newSpin.type, newSpin.value, newSpin.prize]
+    },
+    )
   }
 
   const changeTurn = () => {
@@ -77,14 +105,17 @@ export default function GamePage(props) {
   }
 
   const changeScore = () => {
-    // console.log("GAMEPAGE.JS' CHANGESCORE PLAYER'S INFO: ", players[(turnCount)%(playerNames.length)])
-  let newList=[...players];
-    newList[(turnCount)%(playerNames.length)].score+=wheelInfo[1];
-    if (wheelInfo[2]) {
-      newList[(turnCount)%(playerNames.length)].prizes.push(wheelInfo[2])
-    };
-    setWheelInfo(["", 0, false]);
-    setPlayers(newList)
+    console.log("GAMEPAGE.JS' CHANGESCORE PLAYER'S INFO: ", players[(turnCount)%(playerNames.length)]);
+    dispatch({type: "correct", payload:{player:(turnCount)%(playerNames.length), cash:wheelInfo[1], prize:wheelInfo[2]}})
+    setPlayers(()=> {
+      let newList=[...players];
+      newList[(turnCount)%(playerNames.length)].score+=wheelInfo[1];
+      if (wheelInfo[2]) {
+        newList[(turnCount)%(playerNames.length)].prizes.push(wheelInfo[2])
+      };
+      setWheelInfo(["", 0, false]);
+      return newList
+    })
   };
 
   const guessLetter = () => {
@@ -140,6 +171,7 @@ export default function GamePage(props) {
   // console.log("GAMEPAGE.JS' RANDOM WHEELSEGMENT: ", WheelSegments[Math.floor(Math.random()*WheelSegments.length)]);
   // console.log("GAMEPAGE.JS WHEELSEGMENTS' RANDOM NUMBER: ", Math.floor(Math.random()*WheelSegments.length));
   console.log("GAMEPAGE.JS' PLAYERS: ", players);
+  console.log("GAMEPAGE.JS' PLAYERS2: ", players2);
   // console.log("GAMEPAGE.JS' GUESSEDLETTERS: ", guessedLetters);
   // console.log("GAMEPAGE.JS' PLAYERS2: ", players2);
   // console.log("GAMEPAGE.JS' TURNCOUNT: ", turnCount);

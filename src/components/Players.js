@@ -3,12 +3,8 @@ import PlayerCard from './PlayerCard';
 
 export default function Players(props) {
 
-    // const [playerScore, setPlayerScore] =useState(0);
-    // const [playerPrizes, setPlayerPrizes] = useState([]);
-
-
     // console.log("PLAYERS.JS' PROPS.PLAYERS: ", props.players);
-    console.log("PLAYERS.JS' PROPS: ", props);
+    // console.log("PLAYERS.JS' PROPS: ", props);
 
   return (
     <ul className="players">

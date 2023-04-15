@@ -1,4 +1,4 @@
-// import { useState } from 'react'
+
 
 export default function Settings(props) {
 
@@ -57,26 +57,26 @@ export default function Settings(props) {
 
     const handleP1NameChange = (e) => {
         props.setPlayer1Name(e.target.value);
-        if (e.target.value.length>0 && (e.target.value!==props.player2Name || e.target.value!==props.player3Name)) {
+        if (!(e.target.value.indexOf("Computer")<0)) {
+            props.setPlayer1NameError("Humans can't have that Player Name")
+        } else if (e.target.value.length>0 && (e.target.value!==props.player2Name || e.target.value!==props.player3Name)) {
             props.setPlayer1NameError("");
-            props.setPlayer2NameError("");
-            props.setPlayer3NameError("");
         };
     };
     const handleP2NameChange = (e) => {
         props.setPlayer2Name(e.target.value);
-        if (e.target.value.length>0 || e.target.value!==props.player1Name || e.target.value!==props.player3Name) {
-            props.setPlayer1NameError("");
+        if (!(e.target.value.indexOf("Computer")<0)) {
+            props.setPlayer2NameError("Humans can't have that Player Name")
+        } else if (e.target.value.length>0 || e.target.value!==props.player1Name || e.target.value!==props.player3Name) {
             props.setPlayer2NameError("");
-            props.setPlayer3NameError("");
         };
     };
 
     const handleP3NameChange = (e) => {
         props.setPlayer3Name(e.target.value);
-        if (e.target.value.length>0 || e.target.value!==props.player1Name || e.target.value!==props.player2Name) {
-            props.setPlayer1NameError("");
-            props.setPlayer2NameError("");
+        if (!(e.target.value.indexOf("Computer")<0)) {
+            props.setPlayer3NameError("Humans can't have that Player Name")
+        } else if (e.target.value.length>0 || e.target.value!==props.player1Name || e.target.value!==props.player2Name) {
             props.setPlayer3NameError("");
         };
     };
@@ -86,7 +86,7 @@ export default function Settings(props) {
         && (parseInt(props.humanPlayerAmount)<2 || (props.player2Name!=="" && props.player2Name!==props.player1Name)) && (parseInt(props.humanPlayerAmount)<3 || (props.player3Name!=="" && props.player3Name!==props.player2Name && props.player3Name!==props.player1Name))
 
     const clearForm = () => {
-        props.setHumanPlayerAmount(0);
+        props.setHumanPlayerAmount(1);
         props.setComputerPlayerAmount(0);
         props.setComputerDifficultyLevel(1);
         props.setPlayer1Name("");
@@ -136,7 +136,7 @@ export default function Settings(props) {
 
     // console.log("PLAYER 1'S NAME: ", player1Name)
     // console.log(`SETTINGS.JS' "DISABLED" VALUE`, disabled)
-    console.log("SETTINGS.JS' PROPS: ", props)
+    // console.log("SETTINGS.JS' PROPS: ", props);
     // console.log("SETTINGS.JS' GOTREQUIREDINFO: ", gotRequiredInfo)
 
     return (
