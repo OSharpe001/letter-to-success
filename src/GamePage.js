@@ -1,6 +1,8 @@
 // TODO:
 // 3-SETUP A BETTER PUZZLE DESIGN WITH MORE WORDS ON A SINGLE LINE AND
 //    A SET OF GREEN BACKGROUND BRICKS
+// 4-NEED TO TIE SCORE TOGETHER WITH CORRECT CONSONANT GUESSES AND A LOSETURN PENALTY FOR WRONG GUESSES.
+// 5-NEED TO TIE A $250 COST TO BUYING A VOWEL AND A LOSETURN PENALTY FOR WRONG GUESSES.
 
 import { WheelSegments } from "./assets/wheelSegments";
 import Board from "./components/Board";
@@ -35,7 +37,9 @@ export default function GamePage(props) {
 
   const consonants=["B", "C", "D", "F", "G", "H", "J", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "V", "W", "X", "Y", "Z"];
   const vowels=["A", "E", "I", "O", "U"];
-  const allLetters= vowels + consonants;
+  const allLetters= [...consonants, ...vowels];
+  const loserLetters=allLetters.filter(letter=>props.puzzlePhrase.indexOf(letter)<0);
+  /**/
   // const vowelCost= 250;
   const currentPlayer = playerNames[(turnCount)%(playerNames.length)];
 
@@ -52,13 +56,7 @@ export default function GamePage(props) {
         newList[(turnCount)%(playerNames.length)].score=0;
         newList[(turnCount)%(playerNames.length)].prizes=[];
         setWheelInfo(["", 0, false]);
-        setPlayers(newList)//()=> {
-          // let newList=[...players];
-          // newList[(turnCount)%(playerNames.length)].score=0;
-          // newList[(turnCount)%(playerNames.length)].prizes=[];
-          // setWheelInfo(["", 0, false]);
-          // return newList
-        // });
+        setPlayers(newList)
         changeTurn();
         setWheelInfo(["", 0, false]);
         return
@@ -94,6 +92,13 @@ export default function GamePage(props) {
         newGuessedLetters.push(latestConsonant);
         return newGuessedLetters;
       });
+      if (loserLetters.indexOf(latestConsonant)<0) {
+        changeScore();
+      } else {
+        changeTurn();
+      }
+      // SET UP AN IF-STATEMENT TO CHANGESCORE IF THE CONSONANT WAS CORRECT
+      // SET UP AN ELSE-IF STATEMENT TO CHANGETURN IF THE CONSONANT WAS IN LOSERLETTERS
       setLatestConsonant("");
     } else if (guessedLetters.indexOf(latestVowel)<0 && latestVowel!=="") {
       setGuessedLetters(()=>{
@@ -101,6 +106,9 @@ export default function GamePage(props) {
         newGuessedLetters.push(latestVowel);
         return newGuessedLetters;
       });
+      if (loserLetters.indexOf(latestVowel)<0) {
+        changeTurn();
+      }
       setLatestVowel("");
     }
   };
@@ -139,12 +147,15 @@ export default function GamePage(props) {
 
   // console.log("GAMEPAGE.JS' RANDOM WHEELSEGMENT: ", WheelSegments[Math.floor(Math.random()*WheelSegments.length)]);
   // console.log("GAMEPAGE.JS WHEELSEGMENTS' RANDOM NUMBER: ", Math.floor(Math.random()*WheelSegments.length));
-  console.log("GAMEPAGE.JS' PLAYERS: ", players);
   // console.log("GAMEPAGE.JS' GUESSEDLETTERS: ", guessedLetters);
   // console.log("GAMEPAGE.JS' PLAYERS2: ", players2);
   // console.log("GAMEPAGE.JS' TURNCOUNT: ", turnCount);
-  // console.log("GAMEPAGE.JS' PROPS: ", props.settingsData);
+  // console.log("GAMEPAGE.JS' PROPS.SETTINGSDATA: ", props.settingsData);
   // console.log("GAMEPAGE.JS' PLAYERNAMES: ", playerNames);
+  // console.log("ALLLETTERS: ", allLetters);
+  // console.log("GAMEPAGE.JS' PROPS: ", props);
+  console.log("GAMEPAGE.JS' PLAYERS: ", players);
+  // console.log("GAMEPAGE.JS' LOSERLETTERS: ", loserLetters);
 
   return (
     <>
