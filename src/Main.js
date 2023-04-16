@@ -74,6 +74,7 @@ export default function Main() {
                                                 />}/>
             <Route path="/results" element={<Results
                                               winner={winner}
+                                              setWinner={setWinner}
                                               />}/>
         </Routes>
     </>

@@ -1,36 +1,16 @@
-// COULDN'T GET USEREDUCER TO HELP.
-
 // TODO:
-// 
-// 2-SET STATE TO KEEP TRACK OF PLAYERS' NAMES, SCORES AND PRIZES
-// 3-SETUP A BETTER PUZZLE DESIGN WITH MORE WORDS ON A SINGLE LINE AND
+// 5-SETUP A BETTER PUZZLE DESIGN WITH MORE WORDS ON A SINGLE LINE AND
 //    A SET OF GREEN BACKGROUND BRICKS
+
+//CAUSING TOO MANY RERENDERS FOR REACT TO HANDLE!//
 
 import { WheelSegments } from "./assets/wheelSegments";
 import Board from "./components/Board";
 import Wheel from "./components/Wheel";
 import Pointer from "./components/Pointer";
 import Players from "./components/Players";
-import { useState, useReducer, /*useEffect*/ } from "react";
-
-const reducer1 = (state, action) => {
-  if (action.type ==="bankrupt") {console.log("REDUCER1 STATE: ", state); console.log("REDUCER1 ACTION: ", action); return (state[action.payload.player].score=0, state[action.payload.player].prizes=[])};
-  if (action.type ==="correct" && !!(action.payload.prize))  {
-    console.log("REDUCER1 STATE: ", state);
-    console.log("REDUCER1 ACTION: ", action);
-    state[action.payload.player].score+=action.payload.cash;
-    state[action.payload.player].prizes.push(action.payload.prize);
-    return state;
-    };
-  if (action.type ==="correct" && !(action.payload.prize))  {
-    console.log("REDUCER1 INFO TO CHANGE SCORE:",state[action.payload.player].score);
-    console.log("REDUCER1 STATE: ", state);
-    console.log("REDUCER1 ACTION.PAYLOAD: ", action.payload);
-    state[action.payload.player].score+=action.payload.cash;
-    return state
-  };
-  return state
-}/** */
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function GamePage(props) {
 
@@ -44,20 +24,17 @@ export default function GamePage(props) {
   const [wheelInfo, setWheelInfo] = useState(["", 0, false])
   const [latestConsonant, setLatestConsonant] = useState("");
   const [latestVowel, setLatestVowel] = useState("");
-  const [latestGuessError, setLatestGuessError] = useState("");
+  const [latestGuessLetterError, setLatestGuessLetterError] = useState("");
   const [guessedLetters, setGuessedLetters] = useState([]);
   const [isSpinning, setIsSpinning] = useState(false);
   const [turnCount, setTurnCount] = useState(0);
-  const currentPlayer = playerNames[(turnCount)%(playerNames.length)];
-
-  const initialPlayers2 = playerNames.map(player => (
-    {
-      "name":player,
-      "score":0,
-      "prizes":[]
-    }
-    ));
-  const [players2, dispatch] = useReducer(reducer1, initialPlayers2);
+  const [statusMessage, setStatusMessage] = useState('Are you players ready to "CLIMB THE LETTER"??');
+  const [vowelInterface, setVowelInterface] = useState(false);
+  const [noMoreVowels, setNoMoreVowels] = useState(false);
+  const [noMoreConsonants, setNoMoreConsonants] = useState(false);
+  const [attemptToSolve, setAttemptToSolve] = useState(false);
+  const [guessPuzzle, setGuessPuzzle] = useState("");
+  const [guessPuzzleError, setGuessPuzzleError] = useState("");
   const [players, setPlayers]= useState(playerNames.map(player => (
     {
       "name":player,
@@ -66,56 +43,76 @@ export default function GamePage(props) {
     }
   )));
 
-  const consonants=["B", "C", "D", "F", "G", "H", "J", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "V", "W", "X", "Y", "Z"];
-  const vowels=["A", "E", "I", "O", "U"];
-  const allLetters= vowels + consonants;
-//   const vowelCost= 250;
+  const navigate = useNavigate();
+  const autoReset = useEffect;
+  autoReset(()=> {
+    // console.log('THE USEEFFECT HOOK "AUTORESET" WAS JUST TRIGGERRED');
+    if (!players[1].name) {
+      navigate("/settings")
+    }
+  },players)
+
+
+  const consonants = ["B", "C", "D", "F", "G", "H", "J", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "V", "W", "X", "Y", "Z"];
+  const vowels = ["A", "E", "I", "O", "U"];
+  const allLetters = [...consonants, ...vowels];
+  const puzzleLetters = props.puzzlePhrase.split("").filter(letter=>allLetters.indexOf(letter)>-1);
+  const consonantMultiplier = (puzzleLetters.filter(letter=>letter===latestConsonant)).length;
+  const vowelMultiplier= (puzzleLetters.filter(letter=>letter===latestVowel)).length;
+  const wheelValue = wheelInfo[1];
+  const wheelPrize = wheelInfo[2];
+  const vowelCost= 250;
+
+  const currentPlayerNumber = [(turnCount)%(playerNames.length)];
+  const currentPlayer = players[currentPlayerNumber];
+  const nextPlayer = players[(turnCount+1)%(playerNames.length)]
 
   const stopSpinning = () => {
     setIsSpinning(false);
   }
   const spinIt = () =>{
+    setStatusMessage("");
     setIsSpinning(!isSpinning);
     setTimeout(stopSpinning,5000);
-    setWheelInfo(()=>{
-      const newSpin=WheelSegments[Math.floor(Math.random()*WheelSegments.length)];
-      if (newSpin.type==="bankrupt") {
-          console.log("NEWSPIN WAS A 'BANKRUPT'")
-          dispatch({type: "bankrupt", payload:{player:(turnCount)%(playerNames.length)}})
-          setPlayers(()=> {
-            let newList=[...players];
-            newList[(turnCount)%(playerNames.length)].score=0;
-            newList[(turnCount)%(playerNames.length)].prizes=[];
-            setWheelInfo(["", 0, false]);
-            return newList
-          });
+    const newSpin=WheelSegments[Math.floor(Math.random()*WheelSegments.length)];
+    setTimeout(setWheelInfo, 5000, [newSpin.type, newSpin.value, newSpin.prize]);
+    const badNews= ()=> {
+        if (newSpin.type==="bankrupt") {
+          // console.log("NEWSPIN WAS A 'BANKRUPT'")
+          setStatusMessage(`${currentPlayer.name} just went BANKRUPT! (OUCH!)`);
+          let newList=[...players];
+          newList[currentPlayerNumber].score=0;
+          newList[currentPlayerNumber].prizes=[];
+          setPlayers(newList)
           changeTurn();
+          return
         }
-        if (newSpin.type==="loseturn") {
-          console.log("NEWSPIN WAS A 'LOSETURN'")
-          changeTurn();
+      if (newSpin.type==="loseturn") {
+        setStatusMessage(`${currentPlayer.name} just lost their turn! (sorry...)`);
+        // console.log("NEWSPIN WAS A 'LOSETURN'")
+        changeTurn();
+        return
       }
-      return [newSpin.type, newSpin.value, newSpin.prize]
-    },
-    )
+    }
+    setTimeout(badNews, 5500);
+    // setWheelInfo([newSpin.type, newSpin.value, newSpin.prize])
   }
 
   const changeTurn = () => {
-    setTurnCount(turnCount+1)
+    setTurnCount(turnCount+1);
+    setTimeout(setStatusMessage, 3000, `It's your turn, ${nextPlayer.name}`);
+    setWheelInfo(["", 0, false]);
   }
 
   const changeScore = () => {
-    console.log("GAMEPAGE.JS' CHANGESCORE PLAYER'S INFO: ", players[(turnCount)%(playerNames.length)]);
-    dispatch({type: "correct", payload:{player:(turnCount)%(playerNames.length), cash:wheelInfo[1], prize:wheelInfo[2]}})
-    setPlayers(()=> {
-      let newList=[...players];
-      newList[(turnCount)%(playerNames.length)].score+=wheelInfo[1];
-      if (wheelInfo[2]) {
-        newList[(turnCount)%(playerNames.length)].prizes.push(wheelInfo[2])
-      };
-      setWheelInfo(["", 0, false]);
-      return newList
-    })
+    // console.log("GAMEPAGE.JS' CHANGESCORE PLAYER'S INFO: ", players[currentPlayerNumber])
+  let newList=[...players];
+    newList[currentPlayerNumber].score+=(wheelValue*consonantMultiplier);
+    if (wheelPrize) {
+      newList[currentPlayerNumber].prizes.push(wheelPrize)
+    };
+    setWheelInfo(["", 0, false]);
+    setPlayers(newList)
   };
 
   const guessLetter = () => {
@@ -123,17 +120,66 @@ export default function GamePage(props) {
       setGuessedLetters(()=>{
         const newGuessedLetters=[...guessedLetters];
         newGuessedLetters.push(latestConsonant);
+        newGuessedLetters.sort();
+        if (consonants.every(consonant=>newGuessedLetters.indexOf(consonant)>=0)) {
+          
+          setNoMoreConsonants(true);
+          setTimeout(setStatusMessage, 4000, "There are no more consonants...");
+        } else if (puzzleLetters.every(letter=>newGuessedLetters.indexOf(letter)>=0)) {
+          props.setWinner(currentPlayer);
+          // setStatusMessage(`${currentPlayer.name} HAS WON!!!`);
+          // setTimeout(navigate, 8000, "/results");
+          navigate("/results");
+        };
         return newGuessedLetters;
       });
+      if (puzzleLetters.indexOf(latestConsonant)>=0) {
+        changeScore();
+        (consonantMultiplier>1?setStatusMessage(`There are ${consonantMultiplier} ${latestConsonant}'s!`):setStatusMessage(`There is 1 ${latestConsonant}.`));
+      } else {
+        setStatusMessage(`There are no ${latestConsonant}'s. (sorry...)`);
+        changeTurn();
+      }
       setLatestConsonant("");
     } else if (guessedLetters.indexOf(latestVowel)<0 && latestVowel!=="") {
       setGuessedLetters(()=>{
         const newGuessedLetters=[...guessedLetters];
         newGuessedLetters.push(latestVowel);
+        newGuessedLetters.sort();
+        if (vowels.every(vowel=>newGuessedLetters.indexOf(vowel)>=0)) {
+          setNoMoreVowels(true);
+          setTimeout(setStatusMessage, 4000, "There are no more vowels...");
+        } else if (puzzleLetters.every(letter=>newGuessedLetters.indexOf(letter)>=0)) {
+          props.setWinner(currentPlayer);
+          // setStatusMessage(`${currentPlayer.name} HAS WON!!!`);
+          // setTimeout(navigate, 8000, "/results");
+          navigate("/results");
+        };
         return newGuessedLetters;
       });
+      if (puzzleLetters.indexOf(latestVowel)<0) {
+        setStatusMessage(`There are no ${latestVowel}'s. (sorry...)`);
+        changeTurn();
+      // } else if (){
+
+      } else {
+        (vowelMultiplier>1?setStatusMessage(`There are ${vowelMultiplier} ${latestVowel}'s!`):setStatusMessage(`There is 1 ${latestVowel}.`));
+      }
+      setVowelInterface(false)
       setLatestVowel("");
     }
+  };
+
+  const buyVowel = () => {
+    let newList=[...players];
+    newList[currentPlayerNumber].score-=vowelCost;
+    setPlayers(newList);
+    setVowelInterface(true);
+  }
+
+  const solveIt = () => {
+    console.log("GAMEPAGE.JS' SOLVEIT IN PROGRESS");
+    setAttemptToSolve(true);
   };
 
   const handleConsonantGuess = (e) => {
@@ -141,13 +187,13 @@ export default function GamePage(props) {
     // console.log("GAMEPAGE.JS HANDLECONSONANTGUESS' E.TARGET.VALUE: ", e.target.value)
     setLatestConsonant(e.target.value)
     if (consonants.indexOf(e.target.value)<0) {
-      setLatestGuessError("Choose a consonant.")
+      setLatestGuessLetterError("Choose a consonant.")
     } else if (e.target.value==="" || e.target.value.length>1 || guessedLetters.indexOf(e.target.value)>-1) {
-      setLatestGuessError("Choose a new single consonant.");
+      setLatestGuessLetterError("Choose a new single consonant.");
     } else if (vowels.indexOf(e.target.value)>-1) {
-      setLatestGuessError("Please choose a consonent.")
+      setLatestGuessLetterError("Please choose a consonent.")
     }else {
-      setLatestGuessError("");
+      setLatestGuessLetterError("");
     };
   };
 
@@ -156,27 +202,55 @@ export default function GamePage(props) {
     // console.log("GAMEPAGE.JS HANDLEVOWELGUESS' E.TARGET.VALUE: ", e.target.value)
     setLatestVowel(e.target.value)
     if (vowels.indexOf(e.target.value)<0) {
-      setLatestGuessError("Choose a vowel.")
+      setLatestGuessLetterError("Choose a vowel.")
     } else if (e.target.value==="" || e.target.value.length>1 || guessedLetters.indexOf(e.target.value)>-1) {
-      setLatestGuessError("Choose a new single Vowel.");
+      setLatestGuessLetterError("Choose a new single Vowel.");
     } else if (consonants.indexOf(e.target.value)>-1) {
-      setLatestGuessError("Please choose a Vowel.")
+      setLatestGuessLetterError("Please choose a Vowel.")
     }else {
-      setLatestGuessError("");
+      setLatestGuessLetterError("");
     };
   };
 
-  const guessDisabled= latestGuessError;
+  /** */
+  const handlePuzzleGuess = (e) => {
+    e.target.value=e.target.value.toUpperCase();
+    setGuessPuzzle(e.target.value);
+    if (e.target.value==="") {
+      setGuessPuzzleError("You have to guess something...")
+    };
+  };
+
+  const AttemptToSolvePuzzle = () => {
+    if (guessPuzzle===props.puzzlePhrase) {
+      props.setWinner(currentPlayer);
+      navigate("/results");
+    } else {
+      changeTurn();
+    };
+  };
+  /** */
+
+
+  const guessLetterDisabled = latestGuessLetterError;
+  /** */
+  const guessPuzzleDisabled = guessPuzzleError;
+  /** */
 
   // console.log("GAMEPAGE.JS' RANDOM WHEELSEGMENT: ", WheelSegments[Math.floor(Math.random()*WheelSegments.length)]);
   // console.log("GAMEPAGE.JS WHEELSEGMENTS' RANDOM NUMBER: ", Math.floor(Math.random()*WheelSegments.length));
-  console.log("GAMEPAGE.JS' PLAYERS: ", players);
-  console.log("GAMEPAGE.JS' PLAYERS2: ", players2);
   // console.log("GAMEPAGE.JS' GUESSEDLETTERS: ", guessedLetters);
   // console.log("GAMEPAGE.JS' PLAYERS2: ", players2);
   // console.log("GAMEPAGE.JS' TURNCOUNT: ", turnCount);
-  // console.log("GAMEPAGE.JS' PROPS: ", props.settingsData);
+  // console.log("GAMEPAGE.JS' PROPS.SETTINGSDATA: ", props.settingsData);
   // console.log("GAMEPAGE.JS' PLAYERNAMES: ", playerNames);
+  // console.log("ALLLETTERS: ", allLetters);
+  // console.log("GAMEPAGE.JS' PROPS: ", props);
+  // console.log("GAMEPAGE.JS' PLAYERS: ", players);
+  // console.log("GAMEPAGE.JS' PUZZLELETTERS: ", puzzleLetters);
+  // console.log("GAMEPAGE.JS' NOMOREVOWELS: ", noMoreVowels);
+  // console.log("GAMEPAGE.JS' PROPS.WINNER: ", props.winner);
+  // console.log("CONSONANTMULTIPLIER: ", consonantMultiplier);
 
   return (
     <>
@@ -195,47 +269,68 @@ export default function GamePage(props) {
             isMoving={isSpinning}
             />
         </div>
-        <button onClick={spinIt} >Spin It!</button>
-        <br/>
-        <p>Type: {wheelInfo[0]}</p>
-        <p>Value: {wheelInfo[1]}</p>
-        <p>Prize: {wheelInfo[2]}</p>
-        <button onClick={changeTurn} >Change Turn!</button>
-        <br/>
-        <button onClick={changeScore} >Add to Score!</button>
-        {/* <button onClick={changePrizes} >Add to Prizes!</button> */}
-        <br/>
-        <label htmlFor="guess-consonant">Guess a Consonant</label>
-        <input
-        type="text"
-        name="guess-consonant"
-        id="guess-consonant"
-        placeholder="Guess a Consonant"
-        value={latestConsonant}
-        onChange={handleConsonantGuess}/>
-        <br/>
-        <label htmlFor="guess-vowel">Guess a Vowel</label>
-        <input
-        type="text"
-        name="guess-vowel"
-        id="guess-vowel"
-        placeholder="Guess a Vowel"
-        value={latestVowel}
-        onChange={handleVowelGuess}/>
-        <br/>
-        <button disabled={guessDisabled} onClick={guessLetter} >Guess a Letter!</button>
+        <div className="readout">
+          <p className="game-status">Game Status: {statusMessage}</p>
+          <div className={!props.winner?"interface": "hidden"}>
+            <button className={wheelValue || vowelInterface || noMoreConsonants || isSpinning || attemptToSolve?"hidden":null} onClick={spinIt} >Spin It!</button>
+            <br/>
+            <button className={wheelValue || currentPlayer.score<250 || vowelInterface || noMoreVowels || isSpinning || attemptToSolve?"hidden":null} onClick={buyVowel} >Buy a Vowel!</button>
+            <br/>
+            <button className={wheelValue || vowelInterface || isSpinning || attemptToSolve?"hidden":null} onClick={solveIt} >Attempt to Solve!</button>
+            <br/>
+            <p>Value: {wheelValue}</p>
+            <p>Prize: {wheelPrize}</p>
+            {/* <button onClick={changeTurn} >Change Turn!</button> */}
+            <br/>
+            {/* <button onClick={changeScore} >Add to Score!</button> */}
+            {/* <button onClick={changePrizes} >Add to Prizes!</button> */}
+            <br/>
+            <label className={!wheelValue?"hidden":null} htmlFor="guess-consonant">Guess a Consonant</label>
+            <input
+            className={!wheelValue?"hidden":null}
+            type="text"
+            name="guess-consonant"
+            id="guess-consonant"
+            placeholder="Guess a Consonant"
+            value={latestConsonant}
+            onChange={handleConsonantGuess}/>
+            <br/>
+            <label className={!vowelInterface?"hidden":null} htmlFor="guess-vowel">Guess a Vowel</label>
+            <input
+            className={!vowelInterface?"hidden":null}
+            type="text"
+            name="guess-vowel"
+            id="guess-vowel"
+            placeholder="Guess a Vowel"
+            value={latestVowel}
+            onChange={handleVowelGuess}/>
+            <br/>
+            <button className={vowelInterface || wheelValue?null:"hidden"} disabled={guessLetterDisabled} onClick={guessLetter} >Guess a Letter!</button>
+            
+             <br/>
+            <label className={!attemptToSolve?"hidden":null} htmlFor="guess-puzzle">Guess the Puzzle</label>
+            <input
+            className={!attemptToSolve?"hidden":null}
+            type="text"
+            name="guess-puzzle"
+            id="guess-puzzle"
+            placeholder="Guess the Puzzle!"
+            value={guessPuzzle}
+            onChange={handlePuzzleGuess}/>
+            <br/>
+            <button className={!attemptToSolve?"hidden":null} disabled={guessPuzzleDisabled} onClick={AttemptToSolvePuzzle} >Guess the Puzzle!</button>
+            
+            {guessPuzzleError?<p className="error-message">{guessPuzzleError}</p>:null}
+            
+            <br/>
+            {/* <p>Current Player: {currentPlayer}</p> */}
+            <p>Guessed Letters: {guessedLetters} </p>
+          </div>
+        </div>
         
-        {latestGuessError?<p className="error-message">{latestGuessError}</p>:null}
-        
-        {/* <p>Latest Consonant: {latestConsonant}</p> */}
-        {/* <p>Latest Vowel: {latestVowel}</p> */}
-        
-        <br/>
-        {/* <p>Current Player: {currentPlayer}</p> */}
-        <p>Guessed Letters: {guessedLetters} </p>
         <Players
           players={players}
-          currentPlayer={currentPlayer}
+          currentPlayer={currentPlayer.name}
           />
     </>
   )
