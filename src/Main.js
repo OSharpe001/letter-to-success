@@ -22,6 +22,7 @@ export default function Main() {
   const [computerPlayerAmountError, setComputerPlayerAmountError] = useState("");
   const [computerDifficultyLevel, setComputerDifficultyLevel] = useState(1);
   const [settingsData, setSettingsData] =useState({})
+  const [winner, setWinner] = useState("");
 
   const navigate = useNavigate();
 
@@ -68,8 +69,12 @@ export default function Main() {
                                                 settingsData={settingsData}
                                                 puzzlePhrase={puzzlePhrase}
                                                 puzzleType={puzzleType}
+                                                winner={winner}
+                                                setWinner={setWinner}
                                                 />}/>
-            <Route path="/results" element={<Results />}/>
+            <Route path="/results" element={<Results
+                                              winner={winner}
+                                              />}/>
         </Routes>
     </>
   );
