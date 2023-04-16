@@ -1,7 +1,6 @@
 // TODO:
-// 5-SETUP A BETTER PUZZLE DESIGN WITH MORE WORDS ON A SINGLE LINE AND
+// 6-SETUP A BETTER PUZZLE DESIGN WITH MORE WORDS ON A SINGLE LINE AND
 //    A SET OF GREEN BACKGROUND BRICKS
-// 6-NEED TO SET UP FUNCTIONS TO GUESS THE PUZZLE
 
 
 import { WheelSegments } from "./assets/wheelSegments";
@@ -28,7 +27,7 @@ export default function GamePage(props) {
   const [guessedLetters, setGuessedLetters] = useState([]);
   const [isSpinning, setIsSpinning] = useState(false);
   const [turnCount, setTurnCount] = useState(0);
-  const [statusMessage, setStatusMessage] = useState("");
+  const [statusMessage, setStatusMessage] = useState('Are you players ready to "CLIMB THE LETTER"??');
   const [vowelInterface, setVowelInterface] = useState(false);
   const [noMoreVowels, setNoMoreVowels] = useState(false);
   const [noMoreConsonants, setNoMoreConsonants] = useState(false);
@@ -96,7 +95,6 @@ export default function GamePage(props) {
       }
     }
     setTimeout(badNews, 5500);
-    // setWheelInfo([newSpin.type, newSpin.value, newSpin.prize])
   }
 
   const changeTurn = () => {
@@ -128,8 +126,8 @@ export default function GamePage(props) {
           setTimeout(setStatusMessage, 3000, "There are no more consonants...");
         } else if (puzzleLetters.every(letter=>newGuessedLetters.indexOf(letter)>=0)) {
           props.setWinner(currentPlayer);
-          setStatusMessage(`${currentPlayer.name} HAS WON!!!`);
-          // setTimeout(navigate, 8000, "/results");
+          // setStatusMessage(`${currentPlayer.name} HAS WON!!!`);
+          alert(`${currentPlayer.name} HAS WON!!!`);
           navigate("/results");
         };
         return newGuessedLetters;
@@ -152,8 +150,8 @@ export default function GamePage(props) {
           setTimeout(setStatusMessage, 3000, "There are no more vowels...");
         } else if (puzzleLetters.every(letter=>newGuessedLetters.indexOf(letter)>=0)) {
           props.setWinner(currentPlayer);
-          setStatusMessage(`${currentPlayer.name} HAS WON!!!`);
-          // setTimeout(navigate, 8000, "/results");
+          // setStatusMessage(`${currentPlayer.name} HAS WON!!!`);
+          alert(`${currentPlayer.name} HAS WON!!!`);
           navigate("/results");
         };
         return newGuessedLetters;
@@ -161,10 +159,10 @@ export default function GamePage(props) {
       if (puzzleLetters.indexOf(latestVowel)<0) {
         setStatusMessage(`There are no ${latestVowel}'s. (sorry...)`);
         changeTurn();
-      // } else if (){
-
+      } else if (vowelMultiplier>1){
+        setStatusMessage(`There are ${vowelMultiplier} ${latestVowel}'s!`);
       } else {
-        (vowelMultiplier>1?setStatusMessage(`There are ${vowelMultiplier} ${latestVowel}'s!`):setStatusMessage(`There is 1 ${latestVowel}.`));
+        setStatusMessage(`There is 1 ${latestVowel}.`);
       }
       setVowelInterface(false)
       setLatestVowel("");
@@ -177,7 +175,7 @@ export default function GamePage(props) {
     setPlayers(newList);
     setVowelInterface(true);
   }
-  // **
+
   const solveIt = () => {
     // console.log("GAMEPAGE.JS' SOLVEIT IN PROGRESS");
     setAttemptToSolve(true);
@@ -213,7 +211,6 @@ export default function GamePage(props) {
     };
   };
 
-  // **
   const handlePuzzleGuess = (e) => {
     e.target.value=e.target.value.toUpperCase();
     // console.log("GAMEPAGE.JS HANDLEPUZZLEGUESS' E.TARGET.VALUE: ", e.target.value)
@@ -240,7 +237,6 @@ export default function GamePage(props) {
   };
 
   const guessDisabled= latestGuessError;
-  //** 
   const guessPuzzleDisabled = guessPuzzleError;
 
   // console.log("GAMEPAGE.JS' RANDOM WHEELSEGMENT: ", WheelSegments[Math.floor(Math.random()*WheelSegments.length)]);
@@ -286,10 +282,6 @@ export default function GamePage(props) {
             <br/>
             <p>Value: {wheelValue}</p>
             <p>Prize: {wheelPrize}</p>
-            {/* <button onClick={changeTurn} >Change Turn!</button> */}
-            <br/>
-            {/* <button onClick={changeScore} >Add to Score!</button> */}
-            {/* <button onClick={changePrizes} >Add to Prizes!</button> */}
             <br/>
               <label className={!wheelValue?"hidden":null} htmlFor="guess-consonant">Guess a Consonant</label>
               <input
@@ -331,7 +323,6 @@ export default function GamePage(props) {
             
             {guessPuzzleError?<p className="error-message">{guessPuzzleError}</p>:null}
             <br/>
-            {/* <p>Current Player: {currentPlayer}</p> */}
             <p>Guessed Letters: {guessedLetters} </p>
           </div>
         </div>

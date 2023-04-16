@@ -2,21 +2,23 @@ import { useNavigate } from "react-router-dom";
 
 
 export default function Results(props) {
-  
+
   const navigate = useNavigate();
+
   const playAgain = () => {
     props.setWinner("");
-    navigate("/settings")
+    navigate("/settings");
   };
+
   const backHome = () => {
     props.setWinner("");
-    navigate("/")
+    navigate("/");
   };
 
-  console.log("RESULTS.JS' PROPS: ", props);
+  // console.log("RESULTS.JS' PROPS: ", props);
 
   return (
-    <>
+    <div className="results-page">
         <h1>Results</h1>
         <br/>
         <h2>Congratulations, {props.winner.name}!</h2>
@@ -28,7 +30,7 @@ export default function Results(props) {
             <p>and these are your prizes:</p>
             <br/>
             <ul>
-              {props.winner.prizes.map((prize, index) => <li key={prize+index}>A {prize}</li>)}
+              {props.winner.prizes.map((prize, index) => <li className="winner's_prizes" key={prize+index}>A {prize}</li>)}
             </ul>
           </>
           :
@@ -38,6 +40,6 @@ export default function Results(props) {
         <button onClick={playAgain}>Play Again!</button>
         <br/>
         <button onClick={backHome}>Back to Home</button>
-    </>
-  )
-}
+    </div>
+  );
+};
