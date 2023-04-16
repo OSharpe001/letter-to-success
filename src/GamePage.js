@@ -227,6 +227,7 @@ export default function GamePage(props) {
   const AttemptToSolvePuzzle = () => {
     if (guessPuzzle===props.puzzlePhrase) {
       props.setWinner(currentPlayer);
+      alert(`Congratulations, ${currentPlayer.name}! That was the correct answer!`);
       navigate("/results");
     } else {
       setGuessPuzzle("");
