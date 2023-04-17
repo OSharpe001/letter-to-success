@@ -805,7 +805,7 @@ phrases: [
 ]},
 {type:"Same Name",
 phrases: [
-    "Barnaby & Me And Mrs Jones",
+    "Barnaby & Me And Mrs. Jones",
     "Barney & Mitch Miller",
     "Bird's & Empty Nest",
     "Breaking & I'll Fly Away",
