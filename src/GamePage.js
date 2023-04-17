@@ -14,7 +14,7 @@ import Board from "./components/Board";
 import Wheel from "./components/Wheel";
 import Pointer from "./components/Pointer";
 import Players from "./components/Players";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function GamePage(props) {
@@ -40,6 +40,9 @@ export default function GamePage(props) {
   const [attemptToSolve, setAttemptToSolve] = useState(false);
   const [guessPuzzle, setGuessPuzzle] = useState("");
   const [guessPuzzleError, setGuessPuzzleError] = useState("");
+  const consonantInput=useRef();
+  const vowelInput=useRef();
+  const solveInput=useRef();
   const [players, setPlayers]= useState(playerNames.map(player => (
     {
       "name":player,
@@ -47,17 +50,6 @@ export default function GamePage(props) {
       "prizes":[]
     }
   )));
-
-  const navigate = useNavigate();
-  const autoReset = useEffect;
-  autoReset(()=> {
-    // console.log('THE USEEFFECT HOOK "AUTORESET" WAS JUST TRIGGERRED');
-    if (!players[1].name) {
-      setPlayers([{},])
-      navigate("/settings")
-    }
-  },players)
-
 
   const consonants = ["B", "C", "D", "F", "G", "H", "J", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "V", "W", "X", "Y", "Z"];
   const vowels = ["A", "E", "I", "O", "U"];
@@ -71,7 +63,44 @@ export default function GamePage(props) {
 
   const currentPlayerNumber = [(turnCount)%(playerNames.length)];
   const currentPlayer = players[currentPlayerNumber];
-  const nextPlayer = players[(turnCount+1)%(playerNames.length)]
+  const nextPlayer = players[(turnCount+1)%(playerNames.length)];
+
+  const navigate = useNavigate();
+  const autoReset = useEffect;
+  autoReset(()=> {
+    // console.log('THE USEEFFECT HOOK "AUTORESET" WAS JUST TRIGGERRED');
+    if (!players[1].name) {
+      setPlayers([{},])
+      navigate("/settings")
+    }
+  },players);
+
+  const autoFocus = useEffect;
+  autoFocus(()=> {
+    if (vowelInterface) {
+      vowelInput.current.focus();
+    }
+    if (wheelValue) {
+      consonantInput.current.focus();
+    }
+    if (attemptToSolve) {
+      solveInput.current.focus();
+    }
+  }, [vowelInterface, wheelValue, attemptToSolve])
+
+  // const consonants = ["B", "C", "D", "F", "G", "H", "J", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "V", "W", "X", "Y", "Z"];
+  // const vowels = ["A", "E", "I", "O", "U"];
+  // const allLetters = [...consonants, ...vowels];
+  // const puzzleLetters = props.puzzlePhrase.split("").filter(letter=>allLetters.indexOf(letter)>-1);
+  // const consonantMultiplier = (puzzleLetters.filter(letter=>letter===latestConsonant)).length;
+  // const vowelMultiplier= (puzzleLetters.filter(letter=>letter===latestVowel)).length;
+  // const wheelValue = wheelInfo[1];
+  // const wheelPrize = wheelInfo[2];
+  // const vowelCost= 250;
+
+  // const currentPlayerNumber = [(turnCount)%(playerNames.length)];
+  // const currentPlayer = players[currentPlayerNumber];
+  // const nextPlayer = players[(turnCount+1)%(playerNames.length)];
 
   const stopSpinning = () => {
     setIsSpinning(false);
@@ -103,6 +132,20 @@ export default function GamePage(props) {
     setTimeout(badNews, 5500);
   }
 
+  const buyVowel = () => {
+    let newList=[...players];
+    newList[currentPlayerNumber].score-=vowelCost;
+    setPlayers(newList);
+    setVowelInterface(true);
+  }
+
+  const solveIt = () => {
+    // console.log("GAMEPAGE.JS' SOLVEIT IN PROGRESS");
+    solveInput.current.focus();
+    setAttemptToSolve(true);
+
+  };
+
   const changeTurn = () => {
     setTurnCount(turnCount+1);
     setTimeout(setStatusMessage, 1750, `It's your turn, ${nextPlayer.name}`);
@@ -120,7 +163,8 @@ export default function GamePage(props) {
     setPlayers(newList)
   };
 
-  const guessLetter = () => {
+  const guessLetter = (e) => {
+    e.preventDefault();
     if (guessedLetters.indexOf(latestConsonant)<0 && latestConsonant!=="") {
       setGuessedLetters(()=>{
         const newGuessedLetters=[...guessedLetters];
@@ -176,18 +220,6 @@ export default function GamePage(props) {
     }
   };
 
-  const buyVowel = () => {
-    let newList=[...players];
-    newList[currentPlayerNumber].score-=vowelCost;
-    setPlayers(newList);
-    setVowelInterface(true);
-  }
-
-  const solveIt = () => {
-    // console.log("GAMEPAGE.JS' SOLVEIT IN PROGRESS");
-    setAttemptToSolve(true);
-  };
-
   const handleConsonantGuess = (e) => {
     e.target.value=e.target.value.toUpperCase();
     // console.log("GAMEPAGE.JS HANDLECONSONANTGUESS' E.TARGET.VALUE: ", e.target.value)
@@ -231,12 +263,13 @@ export default function GamePage(props) {
     }
   };
 
-  const AttemptToSolvePuzzle = () => {
+  const AttemptToSolvePuzzle = (e) => {
+    e.preventDefault();
     if (guessPuzzle===props.puzzlePhrase) {
       props.setWinner(currentPlayer);
       alert(`Congratulations, ${currentPlayer.name}! That was the correct answer!`);
       navigate("/results");
-    } else {
+    } else if (guessPuzzle.length>0) {
       setGuessPuzzle("");
       setAttemptToSolve(false);
       setStatusMessage(`Sorry ${currentPlayer.name}, that is not the correct answer.`);
@@ -288,38 +321,27 @@ export default function GamePage(props) {
             </div>
             <div className="interface-options">
               <button className={wheelValue || vowelInterface || noMoreConsonants || isSpinning || attemptToSolve?"hidden":"button"} onClick={spinIt} >Spin It!</button>
-              {/* <br/> */}
               <button className={wheelValue || vowelInterface || isSpinning || attemptToSolve?"hidden":"button"} onClick={solveIt} >Attempt to Solve!</button>
               <button className={wheelValue || currentPlayer.score<250 || vowelInterface || noMoreVowels || isSpinning || attemptToSolve?"hidden":"button"} onClick={buyVowel} >Buy a Vowel!</button>
-              {/* <br/> */}
-              {/* <button className={wheelValue || vowelInterface || isSpinning || attemptToSolve?"hidden":"button"} onClick={solveIt} >Attempt to Solve!</button> */}
-              {/* <br/> */}
             </div>
-            {/* <button className={wheelValue || vowelInterface || noMoreConsonants || isSpinning || attemptToSolve?"hidden":"button"} onClick={spinIt} >Spin It!</button>
-            <br/>
-            <button className={wheelValue || currentPlayer.score<250 || vowelInterface || noMoreVowels || isSpinning || attemptToSolve?"hidden":"button"} onClick={buyVowel} >Buy a Vowel!</button>
-            <br/>
-            <button className={wheelValue || vowelInterface || isSpinning || attemptToSolve?"hidden":"button"} onClick={solveIt} >Attempt to Solve!</button>
-            <br/> */}
-            {/* <p>Value: {wheelValue}</p>
-            <p>Prize: {wheelPrize}</p>
-            <br/> */}
             <div className="spin-solve-buy">
-              <div className={!vowelInterface?"left":"right"}>
+              <form className={!wheelValue && !vowelInterface?"hidden":!vowelInterface?"left":"right"}>
                 <label className={!wheelValue?"hidden":null} htmlFor="guess-consonant">Guess a Consonant</label>
                 <br/>
                 <input
+                ref={consonantInput}
                 className={!wheelValue?"hidden":null}
                 type="text"
                 name="guess-consonant"
                 id="guess-consonant"
-                placeholder="Guess a Consonant"
+                placeholder="Consonant"
                 value={latestConsonant}
                 onChange={handleConsonantGuess}/>
                 
                 <label className={!vowelInterface?"hidden":null} htmlFor="guess-vowel">Guess a Vowel</label>
                 <br/>
                 <input
+                ref={vowelInput}
                 className={!vowelInterface?"hidden":null}
                 type="text"
                 name="guess-vowel"
@@ -328,68 +350,28 @@ export default function GamePage(props) {
                 value={latestVowel}
                 onChange={handleVowelGuess}/>
                 <br/>
-                <button className={vowelInterface || wheelValue?"button":"hidden"}disabled={guessDisabled} onClick={guessLetter} >Guess a Letter!</button>
-                
+                <button htmlFor={!vowelInterface?"guess-consonant":"guess-vowel"} className={vowelInterface || wheelValue?"button":"hidden"} disabled={guessDisabled} onClick={guessLetter} >Guess a Letter!</button>
                 {latestGuessError?<p className="error-message">{latestGuessError}</p>:null}
-              </div>
+              </form>
+            {/* </div> */}
+            
+              <form className={!attemptToSolve?"hidden":"center"}>
+                <label htmlFor="guess-puzzle">Guess the Puzzle</label>
+                <br/>
+                <input
+                ref={solveInput}
+                className={!attemptToSolve?"hidden":null}
+                type="text"
+                name="guess-puzzle"
+                id="guess-puzzle"
+                placeholder="Guess the Puzzle!"
+                value={guessPuzzle}
+                onChange={handlePuzzleGuess}/>
+                <br/>
+                <button htmlFor="guess-puzzle" className={!attemptToSolve?"hidden":"button"} disabled={guessPuzzleDisabled} onClick={AttemptToSolvePuzzle} >Guess the Puzzle!</button>
+                {guessPuzzleError?<p className="error-message">{guessPuzzleError}</p>:null}
+              </form>
             </div>
-            
-            {/* <label className={!wheelValue?"hidden":null} htmlFor="guess-consonant">Guess a Consonant</label>
-            <input
-            className={!wheelValue?"hidden":null}
-            type="text"
-            name="guess-consonant"
-            id="guess-consonant"
-            placeholder="Guess a Consonant"
-            value={latestConsonant}
-            onChange={handleConsonantGuess}/>
-            
-            <br/>
-            <label className={!vowelInterface?"hidden":null} htmlFor="guess-vowel">Guess a Vowel</label>
-            <input
-            className={!vowelInterface?"hidden":null}
-            type="text"
-            name="guess-vowel"
-            id="guess-vowel"
-            placeholder="Guess a Vowel"
-            value={latestVowel}
-            onChange={handleVowelGuess}/>
-            <br/>
-            <button className={vowelInterface || wheelValue?"button":"hidden"}disabled={guessDisabled} onClick={guessLetter} >Guess a Letter!</button>
-            
-            {latestGuessError?<p className="error-message">{latestGuessError}</p>:null}
-             */}
-            <br/>
-            <div className="center">
-              <label className={!attemptToSolve?"hidden":null} htmlFor="guess-puzzle">Guess the Puzzle</label>
-              <br/>
-              <input
-              className={!attemptToSolve?"hidden":null}
-              type="text"
-              name="guess-puzzle"
-              id="guess-puzzle"
-              placeholder="Guess the Puzzle!"
-              value={guessPuzzle}
-              onChange={handlePuzzleGuess}/>
-              <br/>
-              <button className={!attemptToSolve?"hidden":"button"} disabled={guessPuzzleDisabled} onClick={AttemptToSolvePuzzle} >Guess the Puzzle!</button>
-              {guessPuzzleError?<p className="error-message">{guessPuzzleError}</p>:null}
-            </div>
-            {/* <label className={!attemptToSolve?"hidden":"center"} htmlFor="guess-puzzle">Guess the Puzzle</label>
-            <br/>
-            <input
-            className={!attemptToSolve?"hidden":"center"}
-            type="text"
-            name="guess-puzzle"
-            id="guess-puzzle"
-            placeholder="Guess the Puzzle!"
-            value={guessPuzzle}
-            onChange={handlePuzzleGuess}/>
-            <br/>
-            <button className={!attemptToSolve?"hidden":"button center"} disabled={guessPuzzleDisabled} onClick={AttemptToSolvePuzzle} >Guess the Puzzle!</button>
-            
-            {guessPuzzleError?<p className="error-message">{guessPuzzleError}</p>:null}
-            <br/> */}
             <p>Guessed Letters: {guessedLetters} </p>
           </div>
         </div>
