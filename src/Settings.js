@@ -95,6 +95,11 @@ export default function Settings(props) {
     };
 
     const setSubmissionErrors = () => {
+        console.log("SETTINGS.JS SETSUBMISSIONERROR'S PLAYER COUNT AMOUNT: ", parseInt(props.humanPlayerAmount) + parseInt(props.computerPlayerAmount))
+        if (parseInt(props.humanPlayerAmount) + parseInt(props.computerPlayerAmount)<2){
+            console.log("LOOKING RIGHT AT YOU...")
+            props.setComputerPlayerAmountError("We need at least two players.")
+        };
         if (props.humanPlayerAmount===0){
             props.setHumanPlayerAmountError("We need at least one Human Player.")
         };
@@ -107,9 +112,9 @@ export default function Settings(props) {
         if (parseInt(props.humanPlayerAmount)>2 && (props.player3Name === "" || props.player3Name=== props.player1Name || props.player3Name=== props.player2Name)) {
             props.setPlayer3NameError(playerNameError);
         };
-        if (parseInt(props.humanPlayerAmount)===1 && parseInt(props.computerPlayerAmount)===0){
-            props.setComputerPlayerAmountError("We need at least two players.")
-        }
+        // if (parseInt(props.humanPlayerAmount) + parseInt(props.computerPlayerAmount)<2){
+        //     props.setComputerPlayerAmountError("We need at least two players.")
+        // };
     };
 
     const handleSubmit = (e) => {
@@ -207,7 +212,7 @@ export default function Settings(props) {
                 <label htmlFor="number-of-computer-players" >How many computer players?</label>
                 <input
                 type="number"
-                min={props.humanPlayerAmount<2?1:0}
+                min="0"//{props.humanPlayerAmount<2?1:0}<--THOUGH I THINK THIS WAS A PRETTY CRAFTY SAFETY FEATURE, IT IS INTERFERING WITH THE ERROR MESSAGES...(4/16/23) 
                 max={3-props.humanPlayerAmount}
                 name="number-of-computer-players"
                 id="number-of-computer-players"
