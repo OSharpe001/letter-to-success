@@ -95,9 +95,9 @@ export default function Settings(props) {
     };
 
     const setSubmissionErrors = () => {
-        console.log("SETTINGS.JS SETSUBMISSIONERROR'S PLAYER COUNT AMOUNT: ", parseInt(props.humanPlayerAmount) + parseInt(props.computerPlayerAmount))
+        // console.log("SETTINGS.JS SETSUBMISSIONERROR'S PLAYER COUNT AMOUNT: ", parseInt(props.humanPlayerAmount) + parseInt(props.computerPlayerAmount))
         if (parseInt(props.humanPlayerAmount) + parseInt(props.computerPlayerAmount)<2){
-            console.log("LOOKING RIGHT AT YOU...")
+            // console.log("LOOKING RIGHT AT YOU...")
             props.setComputerPlayerAmountError("We need at least two players.")
         };
         if (props.humanPlayerAmount===0){
