@@ -37,9 +37,9 @@ export default function Results(props) {
           <p>Sorry. You didn't win any prizes, this time.</p>
         }
         <br/>
-        <button onClick={playAgain}>Play Again!</button>
+        <button className="button" onClick={playAgain}>Play Again!</button>
         <br/>
-        <button onClick={backHome}>Back to Home</button>
+        <button className="button" onClick={backHome}>Back to Home</button>
     </div>
   );
 };

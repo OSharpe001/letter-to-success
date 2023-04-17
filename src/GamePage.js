@@ -31,6 +31,7 @@ export default function GamePage(props) {
   const [latestVowel, setLatestVowel] = useState("");
   const [latestGuessError, setLatestGuessError] = useState("");
   const [guessedLetters, setGuessedLetters] = useState([]);
+  const [showGuessedLetters, setShowGuessedLetters] = useState(true);
   const [isSpinning, setIsSpinning] = useState(false);
   const [turnCount, setTurnCount] = useState(0);
   const [statusMessage, setStatusMessage] = useState('PLAYERS, ARE YOU READY TO "CLIMB THE LETTER"?!?');
@@ -64,6 +65,9 @@ export default function GamePage(props) {
   const currentPlayerNumber = [(turnCount)%(playerNames.length)];
   const currentPlayer = players[currentPlayerNumber];
   const nextPlayer = players[(turnCount+1)%(playerNames.length)];
+
+  const guessDisabled= latestGuessError;
+  const guessPuzzleDisabled = guessPuzzleError;
 
   const navigate = useNavigate();
   const autoReset = useEffect;
@@ -277,8 +281,9 @@ export default function GamePage(props) {
     };
   };
 
-  const guessDisabled= latestGuessError;
-  const guessPuzzleDisabled = guessPuzzleError;
+  const toggleShowGuessedLetters = () => {
+    setShowGuessedLetters(!showGuessedLetters);
+  }
 
   // console.log("GAMEPAGE.JS' RANDOM WHEELSEGMENT: ", WheelSegments[Math.floor(Math.random()*WheelSegments.length)]);
   // console.log("GAMEPAGE.JS WHEELSEGMENTS' RANDOM NUMBER: ", Math.floor(Math.random()*WheelSegments.length));
@@ -316,8 +321,8 @@ export default function GamePage(props) {
           <p className="game-status">Game Status: {statusMessage}</p>
           <div className={"interface"}>
             <div className="wheel-info">
-              <p>Value: {wheelValue}</p>
-              <p>Prize: {wheelPrize}</p>
+              <p className={wheelValue?null:"hidden"}>Value: {wheelValue}</p>
+              <p className={wheelValue?null:"hidden"}>Prize: {wheelPrize}</p>
             </div>
             <div className="interface-options">
               <button className={wheelValue || vowelInterface || noMoreConsonants || isSpinning || attemptToSolve?"hidden":"button"} onClick={spinIt} >Spin It!</button>
@@ -353,7 +358,6 @@ export default function GamePage(props) {
                 <button htmlFor={!vowelInterface?"guess-consonant":"guess-vowel"} className={vowelInterface || wheelValue?"button":"hidden"} disabled={guessDisabled} onClick={guessLetter} >Guess a Letter!</button>
                 {latestGuessError?<p className="error-message">{latestGuessError}</p>:null}
               </form>
-            {/* </div> */}
             
               <form className={!attemptToSolve?"hidden":"center"}>
                 <label htmlFor="guess-puzzle">Guess the Puzzle</label>
@@ -372,7 +376,11 @@ export default function GamePage(props) {
                 {guessPuzzleError?<p className="error-message">{guessPuzzleError}</p>:null}
               </form>
             </div>
-            <p>Guessed Letters: {guessedLetters} </p>
+            <div className="guessed-letters-section">
+              {showGuessedLetters?<button onClick={toggleShowGuessedLetters}>≤</button>:<button onClick={toggleShowGuessedLetters}>≥</button>}
+              <p className={showGuessedLetters?null:"hidden"}>Guessed Letters:</p>
+              <p className={showGuessedLetters?"guessed-letters":"hidden"}>{guessedLetters}</p>
+            </div>
           </div>
         </div>
         

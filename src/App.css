@@ -23,7 +23,7 @@ header a, .button {
   font-weight: bold;
   /* height: 30px; */
   padding: 10px;
-  margin: 5vh auto;
+  margin: auto;
   border-radius: 20px;
   color: var(--secondaryColor);
   background-color: var(--primaryColor);
@@ -34,34 +34,39 @@ header a:hover, .button:hover {
   background-color: var(--secondaryColor);
   border:ridge 2px var(--primaryColor);
 }
-form {
+.settings-page {
+  height:100vh;
+}
+.form {
   /* justify-content: center; */
   display: flex;
   flex-direction: column;
 }
-form input {
+.form input {
   /* justify-self: center; */
   text-align: center;
   align-self: center;
   width: 20vw;
   margin: 1vh auto 1vh;
 }
-form label {
+.form label {
   margin-top: 2vh
 }
 .error-message {
   color: red;
-  margin-bottom: 3vh;
+  /* padding: 0; */
+  margin: 0 0 3vh;
   /* font-size: 16pt; */
 }
-/* .home-page {
-  justify-content: center;
-  justify-self: center;
-  justify-items: center;
-  align-content: center;
-  align-self: center;
-  align-content: center;
-} */
+.home-page {
+  height:100vh;
+  /* justify-content: center; */
+  /* justify-self: center; */
+  /* justify-items: center; */
+  /* align-content: center; */
+  /* align-self: center; */
+  /* align-content: center; */
+}
 .wheel {
   margin:  auto;
   width: 35%;
@@ -512,17 +517,18 @@ form label {
   display: none;
 }
 .interface-options {
+  min-height: 6vh;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  border: 2px solid blue;
+  /* border: 2px solid blue; */
 }
 .interface input {
   font-size: 20px;
-  justify-self: center;
+  /* justify-self: center; */
   text-align: center;
-  align-self: center;
-  width: 5ch;
+  /* align-self: center; */
+  width: 9ch;
   margin: 1vh auto 1vh;
 }
 .interface label {
@@ -533,13 +539,43 @@ form label {
   width: 40ch;
 }
 .spin-solve-buy {
+  min-height: 15vh;
   border: 2px solid black;
   display: flex;
   flex-direction: row;
 }
+.guessed-letters-section {
+  width: 100%;
+  /* padding: 0; */
+  /* margin: 0; */
+  min-height: 3vh;
+  display: flex;
+  flex-direction: row;
+  border: 2px solid yellow;
+}
+.guessed-letters-section p {
+  margin: 0;
+  padding: 0;
+}
+.guessed-letters {
+  width: 73%;
+  text-align: center;
+  padding:0;
+  margin: 0;
+  /* margin: auto; */
+  /* justify-self: center; */
+  /* justify-content: center; */
+  /* justify-items: center; */
+  /* align-items: center; */
+  /* align-self: center; */
+  /* align-content: center; */
+  /* border: 2px solid red; */
+}
 .interface .left {
   text-align: center;
   width: fit-content;
+  /* height: fit-content; */
+  margin-left: 7vw;
   /* justify-self: center; */
   /* justify-content: center; */
   /* justify-items: center; */
@@ -551,20 +587,20 @@ form label {
 .interface .right {
   text-align: center;
   width: fit-content;
+  margin-left: 70vw;
   /* margin: auto; */
-  /* position: absolute; */
   /* right: 2px; */
-  /* margin-bottom: 2vh; */
-  /* justify-self: end; */
-  /* justify-content: end; */
-  /* justify-items: end; */
-  /* align-items: end; */
-  /* align-self: end; */
-  /* align-content: end; */
+  /* justify-self:right; */
+  /* justify-content: right; */
+  /* justify-items: right; */
+  /* align-items: right; */
+  /* align-self: right; */
+  /* align-content: right; */
   border: 2px solid green;
 }
 .interface .center {
   text-align: center;
+  margin: auto;
   /* justify-self: center; */
   /* justify-content: center; */
   /* justify-items: center; */
@@ -574,8 +610,18 @@ form label {
   border: 2px solid red;
 }
 .wheel-info {
+  min-height: 5vh;
+  font-weight: bold;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
   border: 2px solid green;
+}
+.wheel-info p {
+  /* padding: 0; */
+  margin: auto 0;
+}
+.results-page {
+  height:100vh;
+  border: solid 2px red;
 }

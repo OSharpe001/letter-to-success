@@ -95,11 +95,6 @@ export default function Settings(props) {
     };
 
     const setSubmissionErrors = () => {
-        // console.log("SETTINGS.JS SETSUBMISSIONERROR'S PLAYER COUNT AMOUNT: ", parseInt(props.humanPlayerAmount) + parseInt(props.computerPlayerAmount))
-        if (parseInt(props.humanPlayerAmount) + parseInt(props.computerPlayerAmount)<2){
-            // console.log("LOOKING RIGHT AT YOU...")
-            props.setComputerPlayerAmountError("We need at least two players.")
-        };
         if (props.humanPlayerAmount===0){
             props.setHumanPlayerAmountError("We need at least one Human Player.")
         };
@@ -112,9 +107,9 @@ export default function Settings(props) {
         if (parseInt(props.humanPlayerAmount)>2 && (props.player3Name === "" || props.player3Name=== props.player1Name || props.player3Name=== props.player2Name)) {
             props.setPlayer3NameError(playerNameError);
         };
-        // if (parseInt(props.humanPlayerAmount) + parseInt(props.computerPlayerAmount)<2){
-        //     props.setComputerPlayerAmountError("We need at least two players.")
-        // };
+        if (parseInt(props.humanPlayerAmount) + parseInt(props.computerPlayerAmount)<2){
+            props.setComputerPlayerAmountError("We need at least two players.")
+        };
     };
 
     const handleSubmit = (e) => {
@@ -146,7 +141,7 @@ export default function Settings(props) {
 
     return (
         <form
-        className="form"
+        className="form settings-page"
         onSubmit={handleSubmit}
         >
             <h1>Initial Settings</h1>
