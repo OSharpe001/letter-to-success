@@ -1,4 +1,4 @@
-import {WheelSegments} from '../assets/wheelSegments'
+import {WheelSegments} from '../assets/game_data/wheelSegments'
 
 export default function Wheel(props) {
   return (

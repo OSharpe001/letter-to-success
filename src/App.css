@@ -668,3 +668,7 @@ li {
 .results-page ul {
   margin-left: -2vw;
 }
+.arrow-image {
+  width: 10px;
+  height:2.2vh;
+}

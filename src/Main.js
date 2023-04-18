@@ -3,7 +3,7 @@ import Settings from "./Settings"
 import GamePage from "./GamePage"
 import Results from "./Results"
 import Header from "./components/Header"
-import { Puzzles } from './assets/puzzles'
+import { Puzzles } from './assets/game_data/puzzles'
 import { useNavigate } from "react-router-dom";
 import { Routes, Route } from "react-router-dom";
 import { useState } from "react";

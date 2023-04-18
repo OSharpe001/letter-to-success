@@ -11,11 +11,13 @@
 // ??15??-MAY HAVE TO PUSH THE PUZZLE PHRASE/TYPE SELECTOR UP TO SETTINGS.JS TO CURB APPEAL OF REFRESHING TO CHANGE THE PUZZLE ON GAMEPAGE.JS
 
 
-import { WheelSegments } from "./assets/wheelSegments";
 import Board from "./components/Board";
 import Wheel from "./components/Wheel";
 import Pointer from "./components/Pointer";
 import Players from "./components/Players";
+import doubleLeftArrow from "./assets/images/doubleLeftArrow.png";
+import doubleRightArrow from "./assets/images/doubleRightArrow.png";
+import { WheelSegments } from "./assets/game_data/wheelSegments";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -372,7 +374,19 @@ export default function GamePage(props) {
             </div>
 
             <div className="guessed-letters-section">
-              {showGuessedLetters?<button onClick={toggleShowGuessedLetters}>≤</button>:<button onClick={toggleShowGuessedLetters}>≥</button>}
+              {showGuessedLetters?
+                <button onClick={toggleShowGuessedLetters}><img
+                  className="arrow-image"
+                  src={doubleLeftArrow}
+                  alt="double left arrow"/>
+                </button>
+                :
+                <button onClick={toggleShowGuessedLetters}><img
+                  className="arrow-image"
+                  src={doubleRightArrow}
+                  alt="double right arrow"/>
+                </button>
+              }
               <p className={showGuessedLetters?null:"hidden"}>Guessed Letters:</p>
               <p className={showGuessedLetters?"guessed-letters":"hidden"}>{guessedLetters}</p>
             </div>
