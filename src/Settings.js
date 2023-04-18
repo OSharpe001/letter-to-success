@@ -42,17 +42,22 @@ export default function Settings(props) {
         props.setComputerPlayerAmount(e.target.value);
         // console.log("COMPUTER PLAYER AMOUNT: ", parseInt(e.target.value))
         // console.log("ADDITION OF TOTAL PLAYER AMOUNT: ", parseInt(humanPlayerAmount)+parseInt(e.target.value))
-        if (parseInt(props.humanPlayerAmount)<1 || parseInt(props.humanPlayerAmount)>3) {
+        if (!props.humanPlayerAmount || parseInt(props.humanPlayerAmount)>3) {
             props.setComputerPlayerAmountError("Please set proper amount of Human Players, first.")
         } else if (parseInt(e.target.value) + parseInt(props.humanPlayerAmount)<2) {
             props.setComputerPlayerAmountError("We need at least two players");
             return;
-        } else if (parseInt(e.target.value.toNumber) + parseInt(props.humanPlayerAmount)>3) {
+        } else if (parseInt(e.target.value) + parseInt(props.humanPlayerAmount)>3) {
             // console.log("TOTAL PLAYER AMOUNT: ", e.target.value + humanPlayerAmount)
             props.setComputerPlayerAmountError("Sorry. There's a max of three players per game");
         } else {
             props.setComputerPlayerAmountError("");
         };
+        if (parseInt(e.target.value===0) || e.target.value==="") {
+            props.setComputerDifficultyLevel("1");
+            props.setComputerDifficultyError("");
+
+        }
     };
 
     const handleP1NameChange = (e) => {
@@ -81,10 +86,19 @@ export default function Settings(props) {
         };
     };
 
-    const disabled= !!props.humanPlayerAmountError || !!props.computerPlayerAmountError || !!props.player1NameError || !!props.player2NameError || !!props.player3NameError;
+    const handleComputerDifficultyChange = (e) => {
+        props.setComputerDifficultyLevel(e.target.value);
+        if (parseInt(e.target.value)<1 || parseInt(e.target.value)>10) {
+            props.setComputerDifficultyError("Pick a number from 1 (easy) - 10 (hard)");
+        } else{
+            props.setComputerDifficultyError("");
+        };
+    };
+
+    const disabled= !!props.humanPlayerAmountError || !!props.computerPlayerAmountError || !!props.player1NameError || !!props.player2NameError || !!props.player3NameError || !!props.computerDifficultyError;
     const gotRequiredInfo = !!props.humanPlayerAmount && (parseInt(props.humanPlayerAmount) + parseInt(props.computerPlayerAmount)<4) && (parseInt(props.humanPlayerAmount) + parseInt(props.computerPlayerAmount)>1) && (props.player1Name!=="")
         && (parseInt(props.humanPlayerAmount)<2 || (props.player2Name!=="" && props.player2Name!==props.player1Name)) && (parseInt(props.humanPlayerAmount)<3 || (props.player3Name!=="" && props.player3Name!==props.player2Name && props.player3Name!==props.player1Name))
-
+        && (!!props.computerDifficultyLevel || props.computerPlayerAmount===0)
     const clearForm = () => {
         props.setHumanPlayerAmount(1);
         props.setComputerPlayerAmount(0);
@@ -110,6 +124,9 @@ export default function Settings(props) {
         if (parseInt(props.humanPlayerAmount) + parseInt(props.computerPlayerAmount)<2){
             props.setComputerPlayerAmountError("We need at least two players.")
         };
+        if (props.computerDifficultyLevel<1 || props.computerDifficultyLevel>10) {
+            props.setComputerDifficultyError("Pick a number from 1 - 10.")
+        }
     };
 
     const handleSubmit = (e) => {
@@ -155,7 +172,7 @@ export default function Settings(props) {
             value={props.humanPlayerAmount}
             onChange= {e => handleHumanPlayerAmountChange(e)}
             />
-            {props.humanPlayerAmountError?<p className="error-message">{props.humanPlayerAmountError}</p>:null}
+            <p className="error-message">{props.humanPlayerAmountError}</p>
 
             <label htmlFor="player1name" >First player's name?</label>
             <input
@@ -167,7 +184,7 @@ export default function Settings(props) {
             value={props.player1Name}
             onChange={handleP1NameChange}
             />
-            {props.player1NameError?<p className="error-message">{props.player1NameError}</p>:null}
+            <p className="error-message">{props.player1NameError}</p>
 
 
             {props.humanPlayerAmount>1?
@@ -182,7 +199,7 @@ export default function Settings(props) {
                 value={props.player2Name}
                 onChange={handleP2NameChange}
                 />
-                {props.player2NameError?<p className="error-message">{props.player2NameError}</p>:null}
+                <p className="error-message">{props.player2NameError}</p>
             </>
             : null}
 
@@ -198,7 +215,7 @@ export default function Settings(props) {
                 value={props.player3Name}
                 onChange={handleP3NameChange}
                 />
-                {props.player3NameError?<p className="error-message">{props.player3NameError}</p>:null}
+                <p className="error-message">{props.player3NameError}</p>
             </>
             : null}
 
@@ -207,14 +224,14 @@ export default function Settings(props) {
                 <label htmlFor="number-of-computer-players" >How many computer players?</label>
                 <input
                 type="number"
-                min="0"//{props.humanPlayerAmount<2?1:0}<--THOUGH I THINK THIS WAS A PRETTY CRAFTY SAFETY FEATURE, IT IS INTERFERING WITH THE ERROR MESSAGES...(4/16/23) 
+                min={props.humanPlayerAmount<2?1:0}
                 max={3-props.humanPlayerAmount}
                 name="number-of-computer-players"
                 id="number-of-computer-players"
                 value={props.computerPlayerAmount}
                 onChange= {e => handleComputerPlayerAmountChange(e)}
                 />
-                {props.computerPlayerAmountError?<p className="error-message">{props.computerPlayerAmountError}</p>:null}
+                <p className="error-message">{props.computerPlayerAmountError}</p>
             </>
             : null}
 
@@ -228,9 +245,9 @@ export default function Settings(props) {
                 name="computer-difficulty-level"
                 id="computer-difficulty-level"
                 value={props.computerDifficultyLevel}
-                onChange= {(e) => props.setComputerDifficultyLevel(e.target.value)}
+                onChange= {(e) => handleComputerDifficultyChange(e)}
                 />
-                {props.computerDifficultyLevel<1 || props.computerDifficultyLevel>10?<p className="error-message">"Pick a number from 1 - 10"</p>:null}
+                <p className="error-message">{props.computerDifficultyError}</p>
             </>
             :null}
 

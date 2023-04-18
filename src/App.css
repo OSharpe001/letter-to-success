@@ -56,7 +56,9 @@ header a:hover, .button:hover {
   color: red;
   /* padding: 0; */
   margin: 0 0 3vh;
+  min-height: 3vh;
   /* font-size: 16pt; */
+  /* border: 2px solid red; */
 }
 .home-page {
   height:100vh;
@@ -110,8 +112,8 @@ header a:hover, .button:hover {
   background-color: rgb(201, 127, 127);
   /* width:fill; */
   border: 2px solid black;
-  height:fill;
-  /* height:stretch; */
+  /* height:fill; */
+  height:stretch;
   overflow: hidden;
 }
 .wheel-segment:nth-of-type(2) {
@@ -119,8 +121,8 @@ header a:hover, .button:hover {
   background-color: grey;
   /* width:max-content; */
   border: 2px solid black;
-  height:fill;
-  /* height:stretch; */
+  /* height:fill; */
+  height:stretch;
   overflow: hidden;
 }
 .wheel-segment:nth-of-type(3) {
@@ -128,8 +130,8 @@ header a:hover, .button:hover {
   background-color: green;
   /* width:max-content; */
   border: 2px solid black;
-  height:fill;
-  /* height:stretch; */
+  /* height:fill; */
+  height:stretch;
   /* z-index: 2; */
   overflow: hidden;
 }
@@ -138,8 +140,8 @@ header a:hover, .button:hover {
   background-color: skyblue;
   /* width:max-content; */
   border: 2px solid black;
-  height:fill;
-  /* height:stretch; */
+  /* height:fill; */
+  height:stretch;
   /* z-index: 2; */
   overflow: hidden;
 }
@@ -148,8 +150,8 @@ header a:hover, .button:hover {
   background-color: orange;
   /* width:max-content; */
   border: 2px solid black;
-  height:fill;
-  /* height:stretch; */
+  /* height:fill; */
+  height:stretch;
   overflow: hidden;
   /* z-index: 2; */
 }
@@ -158,8 +160,8 @@ header a:hover, .button:hover {
   background-color: orangered;
   /* width:max-content; */
   border: 2px solid black;
-  height:fill;
-  /* height:stretch; */
+  /* height:fill; */
+  height:stretch;
   overflow: hidden;
   /* z-index: 2; */
 }
@@ -168,8 +170,8 @@ header a:hover, .button:hover {
   background-color: yellow;
   /* width:max-content; */
   border: 2px solid black;
-  height:fill;
-  /* height:stretch; */
+  /* height:fill; */
+  height:stretch;
   overflow: hidden;
   /* z-index: 2; */
 }
@@ -178,8 +180,8 @@ header a:hover, .button:hover {
   background-color: grey;
   /* width:max-content; */
   border: 2px solid black;
-  height:fill;
-  /* height:stretch; */
+  /* height:fill; */
+  height:stretch;
   overflow: hidden;
   /* z-index: 2;  */
 }
@@ -189,8 +191,8 @@ header a:hover, .button:hover {
   /* border-bottom: 2px solid black; */
   background-color: greenyellow;
   /* width:max-content; */
-  height:fill;
-  /* height:stretch; */
+  /* height:fill; */
+  height:stretch;
   overflow: hidden;
   /* z-index: 2; */
 }
@@ -199,8 +201,8 @@ header a:hover, .button:hover {
   background-color: rgb(113, 113, 239);
   border: 2px solid black;
   /* width:max-content; */
-  height:fill;
-  /* height:stretch; */
+  /* height:fill; */
+  height:stretch;
   overflow: hidden;
   /* z-index: 2; */
 }
@@ -209,8 +211,8 @@ header a:hover, .button:hover {
   background-color: pink;
   border: 2px solid black;
   /* width:max-content; */
-  height:fill;
-  /* height:stretch; */
+  /* height:fill; */
+  height:stretch;
   overflow: hidden;
   /* z-index: 2; */
 }
@@ -219,8 +221,8 @@ header a:hover, .button:hover {
   background-color: aqua;
   border: 2px solid black;
   /* width:max-content; */
-  height:fill;
-  /* height:stretch; */
+  /* height:fill; */
+  height:stretch;
   overflow: hidden;
   /* z-index: 2; */
 }
@@ -230,8 +232,8 @@ header a:hover, .button:hover {
   border: 2px solid black;
   /* border-bottom: 2px solid black; */
   /* width:max-content; */
-  height:fill;
-  /* height:stretch; */
+  /* height:fill; */
+  height:stretch;
   overflow: hidden;
   /* z-index: -1; */
 }
@@ -419,7 +421,7 @@ header a:hover, .button:hover {
   flex-direction: row;
 }
 .interface {
-  align-self: left;
+  /* align-self: left; */
   text-align: left;
   margin: 0 3vw;
   padding: 10px;
@@ -428,13 +430,16 @@ header a:hover, .button:hover {
   /* justify-content: start; */
   /* justify-self: start; */
   /* justify-items: start; */
-  border: 2px solid red;
+  border: 20px ridge green;
 }
 .game-status {
   font-size: 30pt;
+  min-height: 5vh;
+  margin: 2vh auto;
+  /* border: 2px solid blue; */
 }
 .players {
-  margin-top:10vh;
+  margin-top:1vh;
   list-style-type: none;
   display: flex;
   justify-content: space-around;
@@ -451,18 +456,21 @@ header a:hover, .button:hover {
   background-color: rgb(67, 196, 67);
 }
 .player-name {
-  padding: 30px;
+  padding: 1vh;
+  /* padding: 30px; */
   font-size: 20pt;
   font-weight: bold;
   background-color: grey;
 }
 .player-score {
   font-weight: bold;
-  padding: 20px;
+  padding: 2vh;
+  /* padding: 20px; */
   background-color: green;
 }
 .player-prizes {
   font-weight: bold;
+  /* min-height: */
   padding: 20px;
   background-color: silver;
 }
@@ -521,7 +529,7 @@ header a:hover, .button:hover {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  /* border: 2px solid blue; */
+  border: 2px solid blue;
 }
 .interface input {
   font-size: 20px;
@@ -539,10 +547,10 @@ header a:hover, .button:hover {
   width: 40ch;
 }
 .spin-solve-buy {
-  min-height: 15vh;
-  border: 2px solid black;
+  min-height: 25vh;
   display: flex;
   flex-direction: row;
+  /* border: 2px solid black; */
 }
 .guessed-letters-section {
   width: 100%;
@@ -551,7 +559,7 @@ header a:hover, .button:hover {
   min-height: 3vh;
   display: flex;
   flex-direction: row;
-  border: 2px solid yellow;
+  /* border: 2px solid yellow; */
 }
 .guessed-letters-section p {
   margin: 0;
@@ -562,52 +570,37 @@ header a:hover, .button:hover {
   text-align: center;
   padding:0;
   margin: 0;
-  /* margin: auto; */
-  /* justify-self: center; */
-  /* justify-content: center; */
-  /* justify-items: center; */
-  /* align-items: center; */
-  /* align-self: center; */
-  /* align-content: center; */
   /* border: 2px solid red; */
 }
 .interface .left {
+  display: flex;
+  flex-direction: column;
   text-align: center;
   width: fit-content;
-  /* height: fit-content; */
-  margin-left: 7vw;
-  /* justify-self: center; */
-  /* justify-content: center; */
-  /* justify-items: center; */
-  /* align-items: center; */
-  /* align-self: center; */
-  /* align-content: center; */
-  border: 2px solid blue;
+  margin-left: 4vw;
+  min-width: 20vw;
+  /* border: 2px solid blue; */
 }
 .interface .right {
+  display: flex;
+  flex-direction: column;
   text-align: center;
   width: fit-content;
-  margin-left: 70vw;
-  /* margin: auto; */
-  /* right: 2px; */
-  /* justify-self:right; */
-  /* justify-content: right; */
-  /* justify-items: right; */
-  /* align-items: right; */
-  /* align-self: right; */
-  /* align-content: right; */
-  border: 2px solid green;
+  margin-left: 68vw;
+  min-width: 17vw;
+  /* border: 2px solid green; */
 }
 .interface .center {
+  display: flex;
+  flex-direction: column;
   text-align: center;
-  margin: auto;
-  /* justify-self: center; */
-  /* justify-content: center; */
-  /* justify-items: center; */
-  /* align-items: center; */
-  /* align-self: center; */
-  /* align-content: center; */
-  border: 2px solid red;
+  margin: 0 auto;
+  /* border: 2px solid red; */
+}
+.interface label {
+  margin: 0 0 1vh;
+  /* padding: 0; */
+  /* border: 2px solid red; */
 }
 .wheel-info {
   min-height: 5vh;
@@ -615,7 +608,7 @@ header a:hover, .button:hover {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-  border: 2px solid green;
+  /* border: 2px solid green; */
 }
 .wheel-info p {
   /* padding: 0; */

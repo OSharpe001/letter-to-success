@@ -152,7 +152,7 @@ export default function GamePage(props) {
 
   const changeTurn = () => {
     setTurnCount(turnCount+1);
-    setTimeout(setStatusMessage, 1750, `It's your turn, ${nextPlayer.name}`);
+    setTimeout(setStatusMessage, 1750, `It's your turn, ${nextPlayer.name}.`);
     setWheelInfo(["", 0, false]);
   }
 
@@ -318,11 +318,11 @@ export default function GamePage(props) {
             />
         </div>
         <div className="readout">
-          <p className="game-status">Game Status: {statusMessage}</p>
+          <p className="game-status">{statusMessage}</p>
           <div className={"interface"}>
             <div className="wheel-info">
               <p className={wheelValue?null:"hidden"}>Value: {wheelValue}</p>
-              <p className={wheelValue?null:"hidden"}>Prize: {wheelPrize}</p>
+              <p className={wheelValue && wheelPrize?null:"hidden"}>Prize: {wheelPrize}</p>
             </div>
             <div className="interface-options">
               <button className={wheelValue || vowelInterface || noMoreConsonants || isSpinning || attemptToSolve?"hidden":"button"} onClick={spinIt} >Spin It!</button>
@@ -332,7 +332,6 @@ export default function GamePage(props) {
             <div className="spin-solve-buy">
               <form className={!wheelValue && !vowelInterface?"hidden":!vowelInterface?"left":"right"}>
                 <label className={!wheelValue?"hidden":null} htmlFor="guess-consonant">Guess a Consonant</label>
-                <br/>
                 <input
                 ref={consonantInput}
                 className={!wheelValue?"hidden":null}
@@ -344,7 +343,6 @@ export default function GamePage(props) {
                 onChange={handleConsonantGuess}/>
                 
                 <label className={!vowelInterface?"hidden":null} htmlFor="guess-vowel">Guess a Vowel</label>
-                <br/>
                 <input
                 ref={vowelInput}
                 className={!vowelInterface?"hidden":null}
@@ -354,14 +352,13 @@ export default function GamePage(props) {
                 placeholder="Vowel"
                 value={latestVowel}
                 onChange={handleVowelGuess}/>
-                <br/>
                 <button htmlFor={!vowelInterface?"guess-consonant":"guess-vowel"} className={vowelInterface || wheelValue?"button":"hidden"} disabled={guessDisabled} onClick={guessLetter} >Guess a Letter!</button>
-                {latestGuessError?<p className="error-message">{latestGuessError}</p>:null}
+                <p className="error-message">{latestGuessError}</p>
               </form>
             
               <form className={!attemptToSolve?"hidden":"center"}>
                 <label htmlFor="guess-puzzle">Guess the Puzzle</label>
-                <br/>
+                {/* <br/> */}
                 <input
                 ref={solveInput}
                 className={!attemptToSolve?"hidden":null}
@@ -371,9 +368,9 @@ export default function GamePage(props) {
                 placeholder="Guess the Puzzle!"
                 value={guessPuzzle}
                 onChange={handlePuzzleGuess}/>
-                <br/>
+                {/* <br/> */}
                 <button htmlFor="guess-puzzle" className={!attemptToSolve?"hidden":"button"} disabled={guessPuzzleDisabled} onClick={AttemptToSolvePuzzle} >Guess the Puzzle!</button>
-                {guessPuzzleError?<p className="error-message">{guessPuzzleError}</p>:null}
+                <p className="error-message">{guessPuzzleError}</p>
               </form>
             </div>
             <div className="guessed-letters-section">

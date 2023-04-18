@@ -21,6 +21,7 @@ export default function Main() {
   const [humanPlayerAmountError, setHumanPlayerAmountError] = useState("");
   const [computerPlayerAmountError, setComputerPlayerAmountError] = useState("");
   const [computerDifficultyLevel, setComputerDifficultyLevel] = useState(1);
+  const [computerDifficultyError, setComputerDifficultyError] = useState("");
   const [settingsData, setSettingsData] =useState({})
   const [winner, setWinner] = useState("");
 
@@ -64,6 +65,8 @@ export default function Main() {
                                               computerPlayerAmountError={computerPlayerAmountError}
                                               computerDifficultyLevel={computerDifficultyLevel}
                                               setComputerDifficultyLevel={setComputerDifficultyLevel}
+                                              computerDifficultyError={computerDifficultyError}
+                                              setComputerDifficultyError={setComputerDifficultyError}
                                               />}/>
             <Route path="/game_page" element={<GamePage
                                                 settingsData={settingsData}
