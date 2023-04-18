@@ -34,6 +34,9 @@ header a:hover, .button:hover {
   background-color: var(--secondaryColor);
   border:ridge 2px var(--primaryColor);
 }
+li {
+  list-style: none;
+}
 .settings-page {
   height:100vh;
 }
