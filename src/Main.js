@@ -2,6 +2,7 @@ import HomePage from "./HomePage"
 import Settings from "./Settings"
 import GamePage from "./GamePage"
 import Results from "./Results"
+import Header from "./components/Header"
 import { Puzzles } from './assets/puzzles'
 import { useNavigate } from "react-router-dom";
 import { Routes, Route } from "react-router-dom";
@@ -39,6 +40,7 @@ export default function Main() {
   // console.log("MAIN.JS' SETTINGS FORM DATA: ", settingsData)
   return (
     <>
+      <Header />
         <Routes>
             <Route path="/" element={<HomePage />}/>
             <Route path="/settings" element={<Settings
