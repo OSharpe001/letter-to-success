@@ -1,13 +1,14 @@
 // TODO:
-// 6-SETUP A BETTER PUZZLE DESIGN WITH MORE WORDS ON A SINGLE LINE AND
+// 7-SETUP A BETTER PUZZLE DESIGN WITH MORE WORDS ON A SINGLE LINE AND
 //    A SET OF GREEN BACKGROUND BRICKS
-// 7-SET UP COMPUTER PLAYERS BEHAVIOR
+// 8-SET UP COMPUTER PLAYERS BEHAVIOR (POSSIBLE TO USE A USEEFFECT HOOK FOR THIS!)
 // ---COMPUTER LETTER SELECTION LIST (IN ORDER OF MOST POPULAR LETTER)
 // -----COMPUTER CHOICE OF LETTER GUESS BASED ON DIFFICULTY LEVEL
 // ---CONDITIONS FOR THE COMPUTER TO BUY A VOWEL(IF CURRENTPLAYER.SCORE>250? COMPUTERLETTERSELECTIONLIST-VOWELS)
-// 8-CHANGE THE INTERFACE TO A THREE SECTIONAL TO SAVE HEIGHT("SPIN" & CONSTONANTS (LEFT), "BUY" & VOWELS (RIGHT), "SOLVE" & GUESSPUZZLE (CENTER))
 // 9-SET UP WHEEL SO THAT IT STOPS/STARTS ON THE PROPER SEGMENT
-
+// 10-CHANGE THE WINNER SELECTOR TO A USEEFFECT HOOK TO AVIOD THE ERROR OF RE-RENDERING WHILE GOING TO RESULTS PAGE
+// 11-CREATE A FUNCTION TO LIGHT UP AND THEN TURN THE LETTERS WHEN THEY ARE GUESSED
+// 12-FIX INTERFACE-OPTIONS BOX SO THAT THE BUTTONS DON'T MOVE REGARDLESS OF AMOUNT
 
 import { WheelSegments } from "./assets/wheelSegments";
 import Board from "./components/Board";
@@ -41,9 +42,6 @@ export default function GamePage(props) {
   const [attemptToSolve, setAttemptToSolve] = useState(false);
   const [guessPuzzle, setGuessPuzzle] = useState("");
   const [guessPuzzleError, setGuessPuzzleError] = useState("");
-  const consonantInput=useRef();
-  const vowelInput=useRef();
-  const solveInput=useRef();
   const [players, setPlayers]= useState(playerNames.map(player => (
     {
       "name":player,
@@ -51,6 +49,17 @@ export default function GamePage(props) {
       "prizes":[]
     }
   )));
+
+  const consonantInput=useRef();
+  const vowelInput=useRef();
+  const solveInput=useRef();
+
+  const navigate = useNavigate();
+  const autoReset = useEffect;
+  const autoFocus = useEffect;
+  const winner = useEffect;
+
+  
 
   const consonants = ["B", "C", "D", "F", "G", "H", "J", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "V", "W", "X", "Y", "Z"];
   const vowels = ["A", "E", "I", "O", "U"];
@@ -69,8 +78,7 @@ export default function GamePage(props) {
   const guessDisabled= latestGuessError;
   const guessPuzzleDisabled = guessPuzzleError;
 
-  const navigate = useNavigate();
-  const autoReset = useEffect;
+
   autoReset(()=> {
     // console.log('THE USEEFFECT HOOK "AUTORESET" WAS JUST TRIGGERRED');
     if (!players[1].name) {
@@ -79,7 +87,6 @@ export default function GamePage(props) {
     }
   },players);
 
-  const autoFocus = useEffect;
   autoFocus(()=> {
     if (vowelInterface) {
       vowelInput.current.focus();
@@ -90,7 +97,16 @@ export default function GamePage(props) {
     if (attemptToSolve) {
       solveInput.current.focus();
     }
-  }, [vowelInterface, wheelValue, attemptToSolve])
+  }, [vowelInterface, wheelValue, attemptToSolve]);
+
+  winner(()=> {
+    if (puzzleLetters.every(letter=>guessedLetters.indexOf(letter)>=0)) {
+      setStatusMessage(`${currentPlayer.name} HAS WON!!!`);
+      // alert(`${currentPlayer.name} HAS WON!!! (VOWELS)`);
+      setTimeout(props.setWinner, 3500, currentPlayer);
+      setTimeout(navigate, 3500, "/results");
+    };
+  });
 
   // const consonants = ["B", "C", "D", "F", "G", "H", "J", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "V", "W", "X", "Y", "Z"];
   // const vowels = ["A", "E", "I", "O", "U"];
@@ -178,12 +194,12 @@ export default function GamePage(props) {
           setNoMoreConsonants(true);
           setTimeout(setStatusMessage, 3000, "There are no more consonants...");
         };
-        if (puzzleLetters.every(letter=>newGuessedLetters.indexOf(letter)>=0)) {
-          props.setWinner(currentPlayer);
-          // setStatusMessage(`${currentPlayer.name} HAS WON!!!`);
-          alert(`${currentPlayer.name} HAS WON!!! (CONSONANTS)`);
-          navigate("/results");
-        };
+        // if (puzzleLetters.every(letter=>newGuessedLetters.indexOf(letter)>=0)) {
+        //   props.setWinner(currentPlayer);
+        //   // setStatusMessage(`${currentPlayer.name} HAS WON!!!`);
+        //   alert(`${currentPlayer.name} HAS WON!!! (CONSONANTS)`);
+        //   navigate("/results");
+        // };
         return newGuessedLetters;
       });
       if (puzzleLetters.indexOf(latestConsonant)>=0) {
@@ -203,12 +219,12 @@ export default function GamePage(props) {
           setNoMoreVowels(true);
           setTimeout(setStatusMessage, 3000, "There are no more vowels...");
         };
-        if (puzzleLetters.every(letter=>newGuessedLetters.indexOf(letter)>=0)) {
-          props.setWinner(currentPlayer);
-          // setStatusMessage(`${currentPlayer.name} HAS WON!!!`);
-          alert(`${currentPlayer.name} HAS WON!!! (VOWELS)`);
-          navigate("/results");
-        };
+        // if (puzzleLetters.every(letter=>newGuessedLetters.indexOf(letter)>=0)) {
+        //   props.setWinner(currentPlayer);
+        //   // setStatusMessage(`${currentPlayer.name} HAS WON!!!`);
+        //   alert(`${currentPlayer.name} HAS WON!!! (VOWELS)`);
+        //   navigate("/results");
+        // };
         return newGuessedLetters;
       });
       if (puzzleLetters.indexOf(latestVowel)<0) {
@@ -270,9 +286,11 @@ export default function GamePage(props) {
   const AttemptToSolvePuzzle = (e) => {
     e.preventDefault();
     if (guessPuzzle===props.puzzlePhrase) {
-      props.setWinner(currentPlayer);
-      alert(`Congratulations, ${currentPlayer.name}! That was the correct answer!`);
-      navigate("/results");
+      // setGuessedLetters([...new Set(guessPuzzle)]);
+      setStatusMessage(`Congratulations, ${currentPlayer.name}! That was the correct answer!`)
+      setTimeout(setGuessedLetters, 1500, [...new Set(guessPuzzle)]);
+      // setTimeout(props.setWinner, 3000, currentPlayer);
+      // setTimeout(navigate, 3000, "/results");
     } else if (guessPuzzle.length>0) {
       setGuessPuzzle("");
       setAttemptToSolve(false);
