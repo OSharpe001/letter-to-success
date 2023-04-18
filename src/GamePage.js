@@ -300,7 +300,7 @@ export default function GamePage(props) {
 
   return (
     <>
-        <h1>GamePage...</h1>
+        {/* <h1>GamePage...</h1> */}
         <div className="game-page">
           <Board
             puzzlePhrase={props.puzzlePhrase}
