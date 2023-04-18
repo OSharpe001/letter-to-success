@@ -31,17 +31,18 @@ a h1 {
   margin: 0;
 }
 .button {
+  width:fit-content;
   font-size: 16pt;
   font-weight: bold;
   text-decoration: none;
   border-radius: 20px;
   color: var(--secondaryColor);
   background-color: var(--primaryColor);
-  /* height: 30px; */
   padding: 10px;
   margin: auto;
-  /* border-radius: 20px; */
   border:ridge 2px var(--secondaryColor);
+  /* height: 30px; */
+  /* border-radius: 20px; */
 }
 a:hover, .button:hover {
   color: var(--primaryColor);
@@ -352,7 +353,6 @@ li {
   animation-iteration-count: infinite ;
   animation-timing-function: linear;
 }
-/**/
 @keyframes homepage_wheel {
   0% {
     transform: rotate(0deg);
@@ -558,11 +558,13 @@ li {
   display: none;
 }
 .interface-options {
+  width: 100%;
   min-height: 6vh;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  border: 2px solid blue;
+  display:inline-flex;
+  /* display: flex; */
+  /* flex-direction: row; */
+  /* justify-content: space-between; */
+  /* border: 2px solid blue; */
 }
 .interface input {
   font-size: 20px;
@@ -606,11 +608,28 @@ li {
   margin: 0;
   /* border: 2px solid red; */
 }
+.spin {
+  width: 15vw;
+  position: absolute;
+  margin-left: 6vw;
+  /* text-align: center; */
+}
+.buy{
+  width: 15vw;
+  position: absolute;
+  margin-left: 68vw;
+  /* text-align: center; */
+}
+.solve{
+  width: 15vw;
+  position: absolute;
+  margin-left: 38vw;
+  /* text-align: center; */
+}
 .interface .left {
   display: flex;
   flex-direction: column;
   text-align: center;
-  width: fit-content;
   margin-left: 4vw;
   min-width: 20vw;
   /* border: 2px solid blue; */
@@ -619,7 +638,6 @@ li {
   display: flex;
   flex-direction: column;
   text-align: center;
-  width: fit-content;
   margin-left: 68vw;
   min-width: 17vw;
   /* border: 2px solid green; */

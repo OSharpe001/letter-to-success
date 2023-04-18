@@ -1,15 +1,13 @@
 // TODO:
-// 8-SETUP A BETTER PUZZLE DESIGN WITH MORE WORDS ON A SINGLE LINE AND
+// 10-SETUP A BETTER PUZZLE DESIGN WITH MORE WORDS ON A SINGLE LINE AND
 //    A SET OF GREEN BACKGROUND BRICKS
-// 9-SET UP COMPUTER PLAYERS BEHAVIOR (POSSIBLE TO USE A USEEFFECT HOOK FOR THIS!)
+// 11-SET UP COMPUTER PLAYERS BEHAVIOR (POSSIBLE TO USE A USEEFFECT HOOK FOR THIS!)
 // ---COMPUTER LETTER SELECTION LIST (IN ORDER OF MOST POPULAR LETTER)
 // -----COMPUTER CHOICE OF LETTER GUESS BASED ON DIFFICULTY LEVEL
 // ---CONDITIONS FOR THE COMPUTER TO BUY A VOWEL(IF CURRENTPLAYER.SCORE>250? COMPUTERLETTERSELECTIONLIST-VOWELS)
-// 10-SET UP WHEEL SO THAT IT STOPS/STARTS ON THE PROPER SEGMENT
-// 11-CREATE A FUNCTION TO LIGHT UP AND THEN TURN THE LETTERS WHEN THEY ARE GUESSED
-// 12-FIX INTERFACE-OPTIONS BOX SO THAT THE BUTTONS DON'T MOVE REGARDLESS OF AMOUNT
-// 13-SET THE "PLAYERNAMES"/"PLAYERS" CONFIGURATION UP TO SETTINGS.JS TO KEEP STABILITY IF THE REFRESH BUTTON IS PRESSED ON THE GAMEPAGE
-// 14-INCLUDE HEADER ON ALL PAGES AND SET THE GAME NAME TO A LINK TO RETURN TO INDEX PAGE
+// 12-SET UP WHEEL SO THAT IT STOPS/STARTS ON THE PROPER SEGMENT
+// 13-CREATE A FUNCTION TO LIGHT UP AND THEN TURN THE LETTERS WHEN THEY ARE GUESSED
+// 14-SET THE "PLAYERNAMES"/"PLAYERS" CONFIGURATION UP TO SETTINGS.JS TO KEEP STABILITY IF THE REFRESH BUTTON IS PRESSED ON THE GAMEPAGE
 // ??15??-MAY HAVE TO PUSH THE PUZZLE PHRASE/TYPE SELECTOR UP TO SETTINGS.JS TO CURB APPEAL OF REFRESHING TO CHANGE THE PUZZLE ON GAMEPAGE.JS
 
 
@@ -325,9 +323,9 @@ export default function GamePage(props) {
             </div>
 
             <div className="interface-options">
-              <button className={wheelValue || vowelInterface || noMoreConsonants || isSpinning || attemptToSolve || pauseControls?"hidden":"button"} onClick={spinIt} >Spin It!</button>
-              <button className={wheelValue || vowelInterface || isSpinning || attemptToSolve || pauseControls?"hidden":"button"} onClick={solveIt} >Attempt to Solve!</button>
-              <button className={wheelValue || currentPlayer.score<250 || vowelInterface || noMoreVowels || isSpinning || attemptToSolve || pauseControls?"hidden":"button"} onClick={buyVowel} >Buy a Vowel!</button>
+              <button className={wheelValue || vowelInterface || noMoreConsonants || isSpinning || attemptToSolve || pauseControls?"hidden":"button spin"} onClick={spinIt} >Spin It!</button>
+              <button className={wheelValue || vowelInterface || isSpinning || attemptToSolve || pauseControls?"hidden":"button solve"} onClick={solveIt} >Attempt to Solve!</button>
+              <button className={wheelValue || currentPlayer.score<250 || vowelInterface || noMoreVowels || isSpinning || attemptToSolve || pauseControls?"hidden":"button buy"} onClick={buyVowel} >Buy a Vowel!</button>
             </div>
 
             <div className="spin-solve-buy">
