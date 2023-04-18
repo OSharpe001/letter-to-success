@@ -19,25 +19,25 @@ export default function Results(props) {
 
   return (
     <div className="results-page">
-        <h1>Results</h1>
         <br/>
-        <h2>Congratulations, {props.winner.name}!</h2>
+        <h1>Congratulations, {props.winner.name}!</h1>
         <br/>
-        <p>You have won ${props.winner.score}</p>
+        <h2>You have won ${props.winner.score}</h2>
         <br/>
         {props.winner.prizes.length?
           <>
-            <p>and these are your prizes:</p>
+            <h2>and these are your prizes:</h2>
             <br/>
             <ul>
-              {props.winner.prizes.map((prize, index) => <li className="winner's_prizes" key={prize+index}>A {prize}</li>)}
+              {props.winner.prizes.map((prize, index) => <><li className="winner's_prizes" key={prize+index}><h3>- A {prize}</h3></li></>)}
             </ul>
           </>
           :
-          <p>Sorry. You didn't win any prizes, this time.</p>
+          <><h3>Sorry. You didn't win any prizes, this time.</h3><br/></>
         }
         <br/>
         <button className="button" onClick={playAgain}>Play Again!</button>
+        <br/>
         <br/>
         <button className="button" onClick={backHome}>Back to Home</button>
     </div>
