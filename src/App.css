@@ -430,6 +430,7 @@ header a:hover, .button:hover {
   /* justify-content: start; */
   /* justify-self: start; */
   /* justify-items: start; */
+  border-radius: 16px;
   border: 20px ridge green;
 }
 .game-status {
@@ -540,8 +541,9 @@ header a:hover, .button:hover {
   margin: 1vh auto 1vh;
 }
 .interface label {
-  /* font-size: 20px; */
+  margin: 0 0 1vh;
   font-weight: bold;
+  /* font-size: 20px; */
 }
 #guess-puzzle {
   width: 40ch;
@@ -595,11 +597,6 @@ header a:hover, .button:hover {
   flex-direction: column;
   text-align: center;
   margin: 0 auto;
-  /* border: 2px solid red; */
-}
-.interface label {
-  margin: 0 0 1vh;
-  /* padding: 0; */
   /* border: 2px solid red; */
 }
 .wheel-info {
