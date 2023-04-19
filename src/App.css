@@ -8,15 +8,16 @@
   --secondaryColor: rgb(247, 230, 196);
   background-color: var(--secondaryColor)
 }
-header nav{
-  background-color: var(--primaryColor);
+nav{
   height: 60px;
+  height: 7vh;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-evenly;
-  /* font-size: calc(10px + 2vmin); */
   color: var(--secondaryColor);
+  background-color: var(--primaryColor);
+  /* font-size: calc(10px + 2vmin); */
 }
 a {
   font-size: 16pt;
@@ -55,7 +56,7 @@ li {
   list-style: none;
 }
 .settings-page {
-  height:100vh;
+  height:93vh;
 }
 .form {
   /* justify-content: center; */
@@ -315,9 +316,7 @@ li {
   margin-left:6%;
   overflow: hidden;
   /* border: 2px solid red; */
-
   /* margin-right: 1%; */
-  
 }
 .pointer {
   font-size:40pt;
@@ -450,6 +449,9 @@ li {
   }
 }
 .game-page {
+  height: 93vh;
+}
+.board-set {
   display: flex;
   flex-direction: row;
 }
@@ -473,7 +475,7 @@ li {
   /* border: 2px solid blue; */
 }
 .players {
-  margin-top:1vh;
+  margin: 1vh 0 0;
   list-style-type: none;
   display: flex;
   justify-content: space-around;

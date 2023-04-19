@@ -1,12 +1,10 @@
-// import { Puzzles } from '../assets/puzzles'
+// TODO:
+// 
+// 1-REMEMBER TO REMOVE THE "{props.puzzlePhrase}" (ON LINE 19) WHEN THE REST OF THE GAME IS FIXED
+
 import LetterCard from './LetterCard';
 
 export default function Board(props) {
-
-  // const puzzleChoice = Puzzles[Math.floor(Math.random()*Puzzles.length)];
-  // const puzzleType = puzzleChoice.type;
-  // const puzzlePhrase = puzzleChoice.phrases[Math.floor(Math.random()*puzzleChoice.phrases.length)].toUpperCase()
-  // const puzzlePhraseLetters=[...puzzlePhrase]
 
   // console.log("BOARD.JS CURRENT RANDOM PUZZLECHOICE: ", puzzleChoice);
   // console.log("BOARD.JS CURRENT RANDOM PUZZLETYPE: ", puzzleType);
@@ -27,10 +25,12 @@ export default function Board(props) {
                 <LetterCard
                   letter={props.guessedLetters.indexOf(letter)>=0 || props.allLetters.indexOf(letter)<0?letter:" "}
                 />
-              </li>)}
-          </ul>)}
-        </div>
-        <h3 className="puzzle-type">{props.puzzleType}</h3>
+              </li>
+            )}
+          </ul>
+        )}
+      </div>
+      <h3 className="puzzle-type">{props.puzzleType}</h3>
     </div>
   );
 };

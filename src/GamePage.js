@@ -1,15 +1,15 @@
+// THE WHITE AT THE BOTTOM OF THE PAGE SIGNIFIES THE END OF MY STANDARD SCREEN HEIGHT
+
 // TODO:
 // 10-SETUP A BETTER PUZZLE DESIGN WITH MORE WORDS ON A SINGLE LINE AND
 //    A SET OF GREEN BACKGROUND BRICKS
 // 11-SET UP COMPUTER PLAYERS BEHAVIOR (POSSIBLE TO USE A USEEFFECT HOOK FOR THIS!)
 // ---COMPUTER LETTER SELECTION LIST (IN ORDER OF MOST POPULAR LETTER)
 // -----COMPUTER CHOICE OF LETTER GUESS BASED ON DIFFICULTY LEVEL
-// ---CONDITIONS FOR THE COMPUTER TO BUY A VOWEL(IF CURRENTPLAYER.SCORE>250? COMPUTERLETTERSELECTIONLIST-VOWELS)
+// ---CONDITIONS FOR THE COMPUTER TO BUY A VOWEL(IF CURRENTPLAYER.SCORE>250? COMPUTERLETTERSELECTIONLIST-=VOWELS)
 // 12-SET UP WHEEL SO THAT IT STOPS/STARTS ON THE PROPER SEGMENT
 // 13-CREATE A FUNCTION TO LIGHT UP AND THEN TURN THE LETTERS WHEN THEY ARE GUESSED
-// 14-SET THE "PLAYERNAMES"/"PLAYERS" CONFIGURATION UP TO SETTINGS.JS TO KEEP STABILITY IF THE REFRESH BUTTON IS PRESSED ON THE GAMEPAGE
-// ??15??-MAY HAVE TO PUSH THE PUZZLE PHRASE/TYPE SELECTOR UP TO SETTINGS.JS TO CURB APPEAL OF REFRESHING TO CHANGE THE PUZZLE ON GAMEPAGE.JS
-
+// 14-PUSH THE "PLAYERNAMES"/"PLAYERS" CONFIGURATION UP TO SETTINGS.JS TO KEEP STABILITY IF THE REFRESH BUTTON IS PRESSED ON THE GAMEPAGE
 
 import Board from "./components/Board";
 import Wheel from "./components/Wheel";
@@ -29,7 +29,7 @@ export default function GamePage(props) {
       computerPlayerNames.push("Computer "+(i+1))
   };
   const playerNames=[props.settingsData.player1_name, props.settingsData.player2_name, props.settingsData.player3_name, ...computerPlayerNames].filter(pName => pName!=="")
-  
+
   const [wheelInfo, setWheelInfo] = useState(["", 0, false])
   const [latestConsonant, setLatestConsonant] = useState("");
   const [latestVowel, setLatestVowel] = useState("");
@@ -62,8 +62,6 @@ export default function GamePage(props) {
   const autoReset = useEffect;
   const autoFocus = useEffect;
   const winner = useEffect;
-
-  
 
   const consonants = ["B", "C", "D", "F", "G", "H", "J", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "V", "W", "X", "Y", "Z"];
   const vowels = ["A", "E", "I", "O", "U"];
@@ -155,14 +153,13 @@ export default function GamePage(props) {
     // console.log("GAMEPAGE.JS' SOLVEIT IN PROGRESS");
     solveInput.current.focus();
     setAttemptToSolve(true);
-
   };
 
   const changeTurn = () => {
     setTurnCount(turnCount+1);
     setTimeout(setStatusMessage, 1750, `It's your turn, ${nextPlayer.name}.`);
     setWheelInfo(["", 0, false]);
-  }
+  };
 
   const changeScore = () => {
     // console.log("GAMEPAGE.JS' CHANGESCORE PLAYER'S INFO: ", players[currentPlayerNumber])
@@ -193,13 +190,13 @@ export default function GamePage(props) {
   const handleVowelGuess = (e) => {
     e.target.value=e.target.value.toUpperCase();
     // console.log("GAMEPAGE.JS HANDLEVOWELGUESS' E.TARGET.VALUE: ", e.target.value)
-    setLatestVowel(e.target.value)
+    setLatestVowel(e.target.value);
     if (vowels.indexOf(e.target.value)<0) {
-      setLatestGuessError("Choose a vowel.")
+      setLatestGuessError("Choose a vowel.");
     } else if (e.target.value==="" || e.target.value.length>1 || guessedLetters.indexOf(e.target.value)>-1) {
       setLatestGuessError("Choose a new single Vowel.");
     } else if (consonants.indexOf(e.target.value)>-1) {
-      setLatestGuessError("Please choose a Vowel.")
+      setLatestGuessError("Please choose a Vowel.");
     }else {
       setLatestGuessError("");
     };
@@ -208,7 +205,7 @@ export default function GamePage(props) {
   const guessLetter = (e) => {
     e.preventDefault();
     if (guessedLetters.indexOf(latestConsonant)<0 && latestConsonant!=="") {
-      setGuessedLetters(()=>{
+      setGuessedLetters(()=> {
         const newGuessedLetters=[...guessedLetters];
         newGuessedLetters.push(latestConsonant);
         newGuessedLetters.sort();
@@ -245,11 +242,11 @@ export default function GamePage(props) {
         setStatusMessage(`There are ${vowelMultiplier} ${latestVowel}'s!`);
       } else {
         setStatusMessage(`There is 1 ${latestVowel}.`);
-      }
+      };
       setVowelInterface(false);
       setPauseControls(true);
       setLatestVowel("");
-    }
+    };
   };
 
   const handlePuzzleGuess = (e) => {
@@ -257,18 +254,18 @@ export default function GamePage(props) {
     // console.log("GAMEPAGE.JS HANDLEPUZZLEGUESS' E.TARGET.VALUE: ", e.target.value)
     setGuessPuzzle(e.target.value);
     if (e.target.value==="") {
-      setGuessPuzzleError("You have to guess something...")
+      setGuessPuzzleError("You have to guess something...");
     } else if (e.target.value.length>75) {
-      setGuessPuzzleError("Please, give a reasonable guess.")
+      setGuessPuzzleError("Please, give a reasonable guess.");
     } else {
-      setGuessPuzzleError("")
-    }
+      setGuessPuzzleError("");
+    };
   };
 
   const AttemptToSolvePuzzle = (e) => {
     e.preventDefault();
     if (guessPuzzle===props.puzzlePhrase) {
-      setStatusMessage(`Congratulations, ${currentPlayer.name}! That was the correct answer!`)
+      setStatusMessage(`Congratulations, ${currentPlayer.name}! That was the correct answer!`);
       const filteredGuessPuzzle = [...guessPuzzle].filter(letter => allLetters.indexOf(letter)>=0);
       setTimeout(setGuessedLetters, 1500, [...new Set(filteredGuessPuzzle)]);
     } else if (guessPuzzle.length>0) {
@@ -281,7 +278,7 @@ export default function GamePage(props) {
 
   const toggleShowGuessedLetters = () => {
     setShowGuessedLetters(!showGuessedLetters);
-  }
+  };
 
   // console.log("GAMEPAGE.JS' RANDOM WHEELSEGMENT: ", WheelSegments[Math.floor(Math.random()*WheelSegments.length)]);
   // console.log("GAMEPAGE.JS WHEELSEGMENTS' RANDOM NUMBER: ", Math.floor(Math.random()*WheelSegments.length));
@@ -299,9 +296,8 @@ export default function GamePage(props) {
   // console.log("CONSONANTMULTIPLIER: ", consonantMultiplier);
 
   return (
-    <>
-        {/* <h1>GamePage...</h1> */}
-        <div className="game-page">
+    <div className="game-page">
+        <div className="board-set">
           <Board
             puzzlePhrase={props.puzzlePhrase}
             puzzleType={props.puzzleType}
@@ -397,6 +393,6 @@ export default function GamePage(props) {
           players={players}
           currentPlayer={currentPlayer.name}
           />
-    </>
+    </div>
   );
 };
