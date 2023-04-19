@@ -29,7 +29,7 @@ export default function Results(props) {
             <h2>and these are your prizes:</h2>
             <br/>
             <ul>
-              {props.winner.prizes.map((prize, index) => <><li className="winner's_prizes" key={prize+index}><h3>- A {prize}</h3></li></>)}
+              {props.winner.prizes.map((prize, index) => <><li className="winner's_prizes" key={index}><h3>- A {prize}</h3></li></>)}
             </ul>
           </>
           :
