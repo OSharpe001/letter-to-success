@@ -74,7 +74,7 @@ export default function Main() {
                                                 settingsData={settingsData}
                                                 puzzlePhrase={puzzlePhrase}
                                                 puzzleType={puzzleType}
-                                                computerDifficultyLevel={computerDifficultyLevel}
+                                                // computerDifficultyLevel={computerDifficultyLevel}
                                                 winner={winner}
                                                 setWinner={setWinner}
                                                 />}/>

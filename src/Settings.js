@@ -138,12 +138,12 @@ export default function Settings(props) {
         } else {
             // console.log("SETTINGS.JS' INFO FOR FORM SUBMITION: ",
             props.submitForm({
-                "human_player_amount":props.humanPlayerAmount,
-                "computer_player_amount":props.computerPlayerAmount,
-                "computer_difficulty_level":props.computerDifficultyLevel,
-                "player1_name":props.player1Name,
-                "player2_name":props.player2Name,
-                "player3_name":props.player3Name
+                "humanPlayerAmount":props.humanPlayerAmount,
+                "computerPlayerAmount":parseInt(props.computerPlayerAmount),
+                "computerDifficultyLevel":props.computerDifficultyLevel,
+                "player1Name":props.player1Name,
+                "player2Name":props.player2Name,
+                "player3Name":props.player3Name
             });
             clearForm();
         };

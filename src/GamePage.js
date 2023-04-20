@@ -8,10 +8,11 @@
 // 11-SETUP A BETTER PUZZLE DESIGN WITH MORE WORDS ON A SINGLE LINE AND
 //    A SET OF GREEN BACKGROUND BRICKS
 // 12-SET UP COMPUTER PLAYERS BEHAVIOR (POSSIBLE TO USE A USEEFFECT HOOK FOR THIS!)
-// ---COMPUTER LETTER SELECTION LIST (IN ORDER OF MOST POPULAR LETTER)
-// -----COMPUTER CHOICE OF LETTER GUESS BASED ON DIFFICULTY LEVEL
-// ---CONDITIONS FOR THE COMPUTER TO BUY A VOWEL(IF CURRENTPLAYER.SCORE>250? COMPUTERLETTERSELECTIONLIST-=VOWELS)
+// XXXXXXXXXXXXXXXXXXX---COMPUTER LETTER SELECTION LIST (IN ORDER OF MOST POPULAR LETTER)
+// XXXXXXXXXXXXXXXXXXX-----COMPUTER CHOICE OF LETTER GUESS BASED ON DIFFICULTY LEVEL
+// XXXXXXXXXXXXXXXXXXX---CONDITIONS FOR THE COMPUTER TO BUY A VOWEL(IF CURRENTPLAYER.SCORE>250? COMPUTERLETTERSELECTIONLIST+=VOWELS)
 // 13-SET UP WHEEL SO THAT IT STOPS/STARTS ON THE PROPER SEGMENT
+// 14-RECONFIGURE HOW "PLAYERS" INFO IS DERIVED
 
 import Board from "./components/Board";
 import Wheel from "./components/Wheel";
@@ -25,12 +26,12 @@ import { useNavigate } from "react-router-dom";
 
 export default function GamePage(props) {
 
-  const computerPlayerAmount=parseInt(props.settingsData.computer_player_amount);
+  const computerPlayerAmount=parseInt(props.settingsData.computerPlayerAmount);
   const computerPlayerNames=[];
   for (let i=0; i<computerPlayerAmount; i++) {
       computerPlayerNames.push("Computer "+(i+1))
   };
-  const playerNames=[props.settingsData.player1_name, props.settingsData.player2_name, props.settingsData.player3_name, ...computerPlayerNames].filter(pName => pName!=="")
+  const playerNames=[props.settingsData.player1Name, props.settingsData.player2Name, props.settingsData.player3Name, ...computerPlayerNames].filter(pName => pName!=="")
 
   const [wheelInfo, setWheelInfo] = useState(["", 0, false])
   const [latestConsonant, setLatestConsonant] = useState("");
@@ -67,11 +68,12 @@ export default function GamePage(props) {
   const autoReset = useEffect;
   const autoFocus = useEffect;
   const winner = useEffect;
+  const computerPlayersBehavior = useEffect;
 
   const consonants = ["B", "C", "D", "F", "G", "H", "J", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "V", "W", "X", "Y", "Z"];
   const vowels = ["A", "E", "I", "O", "U"];
-  const computerSelection = ["Z", "Q", "X", "J", "K", "V", "B", "P", "Y", "G", "F", "W", "M", "U", "C", "L", "D", "R", "H", "S", "N", "I", "O", "A", "T", "E"]
-  const allLetters = [...consonants, ...vowels];
+  const allLetters = ["Z", "Q", "X", "J", "K", "V", "B", "P", "Y", "G", "F", "W", "M", "U", "C", "L", "D", "R", "H", "S", "N", "I", "O", "A", "T", "E"]
+  // const allLetters = [...consonants, ...vowels];
   const puzzleLetters = props.puzzlePhrase.split("").filter(letter=>allLetters.indexOf(letter)>-1);
   const consonantMultiplier = (puzzleLetters.filter(letter=>letter===latestConsonant)).length;
   const vowelMultiplier= (puzzleLetters.filter(letter=>letter===latestVowel)).length;
@@ -106,6 +108,31 @@ export default function GamePage(props) {
       solveInput.current.focus();
     }
   }, [vowelInterface, wheelValue, attemptToSolve]);
+
+  computerPlayersBehavior(() => {
+    if (currentPlayer.name.indexOf("Computer")>=0) {
+      // setTurnCount(turnCount+1);     TEST OF USEEFFECT FUNCTIONALITY WITHOUT A DEPENDENCY
+      const smartPlay= Math.floor(Math.random() * 10)>props.settingsData.computerDifficultyLevel?"off":"on"
+      let computerSelection;
+      let computerChoice;
+      if (currentPlayer.score<vowelCost) {
+        computerSelection = [...allLetters].filter(letter => guessedLetters.indexOf(letter)<0).filter(letter => vowels.indexOf(letter)<0);
+      } else {
+        computerSelection = [...allLetters].filter(letter => guessedLetters.indexOf(letter)<0);
+      };
+      if (smartPlay==="on") {
+        computerChoice = computerSelection.slice(-1)
+      } else {
+        const randomGuess=Math.floor(Math.random() * computerSelection.length)
+        computerChoice = computerSelection.slice(randomGuess-1,randomGuess)
+      };
+
+      // console.log("A RANDOM NUMBER(1-9)", Math.floor(Math.random() * 10), "COMPUTER'S DIFFICULTY LEVEL", props.settingsData.computerDifficultyLevel)
+      console.log("CURRENT COMPUTERSELECTION", computerSelection);
+      console.log("SMARTPLAY IS ", smartPlay);
+      console.log("CURRENT COMPUTERCHOICE IS ", computerChoice);
+    }
+  },)
 
   winner(()=> {
     if (puzzleLetters.every(letter=>guessedLetters.indexOf(letter)>=0)) {
