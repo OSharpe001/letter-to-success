@@ -24,6 +24,7 @@ export default function Board(props) {
               <li key={index}>
                 <LetterCard
                   letter={props.guessedLetters.indexOf(letter)>=0 || props.allLetters.indexOf(letter)<0?letter:" "}
+                  latestLetter={props.latestLetter}
                 />
               </li>
             )}

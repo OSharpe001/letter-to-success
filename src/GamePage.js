@@ -1,15 +1,17 @@
 // THE WHITE AT THE BOTTOM OF THE PAGE SIGNIFIES THE END OF MY STANDARD SCREEN HEIGHT
 
+// TODO#14-PUSH THE "PLAYERNAMES"/"PLAYERS" CONFIGURATION UP TO SETTINGS.JS TO KEEP STABILITY IF THE REFRESH BUTTON IS PRESSED ON THE GAMEPAGE
+// --DIDN'T WORK!--THIS DIDN'T STOP "PLAYERS/PLAYERNAMES FROM CHANGING WHEN THE PAGE WAS REFRESHED
+//                 --ALSO, MY AUTORESET WAS INNEFECTIVE AFTER "PLAYERS/PLAYERNAMES" WAS MOVED TO MAIN.JS (I DON'T THINK USEEFFECT WORKS IF THE DEPENDENCY-LIST IS A PROP)
+
 // TODO:
-// 10-SETUP A BETTER PUZZLE DESIGN WITH MORE WORDS ON A SINGLE LINE AND
+// 11-SETUP A BETTER PUZZLE DESIGN WITH MORE WORDS ON A SINGLE LINE AND
 //    A SET OF GREEN BACKGROUND BRICKS
-// 11-SET UP COMPUTER PLAYERS BEHAVIOR (POSSIBLE TO USE A USEEFFECT HOOK FOR THIS!)
+// 12-SET UP COMPUTER PLAYERS BEHAVIOR (POSSIBLE TO USE A USEEFFECT HOOK FOR THIS!)
 // ---COMPUTER LETTER SELECTION LIST (IN ORDER OF MOST POPULAR LETTER)
 // -----COMPUTER CHOICE OF LETTER GUESS BASED ON DIFFICULTY LEVEL
 // ---CONDITIONS FOR THE COMPUTER TO BUY A VOWEL(IF CURRENTPLAYER.SCORE>250? COMPUTERLETTERSELECTIONLIST-=VOWELS)
-// 12-SET UP WHEEL SO THAT IT STOPS/STARTS ON THE PROPER SEGMENT
-// 13-CREATE A FUNCTION TO LIGHT UP AND THEN TURN THE LETTERS WHEN THEY ARE GUESSED
-// 14-PUSH THE "PLAYERNAMES"/"PLAYERS" CONFIGURATION UP TO SETTINGS.JS TO KEEP STABILITY IF THE REFRESH BUTTON IS PRESSED ON THE GAMEPAGE
+// 13-SET UP WHEEL SO THAT IT STOPS/STARTS ON THE PROPER SEGMENT
 
 import Board from "./components/Board";
 import Wheel from "./components/Wheel";
@@ -46,6 +48,9 @@ export default function GamePage(props) {
   const [guessPuzzle, setGuessPuzzle] = useState("");
   const [guessPuzzleError, setGuessPuzzleError] = useState("");
   const [pauseControls, setPauseControls] = useState(false);
+  //*** */
+  const [latestLetter, setLatestLetter] = useState("");
+  //*** */
   const [players, setPlayers]= useState(playerNames.map(player => (
     {
       "name":player,
@@ -108,6 +113,7 @@ export default function GamePage(props) {
       setTimeout(navigate, 3500, "/results");
     } else {
       setPauseControls(false);
+      setTimeout(setLatestLetter, 2000, true)
     }
   });
 
@@ -205,7 +211,10 @@ export default function GamePage(props) {
   const guessLetter = (e) => {
     e.preventDefault();
     if (guessedLetters.indexOf(latestConsonant)<0 && latestConsonant!=="") {
-      setGuessedLetters(()=> {
+      //*** */
+      setLatestLetter(latestConsonant);
+      //*** */
+      setTimeout(setGuessedLetters(()=> {
         const newGuessedLetters=[...guessedLetters];
         newGuessedLetters.push(latestConsonant);
         newGuessedLetters.sort();
@@ -214,7 +223,7 @@ export default function GamePage(props) {
           setTimeout(setStatusMessage, 3000, "There are no more consonants...");
         };
         return newGuessedLetters;
-      });
+      }), 1500)
       if (puzzleLetters.indexOf(latestConsonant)>=0) {
         changeScore();
         (consonantMultiplier>1?setStatusMessage(`There are ${consonantMultiplier} ${latestConsonant}'s!`):setStatusMessage(`There is 1 ${latestConsonant}.`));
@@ -225,7 +234,10 @@ export default function GamePage(props) {
       setPauseControls(true);
       setLatestConsonant("");
     } else if (guessedLetters.indexOf(latestVowel)<0 && latestVowel!=="") {
-      setGuessedLetters(()=>{
+      //*** */
+      setLatestLetter(latestVowel);
+      //*** */
+      setTimeout(setGuessedLetters(()=>{
         const newGuessedLetters=[...guessedLetters];
         newGuessedLetters.push(latestVowel);
         newGuessedLetters.sort();
@@ -234,7 +246,7 @@ export default function GamePage(props) {
           setTimeout(setStatusMessage, 3000, "There are no more vowels...");
         };
         return newGuessedLetters;
-      });
+      }), 1500);
       if (puzzleLetters.indexOf(latestVowel)<0) {
         setStatusMessage(`There are no ${latestVowel}'s. (sorry...)`);
         changeTurn();
@@ -302,6 +314,7 @@ export default function GamePage(props) {
             puzzlePhrase={props.puzzlePhrase}
             puzzleType={props.puzzleType}
             guessedLetters={guessedLetters}
+            latestLetter={latestLetter}
             allLetters={allLetters}
           />
           <Wheel
