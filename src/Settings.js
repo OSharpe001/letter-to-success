@@ -68,6 +68,7 @@ export default function Settings(props) {
             props.setPlayer1NameError("");
         };
     };
+
     const handleP2NameChange = (e) => {
         props.setPlayer2Name(e.target.value);
         if (!(e.target.value.indexOf("Computer")<0)) {
@@ -136,9 +137,6 @@ export default function Settings(props) {
             return
         } else {
             // console.log("SETTINGS.JS' INFO FOR FORM SUBMITION: ",
-            // props.humanPlayerAmount, props.computerPlayerAmount,
-            // props.computerDifficultyLevel, props.player1Name,
-            // props.player2Name, props.player3Name);
             props.submitForm({
                 "human_player_amount":props.humanPlayerAmount,
                 "computer_player_amount":props.computerPlayerAmount,
@@ -185,7 +183,6 @@ export default function Settings(props) {
             onChange={handleP1NameChange}
             />
             <p className="error-message">{props.player1NameError}</p>
-
 
             {props.humanPlayerAmount>1?
             <>

@@ -1,3 +1,5 @@
+
+
 import { useNavigate } from "react-router-dom";
 
 
@@ -17,7 +19,7 @@ export default function Results(props) {
 
   // console.log("RESULTS.JS' PROPS: ", props);
   // console.log("RESULTS.JS' PRIZES READOUT: ", props.winner.prizes.map((prize, index) => <h3 key={index} className="winner's_prizes">- A {prize}</h3>));
-  
+
   return (
     <div className="results-page">
         <br/>

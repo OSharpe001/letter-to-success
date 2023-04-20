@@ -70,6 +70,7 @@ export default function GamePage(props) {
 
   const consonants = ["B", "C", "D", "F", "G", "H", "J", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "V", "W", "X", "Y", "Z"];
   const vowels = ["A", "E", "I", "O", "U"];
+  const computerSelection = ["Z", "Q", "X", "J", "K", "V", "B", "P", "Y", "G", "F", "W", "M", "U", "C", "L", "D", "R", "H", "S", "N", "I", "O", "A", "T", "E"]
   const allLetters = [...consonants, ...vowels];
   const puzzleLetters = props.puzzlePhrase.split("").filter(letter=>allLetters.indexOf(letter)>-1);
   const consonantMultiplier = (puzzleLetters.filter(letter=>letter===latestConsonant)).length;
@@ -110,10 +111,10 @@ export default function GamePage(props) {
     if (puzzleLetters.every(letter=>guessedLetters.indexOf(letter)>=0)) {
       setStatusMessage(`${currentPlayer.name} HAS WON!!!`);
       setTimeout(props.setWinner, 3500, currentPlayer);
-      setTimeout(navigate, 3500, "/results");
+      setTimeout(navigate, 3501, "/results");
     } else {
       setPauseControls(false);
-      setTimeout(setLatestLetter, 2000, true)
+      setTimeout(setLatestLetter, 2200, "")
     }
   });
 
@@ -145,7 +146,7 @@ export default function GamePage(props) {
         return
       }
     }
-    setTimeout(badNews, 5500);
+    setTimeout(badNews, 5050);
   };
 
   const buyVowel = () => {
