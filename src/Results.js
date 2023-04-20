@@ -16,7 +16,8 @@ export default function Results(props) {
   };
 
   // console.log("RESULTS.JS' PROPS: ", props);
-
+  // console.log("RESULTS.JS' PRIZES READOUT: ", props.winner.prizes.map((prize, index) => <h3 key={index} className="winner's_prizes">- A {prize}</h3>));
+  
   return (
     <div className="results-page">
         <br/>
@@ -28,9 +29,7 @@ export default function Results(props) {
           <>
             <h2>and these are your prizes:</h2>
             <br/>
-            <ul>
-              {props.winner.prizes.map((prize, index) => <><li className="winner's_prizes" key={index}><h3>- A {prize}</h3></li></>)}
-            </ul>
+            {props.winner.prizes.map((prize, index) => <h3 key={index} className="winner's_prizes">- A {prize}</h3>)}
           </>
           :
           <><h3>Sorry. You didn't win any prizes, this time.</h3><br/></>
