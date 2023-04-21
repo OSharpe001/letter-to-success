@@ -52,6 +52,7 @@ export default function GamePage(props) {
   //*** */
   const [latestLetter, setLatestLetter] = useState("");
   //*** */
+  // const [currentComputerChoice, setCurrentComputerChoice] = useState("")
   const [players, setPlayers]= useState(playerNames.map(player => (
     {
       "name":player,
@@ -109,30 +110,70 @@ export default function GamePage(props) {
     }
   }, [vowelInterface, wheelValue, attemptToSolve]);
 
-  computerPlayersBehavior(() => {
-    if (currentPlayer.name.indexOf("Computer")>=0) {
-      // setTurnCount(turnCount+1);     TEST OF USEEFFECT FUNCTIONALITY WITHOUT A DEPENDENCY
-      const smartPlay= Math.floor(Math.random() * 10)>props.settingsData.computerDifficultyLevel?"off":"on"
-      let computerSelection;
-      let computerChoice;
-      if (currentPlayer.score<vowelCost) {
-        computerSelection = [...allLetters].filter(letter => guessedLetters.indexOf(letter)<0).filter(letter => vowels.indexOf(letter)<0);
-      } else {
-        computerSelection = [...allLetters].filter(letter => guessedLetters.indexOf(letter)<0);
-      };
-      if (smartPlay==="on") {
-        computerChoice = computerSelection.slice(-1)
-      } else {
-        const randomGuess=Math.floor(Math.random() * computerSelection.length)
-        computerChoice = computerSelection.slice(randomGuess-1,randomGuess)
-      };
+  // computerPlayersBehavior(() => {
+  //   if (currentPlayer.name.indexOf("Computer")===0) {
+  //     // setTurnCount(turnCount+1);     TEST OF USEEFFECT FUNCTIONALITY WITHOUT A DEPENDENCY
+  //     setPauseControls(true)
+  //     const smartPlay= Math.floor(Math.random() * 10)>props.settingsData.computerDifficultyLevel?"off":"on"
+  //     let computerSelection;
+  //     let computerChoice;
+  //     if (currentPlayer.score<vowelCost) {
+  //       computerSelection = [...allLetters].filter(letter => guessedLetters.indexOf(letter)<0).filter(letter => vowels.indexOf(letter)<0);
+  //     } else {
+  //       computerSelection = [...allLetters].filter(letter => guessedLetters.indexOf(letter)<0);
+  //     };
+  //     if (computerSelection.length===0) {
+  //       setStatusMessage(`${currentPlayer.name} passes their turn...`);
+  //       changeTurn();
+  //     }
+  //     if (smartPlay==="on") {
+  //       computerChoice = computerSelection.slice(-1).toString();
+  //     } else {
+  //       const randomGuess=Math.floor(Math.random() * computerSelection.length)
+  //       computerChoice = computerSelection.slice(randomGuess-1,randomGuess).toString();
+  //     };
+  //     // spinIt();
+  //     if (vowels.indexOf(computerChoice)>=0) {
+  //       let newList=[...players];
+  //       newList[currentPlayerNumber].score-=vowelCost;
+  //       setPlayers(newList);
+  //       setLatestVowel(computerChoice);
+  //       guessLetter();
+  //     } else {
+  //       setIsSpinning(!isSpinning);
+  //       setTimeout(stopSpinning,5000);
+  //       const newSpin=WheelSegments[Math.floor(Math.random()*WheelSegments.length)];
+  //       setTimeout(setWheelInfo, 5000, [newSpin.type, newSpin.value, newSpin.prize]);
+  //       const badNews= ()=> {
+  //         if (newSpin.type==="bankrupt") {
+  //           // console.log("NEWSPIN WAS A 'BANKRUPT'")
+  //           setStatusMessage(`${currentPlayer.name} just went BANKRUPT! (OUCH!)`);
+  //           let newList=[...players];
+  //           newList[currentPlayerNumber].score=0;
+  //           newList[currentPlayerNumber].prizes=[];
+  //           setPlayers(newList)
+  //           changeTurn();
+  //           return
+  //         }
+  //         if (newSpin.type==="loseturn") {
+  //           setStatusMessage(`${currentPlayer.name} just lost their turn! (sorry...)`);
+  //           // console.log("NEWSPIN WAS A 'LOSETURN'")
+  //           changeTurn();
+  //           return
+  //         }
+  //       }
+  //       setTimeout(badNews, 5050);
+  //       setTimeout(setLatestConsonant, 5100, computerChoice);
+  //       setTimeout(guessLetter, 5200);
 
-      // console.log("A RANDOM NUMBER(1-9)", Math.floor(Math.random() * 10), "COMPUTER'S DIFFICULTY LEVEL", props.settingsData.computerDifficultyLevel)
-      console.log("CURRENT COMPUTERSELECTION", computerSelection);
-      console.log("SMARTPLAY IS ", smartPlay);
-      console.log("CURRENT COMPUTERCHOICE IS ", computerChoice);
-    }
-  },)
+  //     }
+
+  //     // console.log("A RANDOM NUMBER(1-9)", Math.floor(Math.random() * 10), "COMPUTER'S DIFFICULTY LEVEL", props.settingsData.computerDifficultyLevel)
+  //     console.log("CURRENT COMPUTERSELECTION", computerSelection);
+  //     console.log("SMARTPLAY IS ", smartPlay);
+  //     console.log("CURRENT COMPUTERCHOICE IS ", computerChoice);
+  //   }
+  // }, players)
 
   winner(()=> {
     if (puzzleLetters.every(letter=>guessedLetters.indexOf(letter)>=0)) {
@@ -207,14 +248,15 @@ export default function GamePage(props) {
   };
 
   const handleConsonantGuess = (e) => {
-    e.target.value=e.target.value.toUpperCase();
-    // console.log("GAMEPAGE.JS HANDLECONSONANTGUESS' E.TARGET.VALUE: ", e.target.value)
-    setLatestConsonant(e.target.value)
-    if (consonants.indexOf(e.target.value)<0) {
+    console.log("GAMEPAGE.JS HANDLECONSONANTGUESS' E BEFORE TOUPPERCASE FUNCTION: ", e)
+    e=e.toUpperCase();
+    console.log("GAMEPAGE.JS HANDLECONSONANTGUESS' E.TARGET.VALUE: ", e)
+    setLatestConsonant(e)
+    if (consonants.indexOf(e)<0) {
       setLatestGuessError("Choose a consonant.")
-    } else if (e.target.value==="" || e.target.value.length>1 || guessedLetters.indexOf(e.target.value)>-1) {
+    } else if (e==="" || e.length>1 || guessedLetters.indexOf(e)>-1) {
       setLatestGuessError("Choose a new single consonant.");
-    } else if (vowels.indexOf(e.target.value)>-1) {
+    } else if (vowels.indexOf(e)>-1) {
       setLatestGuessError("Please choose a consonent.")
     }else {
       setLatestGuessError("");
@@ -222,14 +264,14 @@ export default function GamePage(props) {
   };
 
   const handleVowelGuess = (e) => {
-    e.target.value=e.target.value.toUpperCase();
-    // console.log("GAMEPAGE.JS HANDLEVOWELGUESS' E.TARGET.VALUE: ", e.target.value)
-    setLatestVowel(e.target.value);
-    if (vowels.indexOf(e.target.value)<0) {
+    e=e.toUpperCase();
+    console.log("GAMEPAGE.JS HANDLEVOWELGUESS' E.TARGET.VALUE: ", e)
+    setLatestVowel(e);
+    if (vowels.indexOf(e)<0) {
       setLatestGuessError("Choose a vowel.");
-    } else if (e.target.value==="" || e.target.value.length>1 || guessedLetters.indexOf(e.target.value)>-1) {
+    } else if (e==="" || e.length>1 || guessedLetters.indexOf(e)>-1) {
       setLatestGuessError("Choose a new single Vowel.");
-    } else if (consonants.indexOf(e.target.value)>-1) {
+    } else if (consonants.indexOf(e)>-1) {
       setLatestGuessError("Please choose a Vowel.");
     }else {
       setLatestGuessError("");
@@ -237,6 +279,9 @@ export default function GamePage(props) {
   };
 
   const guessLetter = (e) => {
+    // if (currentPlayer.name.indexOf("Computer")<0){
+    //   e.preventDefault();
+    // }
     e.preventDefault();
     if (guessedLetters.indexOf(latestConsonant)<0 && latestConsonant!=="") {
       //*** */
@@ -256,6 +301,7 @@ export default function GamePage(props) {
         changeScore();
         (consonantMultiplier>1?setStatusMessage(`There are ${consonantMultiplier} ${latestConsonant}'s!`):setStatusMessage(`There is 1 ${latestConsonant}.`));
       } else {
+        changeScore();
         setStatusMessage(`There are no ${latestConsonant}'s. (sorry...)`);
         changeTurn();
       };
@@ -378,7 +424,7 @@ export default function GamePage(props) {
                 id="guess-consonant"
                 placeholder="Consonant"
                 value={latestConsonant}
-                onChange={handleConsonantGuess}/>
+                onChange={e => handleConsonantGuess(e.target.value)}/>
                 
                 <label className={!vowelInterface?"hidden":null} htmlFor="guess-vowel">Guess a Vowel</label>
                 <input
@@ -389,7 +435,7 @@ export default function GamePage(props) {
                 id="guess-vowel"
                 placeholder="Vowel"
                 value={latestVowel}
-                onChange={handleVowelGuess}/>
+                onChange={e => handleVowelGuess(e.target.value)}/>
                 <button htmlFor={!vowelInterface?"guess-consonant":"guess-vowel"} className={vowelInterface || wheelValue?"button":"hidden"} disabled={guessDisabled} onClick={guessLetter} >Guess a Letter!</button>
                 <p className="error-message">{latestGuessError}</p>
               </form>
