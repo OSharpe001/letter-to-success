@@ -525,6 +525,7 @@ li {
 }
 .game-status {
   font-size: 30pt;
+  font-weight: bold;
   min-height: 5vh;
   margin: 2vh auto;
   /* border: 2px solid blue; */
