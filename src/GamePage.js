@@ -5,14 +5,11 @@
 //                 --ALSO, MY AUTORESET WAS INNEFECTIVE AFTER "PLAYERS/PLAYERNAMES" WAS MOVED TO MAIN.JS (I DON'T THINK USEEFFECT WORKS IF THE DEPENDENCY-LIST IS A PROP)
 
 // TODO:
-// 11-SETUP A BETTER PUZZLE DESIGN WITH MORE WORDS ON A SINGLE LINE AND
+// 12-SETUP A BETTER PUZZLE DESIGN WITH MORE WORDS ON A SINGLE LINE AND
 //    A SET OF GREEN BACKGROUND BRICKS
-// 12-SET UP COMPUTER PLAYERS BEHAVIOR (POSSIBLE TO USE A USEEFFECT HOOK FOR THIS!)
-// XXXXXXXXXXXXXXXXXXX---COMPUTER LETTER SELECTION LIST (IN ORDER OF MOST POPULAR LETTER)
-// XXXXXXXXXXXXXXXXXXX-----COMPUTER CHOICE OF LETTER GUESS BASED ON DIFFICULTY LEVEL
-// XXXXXXXXXXXXXXXXXXX---CONDITIONS FOR THE COMPUTER TO BUY A VOWEL(IF CURRENTPLAYER.SCORE>250? COMPUTERLETTERSELECTIONLIST+=VOWELS)
 // 13-SET UP WHEEL SO THAT IT STOPS/STARTS ON THE PROPER SEGMENT
 // 14-RECONFIGURE HOW "PLAYERS" INFO IS DERIVED
+// 15-SET UP BETTER COMPUTER PLAYERS' BEHAVIOR TIMING SO THAT THE TIMING OF INFO READOUTS CAN BE READ BY HUMAN PLAYERS -AND- THE GUESSED LETTERS ARE UPDATED PROPERLY
 
 import Board from "./components/Board";
 import Wheel from "./components/Wheel";
@@ -29,11 +26,11 @@ export default function GamePage(props) {
   const computerPlayerAmount=parseInt(props.settingsData.computerPlayerAmount);
   const computerPlayerNames=[];
   for (let i=0; i<computerPlayerAmount; i++) {
-      computerPlayerNames.push("Computer "+(i+1))
+      computerPlayerNames.push("Computer "+(i+1));
   };
   const playerNames=[props.settingsData.player1Name, props.settingsData.player2Name, props.settingsData.player3Name, ...computerPlayerNames].filter(pName => pName!=="")
 
-  const [wheelInfo, setWheelInfo] = useState(["", 0, false])
+  const [wheelInfo, setWheelInfo] = useState(["", 0, false]);
   const [latestConsonant, setLatestConsonant] = useState("");
   const [latestVowel, setLatestVowel] = useState("");
   const [latestGuessError, setLatestGuessError] = useState("");
@@ -50,7 +47,6 @@ export default function GamePage(props) {
   const [guessPuzzleError, setGuessPuzzleError] = useState("");
   const [pauseControls, setPauseControls] = useState(false);
   const [latestLetter, setLatestLetter] = useState("");
-  // const [currentComputerChoice, setCurrentComputerChoice] = useState("")
   const [players, setPlayers]= useState(playerNames.map(player => (
     {
       "name":player,
@@ -72,7 +68,6 @@ export default function GamePage(props) {
   const consonants = ["B", "C", "D", "F", "G", "H", "J", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "V", "W", "X", "Y", "Z"];
   const vowels = ["A", "E", "I", "O", "U"];
   const allLetters = ["Z", "Q", "X", "J", "K", "V", "B", "P", "Y", "G", "F", "W", "M", "U", "C", "L", "D", "R", "H", "S", "N", "I", "O", "A", "T", "E"]
-  // const allLetters = [...consonants, ...vowels];
   const puzzleLetters = props.puzzlePhrase.split("").filter(letter=>allLetters.indexOf(letter)>-1);
   const consonantMultiplier = (puzzleLetters.filter(letter=>letter===latestConsonant)).length;
   const vowelMultiplier= (puzzleLetters.filter(letter=>letter===latestVowel)).length;
@@ -110,7 +105,7 @@ export default function GamePage(props) {
 
   /*** */
   computerPlayersBehavior(() => {
-    if (currentPlayer.name.indexOf("Computer")!==0) {
+    if (currentPlayer.name.indexOf("Computer")!==0 || (puzzleLetters.every(letter=>guessedLetters.indexOf(letter)>=0))) {
       return
     } else {
       console.log("COMPUTERPLAYERBEHAVIOR STARTING...")
@@ -156,16 +151,6 @@ export default function GamePage(props) {
         newList[currentPlayerNumber].score-=vowelCost;
         setPlayers(newList);
         setLatestLetter(computerChoice);
-        // setTimeout(setGuessedLetters, 1500, () => {
-        //   const newGuessedLetters = [...guessedLetters];
-        //   newGuessedLetters.push(computerChoice);
-        //   newGuessedLetters.sort();
-        //   if (vowels.every(vowel => newGuessedLetters.indexOf(vowel) >= 0)) {
-        //     setNoMoreVowels(true);
-        //     setTimeout(setStatusMessage, 3000, "There are no more vowels...");
-        //   };
-        //   return newGuessedLetters;
-        // });
         setGuessedLetters(() => {
             const newGuessedLetters = [...guessedLetters];
             newGuessedLetters.push(computerChoice);
@@ -182,8 +167,6 @@ export default function GamePage(props) {
           if (puzzleLetters.indexOf(computerChoice) >= 0) {
             const vowelMultiplier = (puzzleLetters.filter(letter=>letter===computerChoice)).length;
             (vowelMultiplier>1?setStatusMessage(`There are ${vowelMultiplier} ${computerChoice}'s!`):setStatusMessage(`There is 1 ${computerChoice}.`));
-            // THIS IS THE "END OF PROCESS", SO FAR, FOR WHEN THE VOWEL IS GUESSED CORRECTLY BY COMPUTER PLAYER.
-                // ******NEED TO CREATE SOMETHING TO MAKE THE PROCESS RECYCLE*******
             return
           } else {
             setStatusMessage(`There are no ${computerChoice}'s. (sorry...)`);
@@ -197,7 +180,6 @@ export default function GamePage(props) {
         const newSpin=WheelSegments[Math.floor(Math.random()*WheelSegments.length)];
         setIsSpinning(true);
         setTimeout(stopSpinning, 5000);
-        // const newSpin=WheelSegments[Math.floor(Math.random()*WheelSegments.length)];
         setTimeout(setWheelInfo, 5000, [newSpin.type, newSpin.value, newSpin.prize]);
         console.log("GAMEPAGE.JS COMPUTERPLAYERBEHAVIOR NEWSPIN TYPE/VALUE/PRIZE: ", newSpin.type, newSpin.value, newSpin.prize)
         const guessOrLoseTurn= () => {
@@ -217,16 +199,6 @@ export default function GamePage(props) {
             return
           } else {
             setLatestLetter(computerChoice);
-            // setTimeout(setGuessedLetters, 1500, ()=> {
-            //   const newGuessedLetters=[...guessedLetters];
-            //   newGuessedLetters.push(computerChoice);
-            //   newGuessedLetters.sort();
-            //   if (consonants.every(consonant => newGuessedLetters.indexOf(consonant) >= 0)) {
-            //     setNoMoreConsonants(true);
-            //     setTimeout(setStatusMessage, 5000, "There are no more consonants...");
-            //   };
-            //   return newGuessedLetters;
-            // });
             setGuessedLetters(()=> {
               const newGuessedLetters=[...guessedLetters];
               newGuessedLetters.push(computerChoice);
@@ -251,13 +223,9 @@ export default function GamePage(props) {
                 }
                 setPlayers(newList);
                 (consonantMultiplier>1?setStatusMessage(`There are ${consonantMultiplier} ${computerChoice}'s!`):setStatusMessage(`There is 1 ${computerChoice}.`));
-                // THIS IS THE "END OF PROCESS", SO FAR, FOR WHEN THE CONSONANT IS GUESSED CORRECTLY BY COMPUTER PLAYER.
-                // ******NEED TO CREATE SOMETHING TO MAKE THE PROCESS RECYCLE*******
-                // return
               } else {
                 setStatusMessage(`There are no ${computerChoice}'s. (sorry...)`);
-                changeTurn(); // THIS CHANGETURN ALLOWS THE PROCESS TO RECYCLE IF CURRENT COMPUTER PLAYER GUESSES WRONG AND THE NEXT PLAYER IS A COMPUTER...
-                // setPauseControls(false);
+                changeTurn();
                 return
               };
             };
@@ -267,7 +235,7 @@ export default function GamePage(props) {
         };
         setTimeout(guessOrLoseTurn, 5005);
       };
-    }
+    };
   }, [currentPlayer, guessedLetters.length]);
   /*** */
 
@@ -289,9 +257,6 @@ export default function GamePage(props) {
 
   const spinIt = () =>{
     setStatusMessage("");
-    // if (currentPlayer.name.indexOf("Computer")!==0) {
-    //   setStatusMessage("");
-    // };
     setIsSpinning(true);
     setTimeout(stopSpinning,5000);
     const newSpin=WheelSegments[Math.floor(Math.random()*WheelSegments.length)];
@@ -326,13 +291,11 @@ export default function GamePage(props) {
 
   const solveIt = () => {
     // console.log("GAMEPAGE.JS' SOLVEIT IN PROGRESS");
-    // setStatusMessage("");
     solveInput.current.focus();
     setAttemptToSolve(true);
   };
 
   const changeTurn = (turnJump=1, time=1750) => {
-    // setStatusMessage("");
     setTurnCount(turnCount+turnJump);
     if (turnJump===1) {
       setTimeout(setStatusMessage, time, `It's your turn, ${nextPlayer.name}.`);
