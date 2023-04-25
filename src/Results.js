@@ -1,4 +1,6 @@
-
+// TODO: 
+// 
+// 1-SET UP A "YOU LOST" PAGE FOR TIMES WHEN A COMPUTER PLAYER WINS
 
 import { useNavigate } from "react-router-dom";
 

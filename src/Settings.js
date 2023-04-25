@@ -137,13 +137,28 @@ export default function Settings(props) {
             return
         } else {
             // console.log("SETTINGS.JS' INFO FOR FORM SUBMITION: ",
+            let humanPlayers = [props.player1Name, props.player2Name, props.player3Name].slice(0,props.humanPlayerAmount);
+            // humanPlayers=humanPlayers.slice(0,props.humanPlayerAmount)
+            const computerPlayers=[];
+            const computerPlayerNameGenerator = () => {
+                for (let i=0; i<parseInt(props.computerPlayerAmount); i++) {
+                computerPlayers.push("Computer "+(i+1));
+                };
+            };
+            computerPlayerNameGenerator();
+
+            // const playerNames=[...humanPlayers, ...computerPlayers];
+
             props.submitForm({
-                "humanPlayerAmount":props.humanPlayerAmount,
-                "computerPlayerAmount":parseInt(props.computerPlayerAmount),
-                "computerDifficultyLevel":props.computerDifficultyLevel,
-                "player1Name":props.player1Name,
-                "player2Name":props.player2Name,
-                "player3Name":props.player3Name
+                // "humanPlayerAmount":props.humanPlayerAmount,
+                // "computerPlayerAmount":parseInt(props.computerPlayerAmount),
+                "computerDifficultyLevel":parseInt(props.computerDifficultyLevel),
+                // "player1Name":props.player1Name,
+                // "player2Name":props.player2Name,
+                // "player3Name":props.player3Name,
+                "computerPlayers":computerPlayers,
+                "humanPlayers":humanPlayers,
+                // "playerNames":playerNames
             });
             clearForm();
         };

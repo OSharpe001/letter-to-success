@@ -5,10 +5,9 @@
 //                 --ALSO, MY AUTORESET WAS INNEFECTIVE AFTER "PLAYERS/PLAYERNAMES" WAS MOVED TO MAIN.JS (I DON'T THINK USEEFFECT WORKS IF THE DEPENDENCY-LIST IS A PROP)
 
 // TODO:
-// 12-SETUP A BETTER PUZZLE DESIGN WITH MORE WORDS ON A SINGLE LINE AND
+// 13-SETUP A BETTER PUZZLE DESIGN WITH MORE WORDS ON A SINGLE LINE AND
 //    A SET OF GREEN BACKGROUND BRICKS
-// 13-SET UP WHEEL SO THAT IT STOPS/STARTS ON THE PROPER SEGMENT
-// 14-RECONFIGURE HOW "PLAYERS" INFO IS DERIVED
+// 14-SET UP WHEEL SO THAT IT STOPS/STARTS ON THE PROPER SEGMENT
 // 15-SET UP BETTER COMPUTER PLAYERS' BEHAVIOR TIMING SO THAT THE TIMING OF INFO READOUTS CAN BE READ BY HUMAN PLAYERS -AND- THE GUESSED LETTERS ARE UPDATED PROPERLY
 
 import Board from "./components/Board";
@@ -23,12 +22,16 @@ import { useNavigate } from "react-router-dom";
 
 export default function GamePage(props) {
 
-  const computerPlayerAmount=parseInt(props.settingsData.computerPlayerAmount);
-  const computerPlayerNames=[];
-  for (let i=0; i<computerPlayerAmount; i++) {
-      computerPlayerNames.push("Computer "+(i+1));
-  };
-  const playerNames=[props.settingsData.player1Name, props.settingsData.player2Name, props.settingsData.player3Name, ...computerPlayerNames].filter(pName => pName!=="")
+  // const computerPlayerAmount=props.settingsData.computerPlayerAmount;
+  // const computerPlayerNames=[];
+  // const computerPlayerNameGenerator = () => {
+  //   for (let i=0; i<props.settingsData.computerPlayerAmount; i++) {
+  //     computerPlayerNames.push("Computer "+(i+1));
+  //   };
+  // };
+  // computerPlayerNameGenerator();
+
+  const playerNames=[...props.settingsData.humanPlayers, ...props.settingsData.computerPlayers];
 
   const [wheelInfo, setWheelInfo] = useState(["", 0, false]);
   const [latestConsonant, setLatestConsonant] = useState("");
@@ -67,7 +70,7 @@ export default function GamePage(props) {
 
   const consonants = ["B", "C", "D", "F", "G", "H", "J", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "V", "W", "X", "Y", "Z"];
   const vowels = ["A", "E", "I", "O", "U"];
-  const allLetters = ["Z", "Q", "X", "J", "K", "V", "B", "P", "Y", "G", "F", "W", "M", "U", "C", "L", "D", "R", "H", "S", "N", "I", "O", "A", "T", "E"]
+  const allLetters = ["Z", "Q", "X", "J", "K", "V", "B", "P", "Y", "G", "F", "W", "M", "U", "C", "L", "D", "R", "H", "S", "N", "I", "O", "A", "T", "E"];
   const puzzleLetters = props.puzzlePhrase.split("").filter(letter=>allLetters.indexOf(letter)>-1);
   const consonantMultiplier = (puzzleLetters.filter(letter=>letter===latestConsonant)).length;
   const vowelMultiplier= (puzzleLetters.filter(letter=>letter===latestVowel)).length;
@@ -85,22 +88,22 @@ export default function GamePage(props) {
 
   autoReset(()=> {
     // console.log('THE USEEFFECT HOOK "AUTORESET" WAS JUST TRIGGERRED');
-    if (!players[1].name) {
-      setPlayers([])
-      navigate("/settings")
-    }
-  },players);
+    if (!playerNames[1]) {
+      // setPlayers([]);
+      navigate("/settings");
+    };
+  }, players);
 
   autoFocus(()=> {
     if (vowelInterface) {
       vowelInput.current.focus();
-    }
+    };
     if (wheelValue) {
       consonantInput.current.focus();
-    }
+    };
     if (attemptToSolve) {
       solveInput.current.focus();
-    }
+    };
   }, [vowelInterface, wheelValue, attemptToSolve]);
 
   /*** */
