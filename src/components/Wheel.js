@@ -59,8 +59,8 @@ export default function Wheel(props) {
     };
   }, props.wheelInfo)
 
-  console.log("WHEEL.JS' PROPS: ", props)
-  console.log("WHEEL.JS' PROPS.WHEELINFO: ", props.wheelInfo)
+  // console.log("WHEEL.JS' PROPS: ", props)
+  // console.log("WHEEL.JS' PROPS.WHEELINFO: ", props.wheelInfo)
 
   return (
     <ul className={props.isSpinning?"spinning": "wheel "+latestWheelNumber}>

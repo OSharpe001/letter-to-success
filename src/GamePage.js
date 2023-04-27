@@ -1,13 +1,14 @@
 // THE WHITE AT THE BOTTOM OF THE PAGE SIGNIFIES THE END OF MY STANDARD SCREEN HEIGHT
 
 // TODO:
-// 14-SETUP A BETTER PUZZLE DESIGN WITH MORE WORDS ON A SINGLE LINE AND
+// 15-SETUP A BETTER PUZZLE DESIGN WITH MORE WORDS ON A SINGLE LINE AND
 //    A SET OF GREEN BACKGROUND BRICKS
-// 15-SET UP BETTER COMPUTER PLAYERS' BEHAVIOR TIMING SO THAT THE TIMING OF INFO READOUTS CAN BE READ BY HUMAN PLAYERS -AND- THE GUESSED LETTERS ARE UPDATED PROPERLY
 // 16-FIX THE AUTORESET FEATURE
 // 17-RECLAIM THE SPACE OF THE "WHEEL-INFO" DIV BY PLACING THAT INFO INTO "STATUSMESSAGES"
 // ??18-MAY NEED TO PLACE THE WHEEL AND POINTER IN A SEPARATE DIV TO MAKE SURE THE POINTER DOESN'T SEPARATE FROM THE WHEEL REGARDLESS OF PUZZLE HEIGHT
-// 19-CHANGE THE TIMING ON THE 
+// 19-CHANGE THE PLAYER PRIZES ALGO SO THAT A PLAYER CAN ONLY WIN ONE OF EACH PRIZE
+// 20-CHANGE THE TIMING ON THE WHEEL POINTER TO MAKE IT SHAKE FASTER AT THE BEGINNING
+
 
 import Board from "./components/Board";
 import Wheel from "./components/Wheel";
@@ -113,7 +114,7 @@ export default function GamePage(props) {
 
   /*** */
   computerPlayersBehavior(() => {
-    if (currentPlayer.name.indexOf("Computer")!==0 || (puzzleLetters.every(letter=>guessedLetters.indexOf(letter)>=0))) {
+    if (currentPlayer.name.indexOf("Computer")!==0 || (puzzleLetters.every(letter=>guessedLetters.indexOf(letter)>=0)) || !!statusMessage) {
       return
     } else {
       // console.log("COMPUTERPLAYERBEHAVIOR STARTING...")
@@ -138,6 +139,7 @@ export default function GamePage(props) {
         if (computerSelection.length===0) {
           // console.log("COMPUTERSELECTION.LENGTH IS ZERO. COMPUTER PASSES THEIR TURN...")
           setStatusMessage(`${currentPlayer.name} passes their turn...`);
+          setTimeout(setStatusMessage, 3000, "");
           changeTurn();
         };
       };
@@ -166,6 +168,7 @@ export default function GamePage(props) {
             if (vowels.every(vowel => newGuessedLetters.indexOf(vowel) >= 0)) {
               setNoMoreVowels(true);
               setTimeout(setStatusMessage, 3000, "There are no more vowels...");
+              setTimeout(setStatusMessage, 5000, "");
             };
             return newGuessedLetters;
           });
@@ -175,9 +178,11 @@ export default function GamePage(props) {
           if (puzzleLetters.indexOf(computerChoice) >= 0) {
             const vowelMultiplier = (puzzleLetters.filter(letter=>letter===computerChoice)).length;
             (vowelMultiplier>1?setStatusMessage(`There are ${vowelMultiplier} ${computerChoice}'s!`):setStatusMessage(`There is 1 ${computerChoice}.`));
+            setTimeout(setStatusMessage, 3000, "");
             return
           } else {
             setStatusMessage(`There are no ${computerChoice}'s. (sorry...)`);
+            setTimeout(setStatusMessage, 3000, "");
             changeTurn();
             return
           };
@@ -201,6 +206,7 @@ export default function GamePage(props) {
           if (newSpin.type==="bankrupt") {
             // console.log(`${currentPlayer.name} just went 'BANKRUPT'`)
             setStatusMessage(`${currentPlayer.name} just went BANKRUPT! (OUCH!)`);
+            setTimeout(setStatusMessage, 3000, "");
             let newList=[...players];
             newList[currentPlayerNumber].score=0;
             newList[currentPlayerNumber].prizes=[];
@@ -209,6 +215,7 @@ export default function GamePage(props) {
             return
           } else if (newSpin.type==="loseturn") {
             setStatusMessage(`${currentPlayer.name} just lost their turn! (sorry...)`);
+            setTimeout(setStatusMessage, 3000, "");
             // console.log(`${currentPlayer.name} just hit a 'LOSETURN'`)
             changeTurn();
             return
@@ -221,6 +228,7 @@ export default function GamePage(props) {
               if (consonants.every(consonant => newGuessedLetters.indexOf(consonant) >= 0)) {
                 setNoMoreConsonants(true);
                 setTimeout(setStatusMessage, 5000, "There are no more consonants...");
+                setTimeout(setStatusMessage, 7000, "");
               };
               setTimeout(setLatestLetter, 1500, "")
               return newGuessedLetters;
@@ -238,8 +246,10 @@ export default function GamePage(props) {
                 }
                 setPlayers(newList);
                 (consonantMultiplier>1?setStatusMessage(`There are ${consonantMultiplier} ${computerChoice}'s!`):setStatusMessage(`There is 1 ${computerChoice}.`));
+                setTimeout(setStatusMessage, 3000, "");
               } else {
                 setStatusMessage(`There are no ${computerChoice}'s. (sorry...)`);
+                setTimeout(setStatusMessage, 3000, "");
                 changeTurn();
                 return
               };
@@ -251,7 +261,7 @@ export default function GamePage(props) {
         setTimeout(guessOrLoseTurn, ((timer())+50));
       };
     };
-  }, [currentPlayer, guessedLetters.length]);
+  }, [currentPlayer, guessedLetters.length, statusMessage]);
   /*** */
 
 
@@ -287,6 +297,7 @@ export default function GamePage(props) {
         if (newSpin.type==="bankrupt") {
           // console.log("NEWSPIN WAS A 'BANKRUPT'")
           setStatusMessage(`${currentPlayer.name} just went BANKRUPT! (OUCH!)`);
+          setTimeout(setStatusMessage, 3000, "");
           let newList=[...players];
           newList[currentPlayerNumber].score=0;
           newList[currentPlayerNumber].prizes=[];
@@ -296,6 +307,7 @@ export default function GamePage(props) {
         }
       if (newSpin.type==="loseturn") {
         setStatusMessage(`${currentPlayer.name} just lost their turn! (sorry...)`);
+        setTimeout(setStatusMessage, 3000, "");
         // console.log("NEWSPIN WAS A 'LOSETURN'")
         changeTurn();
         return
@@ -321,6 +333,7 @@ export default function GamePage(props) {
     setTurnCount(turnCount+turnJump);
     if (turnJump===1) {
       setTimeout(setStatusMessage, time, `It's your turn, ${nextPlayer.name}.`);
+      setTimeout(setStatusMessage, time+2000, "");
     };
     setWheelInfo(["", 0, false]);
   };
@@ -378,14 +391,17 @@ export default function GamePage(props) {
         if (consonants.every(consonant=>newGuessedLetters.indexOf(consonant)>=0)) {
           setNoMoreConsonants(true);
           setTimeout(setStatusMessage, 3000, "There are no more consonants...");
+          setTimeout(setStatusMessage, 5000, "");
         };
         return newGuessedLetters;
       }), 1500)
       if (puzzleLetters.indexOf(latestConsonant)>=0) {
         changeScore();
         (consonantMultiplier>1?setStatusMessage(`There are ${consonantMultiplier} ${latestConsonant}'s!`):setStatusMessage(`There is 1 ${latestConsonant}.`));
+        setTimeout(setStatusMessage, 3000, "");
       } else {
         setStatusMessage(`There are no ${latestConsonant}'s. (sorry...)`);
+        setTimeout(setStatusMessage, 3000, "");
         changeTurn();
       };
       setPauseControls(true);
@@ -399,16 +415,20 @@ export default function GamePage(props) {
         if (vowels.every(vowel=>newGuessedLetters.indexOf(vowel)>=0)) {
           setNoMoreVowels(true);
           setTimeout(setStatusMessage, 3000, "There are no more vowels...");
+          setTimeout(setStatusMessage, 5000, "");
         };
         return newGuessedLetters;
       }), 1500);
       if (puzzleLetters.indexOf(latestVowel)<0) {
         setStatusMessage(`There are no ${latestVowel}'s. (sorry...)`);
+        setTimeout(setStatusMessage, 3000, "");
         changeTurn();
       } else if (vowelMultiplier>1){
         setStatusMessage(`There are ${vowelMultiplier} ${latestVowel}'s!`);
+        setTimeout(setStatusMessage, 3000, "");
       } else {
         setStatusMessage(`There is 1 ${latestVowel}.`);
+        setTimeout(setStatusMessage, 3000, "");
       };
       setVowelInterface(false);
       setPauseControls(true);
@@ -439,6 +459,7 @@ export default function GamePage(props) {
       setGuessPuzzle("");
       setAttemptToSolve(false);
       setStatusMessage(`Sorry ${currentPlayer.name}, that is not the correct answer.`);
+      setTimeout(setStatusMessage, 3000, "");
       changeTurn();
     };
   };

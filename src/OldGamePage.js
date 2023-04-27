@@ -1,19 +1,14 @@
-// GOT COMPUTER PLAYER BEHAVIOR TO WORK PERFECTLY (FROM WHAT I CAN SEE, SO FAR). HAD TO TAKE THE SETTIMEOUT FUNCTION OFF OF THE SETGUESSEDLETTERS FUNCTION. I THINK THAT THE DELAY WAS STOPPING THE NEXT ITERATION (IF THE GUESS WAS INCORRECT AND THE NEXT PLAYER WAS ALSO A COMPUTER PLAYER) FROM HAVING ACCESS TO THE PRIOR NEW "GUESSEDLETTER" LIST
 // THE WHITE AT THE BOTTOM OF THE PAGE SIGNIFIES THE END OF MY STANDARD SCREEN HEIGHT
 
-// TODO#14-PUSH THE "PLAYERNAMES"/"PLAYERS" CONFIGURATION UP TO SETTINGS.JS TO KEEP STABILITY IF THE REFRESH BUTTON IS PRESSED ON THE GAMEPAGE
-// --DIDN'T WORK!--THIS DIDN'T STOP "PLAYERS/PLAYERNAMES FROM CHANGING WHEN THE PAGE WAS REFRESHED
-//                 --ALSO, MY AUTORESET WAS INNEFECTIVE AFTER "PLAYERS/PLAYERNAMES" WAS MOVED TO MAIN.JS (I DON'T THINK USEEFFECT WORKS IF THE DEPENDENCY-LIST IS A PROP)
-
 // TODO:
-// 11-SETUP A BETTER PUZZLE DESIGN WITH MORE WORDS ON A SINGLE LINE AND
+// 15-SETUP A BETTER PUZZLE DESIGN WITH MORE WORDS ON A SINGLE LINE AND
 //    A SET OF GREEN BACKGROUND BRICKS
-// 12-SET UP COMPUTER PLAYERS BEHAVIOR (POSSIBLE TO USE A USEEFFECT HOOK FOR THIS!)
-// XXXXXXXXXXXXXXXXXXX---COMPUTER LETTER SELECTION LIST (IN ORDER OF MOST POPULAR LETTER)
-// XXXXXXXXXXXXXXXXXXX-----COMPUTER CHOICE OF LETTER GUESS BASED ON DIFFICULTY LEVEL
-// XXXXXXXXXXXXXXXXXXX---CONDITIONS FOR THE COMPUTER TO BUY A VOWEL(IF CURRENTPLAYER.SCORE>250? COMPUTERLETTERSELECTIONLIST+=VOWELS)
-// 13-SET UP WHEEL SO THAT IT STOPS/STARTS ON THE PROPER SEGMENT
-// 14-RECONFIGURE HOW "PLAYERS" INFO IS DERIVED
+// 16-FIX THE AUTORESET FEATURE
+// 17-RECLAIM THE SPACE OF THE "WHEEL-INFO" DIV BY PLACING THAT INFO INTO "STATUSMESSAGES"
+// ??18-MAY NEED TO PLACE THE WHEEL AND POINTER IN A SEPARATE DIV TO MAKE SURE THE POINTER DOESN'T SEPARATE FROM THE WHEEL REGARDLESS OF PUZZLE HEIGHT
+// 19-CHANGE THE PLAYER PRIZES ALGO SO THAT A PLAYER CAN ONLY WIN ONE OF EACH PRIZE
+// 20-CHANGE THE TIMING ON THE WHEEL POINTER TO MAKE IT SHAKE FASTER AT THE BEGINNING
+
 
 import Board from "./components/Board";
 import Wheel from "./components/Wheel";
@@ -27,14 +22,9 @@ import { useNavigate } from "react-router-dom";
 
 export default function GamePage(props) {
 
-  const computerPlayerAmount=parseInt(props.settingsData.computerPlayerAmount);
-  const computerPlayerNames=[];
-  for (let i=0; i<computerPlayerAmount; i++) {
-      computerPlayerNames.push("Computer "+(i+1))
-  };
-  const playerNames=[props.settingsData.player1Name, props.settingsData.player2Name, props.settingsData.player3Name, ...computerPlayerNames].filter(pName => pName!=="")
+  const playerNames=[...props.settingsData.humanPlayers, ...props.settingsData.computerPlayers];
 
-  const [wheelInfo, setWheelInfo] = useState(["", 0, false])
+  const [wheelInfo, setWheelInfo] = useState(["", 0, false]);
   const [latestConsonant, setLatestConsonant] = useState("");
   const [latestVowel, setLatestVowel] = useState("");
   const [latestGuessError, setLatestGuessError] = useState("");
@@ -51,7 +41,6 @@ export default function GamePage(props) {
   const [guessPuzzleError, setGuessPuzzleError] = useState("");
   const [pauseControls, setPauseControls] = useState(false);
   const [latestLetter, setLatestLetter] = useState("");
-  // const [currentComputerChoice, setCurrentComputerChoice] = useState("")
   const [players, setPlayers]= useState(playerNames.map(player => (
     {
       "name":player,
@@ -72,13 +61,27 @@ export default function GamePage(props) {
 
   const consonants = ["B", "C", "D", "F", "G", "H", "J", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "V", "W", "X", "Y", "Z"];
   const vowels = ["A", "E", "I", "O", "U"];
-  const allLetters = ["Z", "Q", "X", "J", "K", "V", "B", "P", "Y", "G", "F", "W", "M", "U", "C", "L", "D", "R", "H", "S", "N", "I", "O", "A", "T", "E"]
-  // const allLetters = [...consonants, ...vowels];
+  const allLetters = ["Z", "Q", "X", "J", "K", "V", "B", "P", "Y", "G", "F", "W", "M", "U", "C", "L", "D", "R", "H", "S", "N", "I", "O", "A", "T", "E"];
   const puzzleLetters = props.puzzlePhrase.split("").filter(letter=>allLetters.indexOf(letter)>-1);
   const consonantMultiplier = (puzzleLetters.filter(letter=>letter===latestConsonant)).length;
   const vowelMultiplier= (puzzleLetters.filter(letter=>letter===latestVowel)).length;
   const wheelValue = wheelInfo[1];
   const wheelPrize = wheelInfo[2];
+  const wheelTiming = {
+    1000:6800,
+    "bankrupt":6350,
+    2500:5900,
+    950:5450,
+    750:5000,
+    500:4550,
+    800:4150,
+    "loseturn":3750,
+    1000000:3300,
+    650:2900,
+    900:2500,
+    700:2050,
+    600:1635
+  };
   const vowelCost= 250;
 
   const currentPlayerNumber = [(turnCount)%(playerNames.length)];
@@ -89,35 +92,35 @@ export default function GamePage(props) {
   const guessPuzzleDisabled = guessPuzzleError;
 
 
+  // ***AUTORESET IS CURRENTLY INNEFFECTIVE*** //
   autoReset(()=> {
     // console.log('THE USEEFFECT HOOK "AUTORESET" WAS JUST TRIGGERRED');
-    if (!players[1].name) {
-      setPlayers([])
-      navigate("/settings")
-    }
-  },players);
+    if (!playerNames[1]) {
+      navigate("/settings");
+    };
+  }, players);
 
   autoFocus(()=> {
     if (vowelInterface) {
       vowelInput.current.focus();
-    }
+    };
     if (wheelValue) {
       consonantInput.current.focus();
-    }
+    };
     if (attemptToSolve) {
       solveInput.current.focus();
-    }
+    };
   }, [vowelInterface, wheelValue, attemptToSolve]);
 
   /*** */
   computerPlayersBehavior(() => {
-    if (currentPlayer.name.indexOf("Computer")!==0) {
+    if (currentPlayer.name.indexOf("Computer")!==0 || (puzzleLetters.every(letter=>guessedLetters.indexOf(letter)>=0)) || !!statusMessage) {
       return
     } else {
-      console.log("COMPUTERPLAYERBEHAVIOR STARTING...")
-      console.log("GAMEPAGE.JS COMPUTERPLAYERBEHAVIOR CURRENTPLAYER: ", currentPlayer);
+      // console.log("COMPUTERPLAYERBEHAVIOR STARTING...")
+      // console.log("GAMEPAGE.JS COMPUTERPLAYERBEHAVIOR CURRENTPLAYER: ", currentPlayer);
       const smartPlay= Math.floor(Math.random() * 10)>props.settingsData.computerDifficultyLevel?"off":"on";
-      console.log("SMARTPLAY IS ", smartPlay);
+      // console.log("SMARTPLAY IS ", smartPlay);
 
       let computerSelection;
       let computerChoice;
@@ -129,13 +132,14 @@ export default function GamePage(props) {
         };
       };
       getComputerSelection();
-      console.log("CURRENT COMPUTERSELECTION", computerSelection);
+      // console.log("CURRENT COMPUTERSELECTION", computerSelection);
 
 
       const guessOrPass = () => {
         if (computerSelection.length===0) {
-          console.log("COMPUTERSELECTION.LENGTH IS ZERO. COMPUTER PASSES THEIR TURN...")
+          // console.log("COMPUTERSELECTION.LENGTH IS ZERO. COMPUTER PASSES THEIR TURN...")
           setStatusMessage(`${currentPlayer.name} passes their turn...`);
+          setTimeout(setStatusMessage, 3000, "");
           changeTurn();
         };
       };
@@ -150,23 +154,13 @@ export default function GamePage(props) {
         };
       };
       getComputerChoice();
-      console.log("CURRENT COMPUTERCHOICE IS ", computerChoice);
+      // console.log("CURRENT COMPUTERCHOICE IS ", computerChoice);
 
       if (vowels.indexOf(computerChoice)>=0) {
         let newList=[...players];
         newList[currentPlayerNumber].score-=vowelCost;
         setPlayers(newList);
         setLatestLetter(computerChoice);
-        // setTimeout(setGuessedLetters, 1500, () => {
-        //   const newGuessedLetters = [...guessedLetters];
-        //   newGuessedLetters.push(computerChoice);
-        //   newGuessedLetters.sort();
-        //   if (vowels.every(vowel => newGuessedLetters.indexOf(vowel) >= 0)) {
-        //     setNoMoreVowels(true);
-        //     setTimeout(setStatusMessage, 3000, "There are no more vowels...");
-        //   };
-        //   return newGuessedLetters;
-        // });
         setGuessedLetters(() => {
             const newGuessedLetters = [...guessedLetters];
             newGuessedLetters.push(computerChoice);
@@ -174,6 +168,7 @@ export default function GamePage(props) {
             if (vowels.every(vowel => newGuessedLetters.indexOf(vowel) >= 0)) {
               setNoMoreVowels(true);
               setTimeout(setStatusMessage, 3000, "There are no more vowels...");
+              setTimeout(setStatusMessage, 5000, "");
             };
             return newGuessedLetters;
           });
@@ -183,11 +178,11 @@ export default function GamePage(props) {
           if (puzzleLetters.indexOf(computerChoice) >= 0) {
             const vowelMultiplier = (puzzleLetters.filter(letter=>letter===computerChoice)).length;
             (vowelMultiplier>1?setStatusMessage(`There are ${vowelMultiplier} ${computerChoice}'s!`):setStatusMessage(`There is 1 ${computerChoice}.`));
-            // THIS IS THE "END OF PROCESS", SO FAR, FOR WHEN THE VOWEL IS GUESSED CORRECTLY BY COMPUTER PLAYER.
-                // ******NEED TO CREATE SOMETHING TO MAKE THE PROCESS RECYCLE*******
+            setTimeout(setStatusMessage, 3000, "");
             return
           } else {
             setStatusMessage(`There are no ${computerChoice}'s. (sorry...)`);
+            setTimeout(setStatusMessage, 3000, "");
             changeTurn();
             return
           };
@@ -196,15 +191,22 @@ export default function GamePage(props) {
 
       } else {
         const newSpin=WheelSegments[Math.floor(Math.random()*WheelSegments.length)];
+        setWheelInfo([newSpin.type, newSpin.value, newSpin.prize]);
+        const timer=()=> {
+          if (!newSpin.value) {
+            return wheelTiming[newSpin.type]
+          } else {
+            return wheelTiming[newSpin.value]
+          };
+        };
         setIsSpinning(true);
-        setTimeout(stopSpinning, 5000);
-        // const newSpin=WheelSegments[Math.floor(Math.random()*WheelSegments.length)];
-        setTimeout(setWheelInfo, 5000, [newSpin.type, newSpin.value, newSpin.prize]);
-        console.log("GAMEPAGE.JS COMPUTERPLAYERBEHAVIOR NEWSPIN TYPE/VALUE/PRIZE: ", newSpin.type, newSpin.value, newSpin.prize)
+        setTimeout(stopSpinning, timer());
+        // console.log("GAMEPAGE.JS COMPUTERPLAYERBEHAVIOR NEWSPIN TYPE/VALUE/PRIZE: ", newSpin.type, newSpin.value, newSpin.prize)
         const guessOrLoseTurn= () => {
           if (newSpin.type==="bankrupt") {
-            console.log(`${currentPlayer.name} just went 'BANKRUPT'`)
+            // console.log(`${currentPlayer.name} just went 'BANKRUPT'`)
             setStatusMessage(`${currentPlayer.name} just went BANKRUPT! (OUCH!)`);
+            setTimeout(setStatusMessage, 3000, "");
             let newList=[...players];
             newList[currentPlayerNumber].score=0;
             newList[currentPlayerNumber].prizes=[];
@@ -213,21 +215,12 @@ export default function GamePage(props) {
             return
           } else if (newSpin.type==="loseturn") {
             setStatusMessage(`${currentPlayer.name} just lost their turn! (sorry...)`);
-            console.log(`${currentPlayer.name} just hit a 'LOSETURN'`)
+            setTimeout(setStatusMessage, 3000, "");
+            // console.log(`${currentPlayer.name} just hit a 'LOSETURN'`)
             changeTurn();
             return
           } else {
             setLatestLetter(computerChoice);
-            // setTimeout(setGuessedLetters, 1500, ()=> {
-            //   const newGuessedLetters=[...guessedLetters];
-            //   newGuessedLetters.push(computerChoice);
-            //   newGuessedLetters.sort();
-            //   if (consonants.every(consonant => newGuessedLetters.indexOf(consonant) >= 0)) {
-            //     setNoMoreConsonants(true);
-            //     setTimeout(setStatusMessage, 5000, "There are no more consonants...");
-            //   };
-            //   return newGuessedLetters;
-            // });
             setGuessedLetters(()=> {
               const newGuessedLetters=[...guessedLetters];
               newGuessedLetters.push(computerChoice);
@@ -235,6 +228,7 @@ export default function GamePage(props) {
               if (consonants.every(consonant => newGuessedLetters.indexOf(consonant) >= 0)) {
                 setNoMoreConsonants(true);
                 setTimeout(setStatusMessage, 5000, "There are no more consonants...");
+                setTimeout(setStatusMessage, 7000, "");
               };
               setTimeout(setLatestLetter, 1500, "")
               return newGuessedLetters;
@@ -243,22 +237,20 @@ export default function GamePage(props) {
               if (puzzleLetters.indexOf(computerChoice)>=0) {
                 let newList=[...players];
                 const consonantMultiplier = (puzzleLetters.filter(letter=>letter===computerChoice)).length;
-                console.log("GAMEPAGE.JS COMPUTERPLAYERBEHAVIOR HITORMISS' CONSONANTMULTIPLIER: ", consonantMultiplier)
-                console.log("GAMEPAGE.JS COMPUTERPLAYERBEHAVIOR HITORMISS' NEWSPIN.VALUE: ", newSpin.value)
-                console.log("GAMEPAGE.JS COMPUTERPLAYERBEHAVIOR HITORMISS' NEWSPIN.PRIZE: ", newSpin.prize)
+                // console.log("GAMEPAGE.JS COMPUTERPLAYERBEHAVIOR HITORMISS' CONSONANTMULTIPLIER: ", consonantMultiplier)
+                // console.log("GAMEPAGE.JS COMPUTERPLAYERBEHAVIOR HITORMISS' NEWSPIN.VALUE: ", newSpin.value)
+                // console.log("GAMEPAGE.JS COMPUTERPLAYERBEHAVIOR HITORMISS' NEWSPIN.PRIZE: ", newSpin.prize)
                 newList[currentPlayerNumber].score+=(newSpin.value*consonantMultiplier);
                 if (newSpin.prize) {
                   newList[currentPlayerNumber].prizes.push(newSpin.prize);
                 }
                 setPlayers(newList);
                 (consonantMultiplier>1?setStatusMessage(`There are ${consonantMultiplier} ${computerChoice}'s!`):setStatusMessage(`There is 1 ${computerChoice}.`));
-                // THIS IS THE "END OF PROCESS", SO FAR, FOR WHEN THE CONSONANT IS GUESSED CORRECTLY BY COMPUTER PLAYER.
-                // ******NEED TO CREATE SOMETHING TO MAKE THE PROCESS RECYCLE*******
-                // return
+                setTimeout(setStatusMessage, 3000, "");
               } else {
                 setStatusMessage(`There are no ${computerChoice}'s. (sorry...)`);
-                changeTurn(); // THIS CHANGETURN ALLOWS THE PROCESS TO RECYCLE IF CURRENT COMPUTER PLAYER GUESSES WRONG AND THE NEXT PLAYER IS A COMPUTER...
-                // setPauseControls(false);
+                setTimeout(setStatusMessage, 3000, "");
+                changeTurn();
                 return
               };
             };
@@ -266,10 +258,10 @@ export default function GamePage(props) {
           };
           setWheelInfo(["", 0, false]);
         };
-        setTimeout(guessOrLoseTurn, 5005);
+        setTimeout(guessOrLoseTurn, ((timer())+50));
       };
-    }
-  }, [currentPlayer, guessedLetters.length]);
+    };
+  }, [currentPlayer, guessedLetters.length, statusMessage]);
   /*** */
 
 
@@ -289,18 +281,23 @@ export default function GamePage(props) {
   };
 
   const spinIt = () =>{
-    setStatusMessage("");
-    // if (currentPlayer.name.indexOf("Computer")!==0) {
-    //   setStatusMessage("");
-    // };
-    setIsSpinning(true);
-    setTimeout(stopSpinning,5000);
     const newSpin=WheelSegments[Math.floor(Math.random()*WheelSegments.length)];
-    setTimeout(setWheelInfo, 5000, [newSpin.type, newSpin.value, newSpin.prize]);
+    setWheelInfo([newSpin.type, newSpin.value, newSpin.prize]);
+    const timer=()=> {
+      if (!newSpin.value) {
+        return wheelTiming[newSpin.type]
+      } else {
+        return wheelTiming[newSpin.value]
+      };
+    };
+    setStatusMessage("");
+    setIsSpinning(true);
+    setTimeout(stopSpinning, timer());
     const badNews= ()=> {
         if (newSpin.type==="bankrupt") {
           // console.log("NEWSPIN WAS A 'BANKRUPT'")
           setStatusMessage(`${currentPlayer.name} just went BANKRUPT! (OUCH!)`);
+          setTimeout(setStatusMessage, 3000, "");
           let newList=[...players];
           newList[currentPlayerNumber].score=0;
           newList[currentPlayerNumber].prizes=[];
@@ -310,12 +307,13 @@ export default function GamePage(props) {
         }
       if (newSpin.type==="loseturn") {
         setStatusMessage(`${currentPlayer.name} just lost their turn! (sorry...)`);
+        setTimeout(setStatusMessage, 3000, "");
         // console.log("NEWSPIN WAS A 'LOSETURN'")
         changeTurn();
         return
       }
     }
-    setTimeout(badNews, 5050);
+    setTimeout(badNews, ((timer())+50));
   };
 
   const buyVowel = () => {
@@ -327,16 +325,15 @@ export default function GamePage(props) {
 
   const solveIt = () => {
     // console.log("GAMEPAGE.JS' SOLVEIT IN PROGRESS");
-    // setStatusMessage("");
     solveInput.current.focus();
     setAttemptToSolve(true);
   };
 
   const changeTurn = (turnJump=1, time=1750) => {
-    // setStatusMessage("");
     setTurnCount(turnCount+turnJump);
     if (turnJump===1) {
       setTimeout(setStatusMessage, time, `It's your turn, ${nextPlayer.name}.`);
+      setTimeout(setStatusMessage, time+2000, "");
     };
     setWheelInfo(["", 0, false]);
   };
@@ -350,7 +347,7 @@ export default function GamePage(props) {
     };
     setWheelInfo(["", 0, false]);
     setPlayers(newList)
-  }; 
+  };
 
   const handleConsonantGuess = (e) => {
     // console.log("GAMEPAGE.JS HANDLECONSONANTGUESS' E BEFORE TOUPPERCASE FUNCTION: ", e)
@@ -394,14 +391,17 @@ export default function GamePage(props) {
         if (consonants.every(consonant=>newGuessedLetters.indexOf(consonant)>=0)) {
           setNoMoreConsonants(true);
           setTimeout(setStatusMessage, 3000, "There are no more consonants...");
+          setTimeout(setStatusMessage, 5000, "");
         };
         return newGuessedLetters;
       }), 1500)
       if (puzzleLetters.indexOf(latestConsonant)>=0) {
         changeScore();
         (consonantMultiplier>1?setStatusMessage(`There are ${consonantMultiplier} ${latestConsonant}'s!`):setStatusMessage(`There is 1 ${latestConsonant}.`));
+        setTimeout(setStatusMessage, 3000, "");
       } else {
         setStatusMessage(`There are no ${latestConsonant}'s. (sorry...)`);
+        setTimeout(setStatusMessage, 3000, "");
         changeTurn();
       };
       setPauseControls(true);
@@ -415,16 +415,20 @@ export default function GamePage(props) {
         if (vowels.every(vowel=>newGuessedLetters.indexOf(vowel)>=0)) {
           setNoMoreVowels(true);
           setTimeout(setStatusMessage, 3000, "There are no more vowels...");
+          setTimeout(setStatusMessage, 5000, "");
         };
         return newGuessedLetters;
       }), 1500);
       if (puzzleLetters.indexOf(latestVowel)<0) {
         setStatusMessage(`There are no ${latestVowel}'s. (sorry...)`);
+        setTimeout(setStatusMessage, 3000, "");
         changeTurn();
       } else if (vowelMultiplier>1){
         setStatusMessage(`There are ${vowelMultiplier} ${latestVowel}'s!`);
+        setTimeout(setStatusMessage, 3000, "");
       } else {
         setStatusMessage(`There is 1 ${latestVowel}.`);
+        setTimeout(setStatusMessage, 3000, "");
       };
       setVowelInterface(false);
       setPauseControls(true);
@@ -455,6 +459,7 @@ export default function GamePage(props) {
       setGuessPuzzle("");
       setAttemptToSolve(false);
       setStatusMessage(`Sorry ${currentPlayer.name}, that is not the correct answer.`);
+      setTimeout(setStatusMessage, 3000, "");
       changeTurn();
     };
   };
@@ -490,6 +495,7 @@ export default function GamePage(props) {
           />
           <Wheel
             isSpinning={isSpinning}
+            wheelInfo={wheelInfo}
             />
           <Pointer
             isMoving={isSpinning}
@@ -499,10 +505,10 @@ export default function GamePage(props) {
           <p className="game-status">{statusMessage}</p>
 
           <div className={"interface"}>
-            <div className="wheel-info">
+            {/* <div className="wheel-info">
               <p className={wheelValue?null:"hidden"}>${wheelValue}</p>
               <p className={wheelValue && wheelPrize?null:"hidden"}>and  a {wheelPrize}</p>
-            </div>
+            </div> */}
 
             <div className="interface-options">
               <button className={wheelValue || vowelInterface || noMoreConsonants || isSpinning || attemptToSolve || pauseControls?"hidden":"button spin"} onClick={spinIt} >Spin It!</button>
@@ -511,8 +517,8 @@ export default function GamePage(props) {
             </div>
 
             <div className="spin-solve-buy">
-              <form className={(!wheelValue && !vowelInterface) || currentPlayer.name.indexOf("Computer")>=0?"hidden":!vowelInterface?"left":"right"}>
-                <label className={!wheelValue?"hidden":null} htmlFor="guess-consonant">Guess a Consonant</label>
+              <form className={((!wheelValue || isSpinning) && !vowelInterface) || currentPlayer.name.indexOf("Computer")>=0?"hidden":!vowelInterface?"left":"right"}>
+                <label className={!wheelValue || isSpinning?"hidden":null} htmlFor="guess-consonant">Guess a Consonant</label>
                 <input
                 ref={consonantInput}
                 className={!wheelValue?"hidden":null}
