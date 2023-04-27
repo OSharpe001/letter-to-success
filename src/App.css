@@ -6,7 +6,8 @@
   font-size: 16pt;
   --primaryColor: rgb(32, 78, 32);
   --secondaryColor: rgb(247, 230, 196);
-  background-color: var(--secondaryColor)
+  background-color: var(--secondaryColor);
+  --primaryDeg: 0deg;
 }
 nav{
   height: 60px;
@@ -106,7 +107,49 @@ li {
   overflow: hidden;
   border-radius: 50%;
   border: 5px solid black;
+  /* rotate:  332.3deg; */
+  /*skew(62deg)*/;
   /* background-color: lightgrey; */
+}
+.wheel1 {
+  --primaryDeg: 13.8deg;
+  /* rotate: var(--primaryDeg); */
+}.wheel2 {
+  --primaryDeg: 41.5deg;
+  /* rotate: var(--primaryDeg); */
+}.wheel3 {
+  --primaryDeg: 69.2deg;
+  /* rotate: var(--primaryDeg); */
+}.wheel4 {
+  --primaryDeg: 96.9deg;
+  /* rotate: var(--primaryDeg); */
+}.wheel5 {
+  --primaryDeg: 124.6deg;
+  /* rotate: var(--primaryDeg); */
+}.wheel6 {
+  --primaryDeg: 152.3deg;
+  /* rotate: var(--primaryDeg); */
+}.wheel7 {
+  --primaryDeg: 180deg;
+  /* rotate: var(--primaryDeg); */
+}.wheel8 {
+  --primaryDeg: 207.7deg;
+  /* rotate: var(--primaryDeg); */
+}.wheel9 {
+  --primaryDeg: 235.3deg;
+  /* rotate: var(--primaryDeg); */
+}.wheel10 {
+  --primaryDeg: 263deg;
+  /* rotate: var(--primaryDeg); */
+}.wheel11 {
+  --primaryDeg: 290.7deg;
+  /* rotate: var(--primaryDeg); */
+}.wheel12 {
+  --primaryDeg: 318.4deg;
+  /* rotate: var(--primaryDeg); */
+}.wheel13 {
+  --primaryDeg: 346.1deg;
+  /* rotate: var(--primaryDeg); */
 }
 .home-page .wheel {
   margin: 10vh auto 0;
@@ -340,7 +383,7 @@ li {
   border-radius: 50%;
   border: 5px solid black;
   animation-name: spinning;
-  animation-duration: 5s;
+  animation-duration: 7s;
   animation-iteration-count:infinite;
   animation-timing-function:linear;
   overflow: hidden;
@@ -353,7 +396,7 @@ li {
   align-self:center;
   transform: rotate(90deg);
   animation-name: moving;
-  animation-duration: 5s;
+  animation-duration: 7s;
   animation-iteration-count: infinite ;
   animation-timing-function: linear;
 }
@@ -418,27 +461,34 @@ li {
 }
 @keyframes stationary {
   0% {
-    transform: rotate(0deg);
+    transform: rotate(var(--primaryDeg));
   }
   100% {
-    transform: rotate(0deg);
+    transform: rotate(var(--primaryDeg));
   }
 }
 @keyframes spinning {
   0% {
-    transform: rotate(0deg);
+    transform: rotate(var(--primaryDeg));
   }
-  30% {
-    transform: rotate(720deg);
+  .5% {
+    /* transform: rotate(var(--primaryDeg)); */
+    transform: rotate(-1080deg)
+  }
+  20% {
+    transform: rotate(-360deg);
+  }
+  /* 60% {
+    transform: rotate(-30deg);
+  }
+  70% {
+    transform: rotate(-15deg);
   }
   80% {
-    transform: rotate(1080deg);
-  }
-  90% {
-    transform: rotate(1095deg);
-  }
+    transform: rotate(0deg);
+  } */
   100% {
-    transform: rotate(1110deg);
+    transform: rotate(var(--primaryDeg));
   }
 }
 @keyframes moving {
