@@ -1,15 +1,13 @@
 // THE WHITE AT THE BOTTOM OF THE PAGE SIGNIFIES THE END OF MY STANDARD SCREEN HEIGHT
 
-// TODO#14-PUSH THE "PLAYERNAMES"/"PLAYERS" CONFIGURATION UP TO SETTINGS.JS TO KEEP STABILITY IF THE REFRESH BUTTON IS PRESSED ON THE GAMEPAGE
-// --DIDN'T WORK!--THIS DIDN'T STOP "PLAYERS/PLAYERNAMES FROM CHANGING WHEN THE PAGE WAS REFRESHED
-//                 --ALSO, MY AUTORESET WAS INNEFECTIVE AFTER "PLAYERS/PLAYERNAMES" WAS MOVED TO MAIN.JS (I DON'T THINK USEEFFECT WORKS IF THE DEPENDENCY-LIST IS A PROP)
-
 // TODO:
-// 13-SETUP A BETTER PUZZLE DESIGN WITH MORE WORDS ON A SINGLE LINE AND
+// 14-SETUP A BETTER PUZZLE DESIGN WITH MORE WORDS ON A SINGLE LINE AND
 //    A SET OF GREEN BACKGROUND BRICKS
-// 14-SET UP WHEEL SO THAT IT STOPS/STARTS ON THE PROPER SEGMENT
 // 15-SET UP BETTER COMPUTER PLAYERS' BEHAVIOR TIMING SO THAT THE TIMING OF INFO READOUTS CAN BE READ BY HUMAN PLAYERS -AND- THE GUESSED LETTERS ARE UPDATED PROPERLY
 // 16-FIX THE AUTORESET FEATURE
+// 17-RECLAIM THE SPACE OF THE "WHEEL-INFO" DIV BY PLACING THAT INFO INTO "STATUSMESSAGES"
+// ??18-MAY NEED TO PLACE THE WHEEL AND POINTER IN A SEPARATE DIV TO MAKE SURE THE POINTER DOESN'T SEPARATE FROM THE WHEEL REGARDLESS OF PUZZLE HEIGHT
+// 19-CHANGE THE TIMING ON THE 
 
 import Board from "./components/Board";
 import Wheel from "./components/Wheel";
@@ -82,7 +80,7 @@ export default function GamePage(props) {
     900:2500,
     700:2050,
     600:1635
-  }
+  };
   const vowelCost= 250;
 
   const currentPlayerNumber = [(turnCount)%(playerNames.length)];
@@ -198,7 +196,6 @@ export default function GamePage(props) {
         };
         setIsSpinning(true);
         setTimeout(stopSpinning, timer());
-        // setTimeout(setWheelInfo, 5000, [newSpin.type, newSpin.value, newSpin.prize]);
         // console.log("GAMEPAGE.JS COMPUTERPLAYERBEHAVIOR NEWSPIN TYPE/VALUE/PRIZE: ", newSpin.type, newSpin.value, newSpin.prize)
         const guessOrLoseTurn= () => {
           if (newSpin.type==="bankrupt") {
@@ -276,7 +273,6 @@ export default function GamePage(props) {
   const spinIt = () =>{
     const newSpin=WheelSegments[Math.floor(Math.random()*WheelSegments.length)];
     setWheelInfo([newSpin.type, newSpin.value, newSpin.prize]);
-    // setWheelInfo(["cash", 600, false]);
     const timer=()=> {
       if (!newSpin.value) {
         return wheelTiming[newSpin.type]
@@ -287,8 +283,6 @@ export default function GamePage(props) {
     setStatusMessage("");
     setIsSpinning(true);
     setTimeout(stopSpinning, timer());
-    // const newSpin=WheelSegments[Math.floor(Math.random()*WheelSegments.length)];
-    // setTimeout(setWheelInfo, 5000, [newSpin.type, newSpin.value, newSpin.prize]);
     const badNews= ()=> {
         if (newSpin.type==="bankrupt") {
           // console.log("NEWSPIN WAS A 'BANKRUPT'")
@@ -488,13 +482,12 @@ export default function GamePage(props) {
         </div>
         <div className="readout">
           <p className="game-status">{statusMessage}</p>
-          <button onClick={spinIt} className="button">Spin It!</button>
 
           <div className={"interface"}>
-            <div className="wheel-info">
+            {/* <div className="wheel-info">
               <p className={wheelValue?null:"hidden"}>${wheelValue}</p>
               <p className={wheelValue && wheelPrize?null:"hidden"}>and  a {wheelPrize}</p>
-            </div>
+            </div> */}
 
             <div className="interface-options">
               <button className={wheelValue || vowelInterface || noMoreConsonants || isSpinning || attemptToSolve || pauseControls?"hidden":"button spin"} onClick={spinIt} >Spin It!</button>
@@ -503,8 +496,8 @@ export default function GamePage(props) {
             </div>
 
             <div className="spin-solve-buy">
-              <form className={(!wheelValue && !vowelInterface) || currentPlayer.name.indexOf("Computer")>=0?"hidden":!vowelInterface?"left":"right"}>
-                <label className={!wheelValue?"hidden":null} htmlFor="guess-consonant">Guess a Consonant</label>
+              <form className={((!wheelValue || isSpinning) && !vowelInterface) || currentPlayer.name.indexOf("Computer")>=0?"hidden":!vowelInterface?"left":"right"}>
+                <label className={!wheelValue || isSpinning?"hidden":null} htmlFor="guess-consonant">Guess a Consonant</label>
                 <input
                 ref={consonantInput}
                 className={!wheelValue?"hidden":null}

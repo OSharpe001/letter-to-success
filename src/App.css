@@ -107,49 +107,34 @@ li {
   overflow: hidden;
   border-radius: 50%;
   border: 5px solid black;
-  /* rotate:  332.3deg; */
-  /*skew(62deg)*/;
   /* background-color: lightgrey; */
 }
 .wheel1 {
   --primaryDeg: 13.8deg;
-  /* rotate: var(--primaryDeg); */
 }.wheel2 {
   --primaryDeg: 41.5deg;
-  /* rotate: var(--primaryDeg); */
 }.wheel3 {
   --primaryDeg: 69.2deg;
-  /* rotate: var(--primaryDeg); */
 }.wheel4 {
   --primaryDeg: 96.9deg;
-  /* rotate: var(--primaryDeg); */
 }.wheel5 {
   --primaryDeg: 124.6deg;
-  /* rotate: var(--primaryDeg); */
 }.wheel6 {
   --primaryDeg: 152.3deg;
-  /* rotate: var(--primaryDeg); */
 }.wheel7 {
   --primaryDeg: 180deg;
-  /* rotate: var(--primaryDeg); */
 }.wheel8 {
   --primaryDeg: 207.7deg;
-  /* rotate: var(--primaryDeg); */
 }.wheel9 {
   --primaryDeg: 235.3deg;
-  /* rotate: var(--primaryDeg); */
 }.wheel10 {
   --primaryDeg: 263deg;
-  /* rotate: var(--primaryDeg); */
 }.wheel11 {
   --primaryDeg: 290.7deg;
-  /* rotate: var(--primaryDeg); */
 }.wheel12 {
   --primaryDeg: 318.4deg;
-  /* rotate: var(--primaryDeg); */
 }.wheel13 {
   --primaryDeg: 346.1deg;
-  /* rotate: var(--primaryDeg); */
 }
 .home-page .wheel {
   margin: 10vh auto 0;
@@ -409,32 +394,20 @@ li {
   /* background-color:linear-gradient(90deg, rgb(240, 241, 235)4%, rgb(255, 230, 109) 25%, rgb(240, 241, 235) 45%); */
   background-color: rgb(250, 255, 109);
   border: 3px solid black;
-  /* transform: rotateY(180deg); */
   animation-name: turning;
   animation-duration: 2.2s;
-  /* animation-iteration-count: infinite; */
   animation-timing-function: linear;
   /* transition: 2s; */
 }
-/* .letter-card:hover {
-  transform: rotateY(180deg);
-  transition: 2s;
-} */
 @keyframes turning {
   0% {
     transform: rotateY(180deg);
-    /* background-color: linear-gradient(90deg, rgb(255, 230, 109) 11.2%, rgb(87, 232, 107) 100.2%); */
-    /* opacity: 0; */
     color:rgb(250, 255, 109);
   }
   50% {
     transform: rotateY(180deg);
-    /* background-color: linear-gradient(90deg, rgb(255, 230, 109) 11.2%, rgb(87, 232, 107) 100.2%); */
-    /* opacity: 0; */
-    /* color: white; */
   }
   75% {
-    /* opacity: 0; */
     color:rgb(250, 255, 109);
     background-color: rgb(250, 255, 109);
   }
@@ -472,21 +445,11 @@ li {
     transform: rotate(var(--primaryDeg));
   }
   .5% {
-    /* transform: rotate(var(--primaryDeg)); */
     transform: rotate(-1080deg)
   }
   20% {
     transform: rotate(-360deg);
   }
-  /* 60% {
-    transform: rotate(-30deg);
-  }
-  70% {
-    transform: rotate(-15deg);
-  }
-  80% {
-    transform: rotate(0deg);
-  } */
   100% {
     transform: rotate(var(--primaryDeg));
   }
@@ -543,9 +506,6 @@ li {
   80% {
     transform: rotate(110deg);
   }
-  /* 85% {
-    transform: rotate(70deg);
-  } */
   90% {
     transform: rotate(70deg);
   }
