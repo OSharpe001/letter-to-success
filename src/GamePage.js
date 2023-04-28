@@ -496,6 +496,7 @@ export default function GamePage(props) {
             latestLetter={latestLetter}
             allLetters={allLetters}
           />
+          <div className="wheel-set">
           <Wheel
             isSpinning={isSpinning}
             wheelInfo={wheelInfo}
@@ -503,6 +504,8 @@ export default function GamePage(props) {
           <Pointer
             isMoving={isSpinning}
             />
+          </div>
+          
         </div>
         <div className="readout">
           <p className="game-status">{statusMessage}</p>

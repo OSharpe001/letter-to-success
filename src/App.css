@@ -353,7 +353,7 @@ li {
 .pointer {
   font-size:40pt;
   font-weight: bold;
-  margin: 0 0 0 -5vw;
+  margin: 0 0 0 0;
   height: fit-content;
   align-self:center;
   transform: rotate(90deg);
@@ -376,7 +376,7 @@ li {
 .moving {
   font-size:40pt;
   font-weight: bold;
-  margin: 0 0 0 -5vw;
+  margin: 0 0 0 0;
   height: fit-content;
   align-self:center;
   transform: rotate(90deg);
@@ -531,6 +531,12 @@ li {
 .board-set {
   display: flex;
   flex-direction: row;
+}
+.wheel-set {
+  display: flex;
+  flex-direction: row;
+  height:fit-content;
+  margin: auto;
 }
 .interface {
   /* align-self: left; */
