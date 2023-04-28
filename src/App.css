@@ -458,13 +458,25 @@ li {
   0% {
     transform: rotate(110deg);
   }
+  2.5% {
+    transform: rotate(70deg);
+  }
   5% {
+    transform: rotate(110deg);
+  }
+  7.5% {
     transform: rotate(70deg);
   }
   10% {
     transform: rotate(110deg);
   }
+  12.5% {
+    transform: rotate(70deg);
+  }
   15% {
+    transform: rotate(110deg);
+  }
+  17.5% {
     transform: rotate(70deg);
   }
   20% {

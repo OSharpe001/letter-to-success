@@ -1,13 +1,10 @@
 // THE WHITE AT THE BOTTOM OF THE PAGE SIGNIFIES THE END OF MY STANDARD SCREEN HEIGHT
 
 // TODO:
-// 15-SETUP A BETTER PUZZLE DESIGN WITH MORE WORDS ON A SINGLE LINE AND
+// 18-SETUP A BETTER PUZZLE DESIGN WITH MORE WORDS ON A SINGLE LINE AND
 //    A SET OF GREEN BACKGROUND BRICKS
-// 16-FIX THE AUTORESET FEATURE
-// 17-RECLAIM THE SPACE OF THE "WHEEL-INFO" DIV BY PLACING THAT INFO INTO "STATUSMESSAGES"
-// ??18-MAY NEED TO PLACE THE WHEEL AND POINTER IN A SEPARATE DIV TO MAKE SURE THE POINTER DOESN'T SEPARATE FROM THE WHEEL REGARDLESS OF PUZZLE HEIGHT
-// 19-CHANGE THE PLAYER PRIZES ALGO SO THAT A PLAYER CAN ONLY WIN ONE OF EACH PRIZE
-// 20-CHANGE THE TIMING ON THE WHEEL POINTER TO MAKE IT SHAKE FASTER AT THE BEGINNING
+// 19-FIX THE AUTORESET FEATURE
+// ??20-MAY NEED TO PLACE THE WHEEL AND POINTER IN A SEPARATE DIV TO MAKE SURE THE POINTER DOESN'T SEPARATE FROM THE WHEEL REGARDLESS OF PUZZLE HEIGHT
 
 
 import Board from "./components/Board";
@@ -86,6 +83,7 @@ export default function GamePage(props) {
 
   const currentPlayerNumber = [(turnCount)%(playerNames.length)];
   const currentPlayer = players[currentPlayerNumber];
+  const computersTurn = currentPlayer.name.indexOf("Computer")===0
   const nextPlayer = players[(turnCount+1)%(playerNames.length)];
 
   const guessDisabled= latestGuessError;
@@ -104,9 +102,9 @@ export default function GamePage(props) {
     if (vowelInterface) {
       vowelInput.current.focus();
     };
-    if (wheelValue) {
-      consonantInput.current.focus();
-    };
+    // if (wheelValue) {
+    //   consonantInput.current.focus();
+    // };
     if (attemptToSolve) {
       solveInput.current.focus();
     };
@@ -114,7 +112,7 @@ export default function GamePage(props) {
 
   /*** */
   computerPlayersBehavior(() => {
-    if (currentPlayer.name.indexOf("Computer")!==0 || (puzzleLetters.every(letter=>guessedLetters.indexOf(letter)>=0)) || !!statusMessage) {
+    if (!computersTurn || (puzzleLetters.every(letter=>guessedLetters.indexOf(letter)>=0)) || !!statusMessage) {
       return
     } else {
       // console.log("COMPUTERPLAYERBEHAVIOR STARTING...")
@@ -220,6 +218,8 @@ export default function GamePage(props) {
             changeTurn();
             return
           } else {
+            (newSpin.prize && currentPlayer.prizes.indexOf(newSpin.prize)<0?setStatusMessage(`$${newSpin.value} and a ${newSpin.prize}`):setStatusMessage("$"+newSpin.value));
+            // setTimeout(setStatusMessage, 3000, "");
             setLatestLetter(computerChoice);
             setGuessedLetters(()=> {
               const newGuessedLetters=[...guessedLetters];
@@ -241,14 +241,14 @@ export default function GamePage(props) {
                 // console.log("GAMEPAGE.JS COMPUTERPLAYERBEHAVIOR HITORMISS' NEWSPIN.VALUE: ", newSpin.value)
                 // console.log("GAMEPAGE.JS COMPUTERPLAYERBEHAVIOR HITORMISS' NEWSPIN.PRIZE: ", newSpin.prize)
                 newList[currentPlayerNumber].score+=(newSpin.value*consonantMultiplier);
-                if (newSpin.prize) {
+                if (newSpin.prize && currentPlayer.prizes.indexOf(newSpin.prize)<0) {
                   newList[currentPlayerNumber].prizes.push(newSpin.prize);
                 }
                 setPlayers(newList);
-                (consonantMultiplier>1?setStatusMessage(`There are ${consonantMultiplier} ${computerChoice}'s!`):setStatusMessage(`There is 1 ${computerChoice}.`));
+                (consonantMultiplier>1?setTimeout(setStatusMessage, 1000, `There are ${consonantMultiplier} ${computerChoice}'s!`):setTimeout(setStatusMessage, 1000, `There is 1 ${computerChoice}.`));
                 setTimeout(setStatusMessage, 3000, "");
               } else {
-                setStatusMessage(`There are no ${computerChoice}'s. (sorry...)`);
+                setTimeout(setStatusMessage, 1000, `There are no ${computerChoice}'s. (sorry...)`);
                 setTimeout(setStatusMessage, 3000, "");
                 changeTurn();
                 return
@@ -294,23 +294,26 @@ export default function GamePage(props) {
     setIsSpinning(true);
     setTimeout(stopSpinning, timer());
     const badNews= ()=> {
-        if (newSpin.type==="bankrupt") {
-          // console.log("NEWSPIN WAS A 'BANKRUPT'")
-          setStatusMessage(`${currentPlayer.name} just went BANKRUPT! (OUCH!)`);
-          setTimeout(setStatusMessage, 3000, "");
-          let newList=[...players];
-          newList[currentPlayerNumber].score=0;
-          newList[currentPlayerNumber].prizes=[];
-          setPlayers(newList)
-          changeTurn();
-          return
-        }
-      if (newSpin.type==="loseturn") {
+      if (newSpin.type==="bankrupt") {
+        // console.log("NEWSPIN WAS A 'BANKRUPT'")
+        setStatusMessage(`${currentPlayer.name} just went BANKRUPT! (OUCH!)`);
+        setTimeout(setStatusMessage, 3000, "");
+        let newList=[...players];
+        newList[currentPlayerNumber].score=0;
+        newList[currentPlayerNumber].prizes=[];
+        setPlayers(newList)
+        changeTurn();
+        return
+      } else if (newSpin.type==="loseturn") {
         setStatusMessage(`${currentPlayer.name} just lost their turn! (sorry...)`);
         setTimeout(setStatusMessage, 3000, "");
         // console.log("NEWSPIN WAS A 'LOSETURN'")
         changeTurn();
         return
+      } else {
+        (newSpin.prize && currentPlayer.prizes.indexOf(newSpin.prize)<0?setStatusMessage(`$${newSpin.value} and a ${newSpin.prize}`):setStatusMessage("$"+newSpin.value));
+        consonantInput.current.focus();
+        setTimeout(setStatusMessage, 3000, "");
       }
     }
     setTimeout(badNews, ((timer())+50));
@@ -325,7 +328,7 @@ export default function GamePage(props) {
 
   const solveIt = () => {
     // console.log("GAMEPAGE.JS' SOLVEIT IN PROGRESS");
-    solveInput.current.focus();
+    // solveInput.current.focus();
     setAttemptToSolve(true);
   };
 
@@ -342,7 +345,7 @@ export default function GamePage(props) {
     // console.log("GAMEPAGE.JS' CHANGESCORE PLAYER'S INFO: ", players[currentPlayerNumber])
     let newList=[...players];
     newList[currentPlayerNumber].score+=(wheelValue*consonantMultiplier);
-    if (wheelPrize) {
+    if (wheelPrize && currentPlayer.prizes.indexOf(wheelPrize)<0) {
       newList[currentPlayerNumber].prizes.push(wheelPrize)
     };
     setWheelInfo(["", 0, false]);
@@ -505,15 +508,11 @@ export default function GamePage(props) {
           <p className="game-status">{statusMessage}</p>
 
           <div className={"interface"}>
-            {/* <div className="wheel-info">
-              <p className={wheelValue?null:"hidden"}>${wheelValue}</p>
-              <p className={wheelValue && wheelPrize?null:"hidden"}>and  a {wheelPrize}</p>
-            </div> */}
 
             <div className="interface-options">
-              <button className={wheelValue || vowelInterface || noMoreConsonants || isSpinning || attemptToSolve || pauseControls?"hidden":"button spin"} onClick={spinIt} >Spin It!</button>
-              <button className={wheelValue || vowelInterface || isSpinning || attemptToSolve || pauseControls?"hidden":"button solve"} onClick={solveIt} >Attempt to Solve!</button>
-              <button className={wheelValue || currentPlayer.score<250 || vowelInterface || noMoreVowels || isSpinning || attemptToSolve || pauseControls?"hidden":"button buy"} onClick={buyVowel} >Buy a Vowel!</button>
+              <button className={wheelValue || vowelInterface || noMoreConsonants || isSpinning || attemptToSolve || pauseControls || computersTurn?"hidden":"button spin"} onClick={spinIt} >Spin It!</button>
+              <button className={wheelValue || vowelInterface || isSpinning || attemptToSolve || pauseControls || computersTurn?"hidden":"button solve"} onClick={solveIt} >Attempt to Solve!</button>
+              <button className={wheelValue || currentPlayer.score<250 || vowelInterface || noMoreVowels || isSpinning || attemptToSolve || pauseControls || computersTurn?"hidden":"button buy"} onClick={buyVowel} >Buy a Vowel!</button>
             </div>
 
             <div className="spin-solve-buy">
