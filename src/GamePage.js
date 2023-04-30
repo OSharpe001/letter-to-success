@@ -139,6 +139,7 @@ export default function GamePage(props) {
           setStatusMessage(`${currentPlayer.name} passes their turn...`);
           setTimeout(setStatusMessage, 3000, "");
           changeTurn();
+          return
         };
       };
       guessOrPass();
@@ -154,7 +155,7 @@ export default function GamePage(props) {
       getComputerChoice();
       // console.log("CURRENT COMPUTERCHOICE IS ", computerChoice);
 
-      if (vowels.indexOf(computerChoice)>=0) {
+      if (computerChoice && vowels.indexOf(computerChoice)>=0) {
         let newList=[...players];
         newList[currentPlayerNumber].score-=vowelCost;
         setPlayers(newList);
@@ -187,7 +188,7 @@ export default function GamePage(props) {
         };
         hitOrMiss();
 
-      } else {
+      } else if (computerChoice && consonants.indexOf(computerChoice)>=0) {
         const newSpin=WheelSegments[Math.floor(Math.random()*WheelSegments.length)];
         setWheelInfo([newSpin.type, newSpin.value, newSpin.prize]);
         const timer=()=> {
@@ -513,9 +514,9 @@ export default function GamePage(props) {
           <div className={"interface"}>
 
             <div className="interface-options">
-              <button className={wheelValue || vowelInterface || noMoreConsonants || isSpinning || attemptToSolve || pauseControls || computersTurn?"hidden":"button spin"} onClick={spinIt} >Spin It!</button>
-              <button className={wheelValue || vowelInterface || isSpinning || attemptToSolve || pauseControls || computersTurn?"hidden":"button solve"} onClick={solveIt} >Attempt to Solve!</button>
-              <button className={wheelValue || currentPlayer.score<250 || vowelInterface || noMoreVowels || isSpinning || attemptToSolve || pauseControls || computersTurn?"hidden":"button buy"} onClick={buyVowel} >Buy a Vowel!</button>
+              <button className={statusMessage || wheelValue || vowelInterface || noMoreConsonants || isSpinning || attemptToSolve || pauseControls || computersTurn?"hidden":"button spin"} onClick={spinIt} >Spin It!</button>
+              <button className={statusMessage || wheelValue || vowelInterface || isSpinning || attemptToSolve || pauseControls || computersTurn?"hidden":"button solve"} onClick={solveIt} >Attempt to Solve!</button>
+              <button className={statusMessage || wheelValue || currentPlayer.score<250 || vowelInterface || noMoreVowels || isSpinning || attemptToSolve || pauseControls || computersTurn?"hidden":"button buy"} onClick={buyVowel} >Buy a Vowel!</button>
             </div>
 
             <div className="spin-solve-buy">
