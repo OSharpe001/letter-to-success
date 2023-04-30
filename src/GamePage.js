@@ -514,9 +514,9 @@ export default function GamePage(props) {
           <div className={"interface"}>
 
             <div className="interface-options">
-              <button className={statusMessage || wheelValue || vowelInterface || noMoreConsonants || isSpinning || attemptToSolve || pauseControls || computersTurn?"hidden":"button spin"} onClick={spinIt} >Spin It!</button>
-              <button className={statusMessage || wheelValue || vowelInterface || isSpinning || attemptToSolve || pauseControls || computersTurn?"hidden":"button solve"} onClick={solveIt} >Attempt to Solve!</button>
-              <button className={statusMessage || wheelValue || currentPlayer.score<250 || vowelInterface || noMoreVowels || isSpinning || attemptToSolve || pauseControls || computersTurn?"hidden":"button buy"} onClick={buyVowel} >Buy a Vowel!</button>
+              <button className={(guessedLetters.length>0 && statusMessage) || wheelValue || vowelInterface || noMoreConsonants || isSpinning || attemptToSolve || pauseControls || computersTurn?"hidden":"button spin"} onClick={spinIt} >Spin It!</button>
+              <button className={(guessedLetters.length>0 && statusMessage) || wheelValue || vowelInterface || isSpinning || attemptToSolve || pauseControls || computersTurn?"hidden":"button solve"} onClick={solveIt} >Attempt to Solve!</button>
+              <button className={(guessedLetters.length>0 && statusMessage) || wheelValue || currentPlayer.score<250 || vowelInterface || noMoreVowels || isSpinning || attemptToSolve || pauseControls || computersTurn?"hidden":"button buy"} onClick={buyVowel} >Buy a Vowel!</button>
             </div>
 
             <div className="spin-solve-buy">
