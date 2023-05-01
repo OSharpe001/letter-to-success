@@ -1,7 +1,3 @@
-// TODO:
-//
-// 1-CHANGE ITEM.TEXT AND ITEM.PRIZE TO P-TAGS (AND ADJUST THE CSS ACCORDINGLY)
-
 import {WheelSegments} from '../assets/game_data/wheelSegments'
 import { useEffect, useState } from "react";
 
@@ -59,10 +55,8 @@ export default function Wheel(props) {
     };
   }, props.wheelInfo)
 
-  // console.log("WHEEL.JS' PROPS: ", props)
-  // console.log("WHEEL.JS' PROPS.WHEELINFO: ", props.wheelInfo)
-
   return (
+
     <ul className={props.isSpinning?"spinning": "wheel "+latestWheelNumber}>
       {WheelSegments.map(item =>
         <li  key={item.text} className="wheel-segment">

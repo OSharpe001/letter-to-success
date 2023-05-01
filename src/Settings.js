@@ -1,5 +1,3 @@
-
-
 export default function Settings(props) {
 
 
@@ -8,27 +6,22 @@ export default function Settings(props) {
     const handleHumanPlayerAmountChange = (e) => {
         props.setHumanPlayerAmount(e.target.value);
         if (parseInt(e.target.value) < 1) {
-            // console.log("SETTINGS.JS HANDLEHUMANPLAYERAMOUNTCHANGE'S E.TARGETVALUE: ", e.target.value)
             props.setHumanPlayerAmountError("We need at least one Human Player...");
             return;
         } else if (parseInt(e.target.value)===3) {
-            // console.log("SETTINGS.JS HANDLEHUMANPLAYERAMOUNTCHANGE'S E.TARGETVALUE: ", e.target.value)
             props.setComputerPlayerAmount(0);
             props.setComputerPlayerAmountError("");
             props.setHumanPlayerAmountError("");
         } else if (parseInt(e.target.value) >3) {
-            // console.log("SETTINGS.JS HANDLEHUMANPLAYERAMOUNTCHANGE'S E.TARGETVALUE: ", e.target.value)
             props.setHumanPlayerAmountError("Sorry. There's a max of three players per game");
             props.setComputerPlayerAmountError("");
         } else if (parseInt(e.target.value)<2) {
-            // console.log("SETTINGS.JS HANDLEHUMANPLAYERAMOUNTCHANGE'S E.TARGETVALUE: ", e.target.value)
             props.setPlayer2Name("");
             props.setPlayer2NameError("");
             props.setPlayer3Name("");
             props.setPlayer3NameError("");
             props.setHumanPlayerAmountError("");
         } else if (parseInt(e.target.value)<3) {
-            // console.log("SETTINGS.JS HANDLEHUMANPLAYERAMOUNTCHANGE'S E.TARGETVALUE: ", e.target.value)
             props.setPlayer3Name("");
             props.setPlayer3NameError("");
             props.setComputerPlayerAmountError("");
@@ -40,15 +33,12 @@ export default function Settings(props) {
 
     const handleComputerPlayerAmountChange = (e) => {
         props.setComputerPlayerAmount(e.target.value);
-        // console.log("COMPUTER PLAYER AMOUNT: ", parseInt(e.target.value))
-        // console.log("ADDITION OF TOTAL PLAYER AMOUNT: ", parseInt(humanPlayerAmount)+parseInt(e.target.value))
         if (!props.humanPlayerAmount || parseInt(props.humanPlayerAmount)>3) {
             props.setComputerPlayerAmountError("Please set proper amount of Human Players, first.")
         } else if (parseInt(e.target.value) + parseInt(props.humanPlayerAmount)<2) {
             props.setComputerPlayerAmountError("We need at least two players");
             return;
         } else if (parseInt(e.target.value) + parseInt(props.humanPlayerAmount)>3) {
-            // console.log("TOTAL PLAYER AMOUNT: ", e.target.value + humanPlayerAmount)
             props.setComputerPlayerAmountError("Sorry. There's a max of three players per game");
         } else {
             props.setComputerPlayerAmountError("");
@@ -136,7 +126,6 @@ export default function Settings(props) {
             setSubmissionErrors();
             return
         } else {
-            // console.log("SETTINGS.JS' INFO FOR FORM SUBMITION: ",
             let humanPlayers = [props.player1Name, props.player2Name, props.player3Name].slice(0,props.humanPlayerAmount);
             const computerPlayers=[];
             const computerPlayerNameGenerator = () => {
@@ -154,11 +143,6 @@ export default function Settings(props) {
             clearForm();
         };
     };
-
-    // console.log("PLAYER 1'S NAME: ", player1Name)
-    // console.log(`SETTINGS.JS' "DISABLED" VALUE`, disabled)
-    // console.log("SETTINGS.JS' PROPS: ", props);
-    // console.log("SETTINGS.JS' GOTREQUIREDINFO: ", gotRequiredInfo)
 
     return (
         <form

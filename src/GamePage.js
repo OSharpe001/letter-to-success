@@ -87,7 +87,6 @@ export default function GamePage(props) {
 
   // ***AUTORESET IS CURRENTLY INNEFFECTIVE*** //
   autoReset(()=> {
-    // console.log('THE USEEFFECT HOOK "AUTORESET" WAS JUST TRIGGERRED');
     if (!playerNames[1]) {
       navigate("/settings");
     };
@@ -97,23 +96,16 @@ export default function GamePage(props) {
     if (vowelInterface) {
       vowelInput.current.focus();
     };
-    // if (wheelValue) {
-    //   consonantInput.current.focus();
-    // };
     if (attemptToSolve) {
       solveInput.current.focus();
     };
   }, [vowelInterface, wheelValue, attemptToSolve]);
 
-  /*** */
   computerPlayersBehavior(() => {
     if (!computersTurn || (puzzleLetters.every(letter=>guessedLetters.indexOf(letter)>=0)) || !!statusMessage) {
       return
     } else {
-      // console.log("COMPUTERPLAYERBEHAVIOR STARTING...")
-      // console.log("GAMEPAGE.JS COMPUTERPLAYERBEHAVIOR CURRENTPLAYER: ", currentPlayer);
       const smartPlay= Math.floor(Math.random() * 10)>props.settingsData.computerDifficultyLevel?"off":"on";
-      // console.log("SMARTPLAY IS ", smartPlay);
 
       let computerSelection;
       let computerChoice;
@@ -125,12 +117,9 @@ export default function GamePage(props) {
         };
       };
       getComputerSelection();
-      // console.log("CURRENT COMPUTERSELECTION", computerSelection);
-
 
       const guessOrPass = () => {
         if (computerSelection.length===0) {
-          // console.log("COMPUTERSELECTION.LENGTH IS ZERO. COMPUTER PASSES THEIR TURN...")
           setStatusMessage(`${currentPlayer.name} passes their turn...`);
           setTimeout(setStatusMessage, 3000, "");
           changeTurn();
@@ -148,7 +137,6 @@ export default function GamePage(props) {
         };
       };
       getComputerChoice();
-      // console.log("CURRENT COMPUTERCHOICE IS ", computerChoice);
 
       if (computerChoice && vowels.indexOf(computerChoice)>=0) {
         let newList=[...players];
@@ -195,10 +183,8 @@ export default function GamePage(props) {
         };
         setIsSpinning(true);
         setTimeout(stopSpinning, timer());
-        // console.log("GAMEPAGE.JS COMPUTERPLAYERBEHAVIOR NEWSPIN TYPE/VALUE/PRIZE: ", newSpin.type, newSpin.value, newSpin.prize)
         const guessOrLoseTurn= () => {
           if (newSpin.type==="bankrupt") {
-            // console.log(`${currentPlayer.name} just went 'BANKRUPT'`)
             setStatusMessage(`${currentPlayer.name} just went BANKRUPT! (OUCH!)`);
             setTimeout(setStatusMessage, 3000, "");
             let newList=[...players];
@@ -210,12 +196,10 @@ export default function GamePage(props) {
           } else if (newSpin.type==="loseturn") {
             setStatusMessage(`${currentPlayer.name} just lost their turn! (sorry...)`);
             setTimeout(setStatusMessage, 3000, "");
-            // console.log(`${currentPlayer.name} just hit a 'LOSETURN'`)
             changeTurn();
             return
           } else {
             (newSpin.prize && currentPlayer.prizes.indexOf(newSpin.prize)<0?setStatusMessage(`$${newSpin.value} and a ${newSpin.prize}`):setStatusMessage("$"+newSpin.value));
-            // setTimeout(setStatusMessage, 3000, "");
             setLatestLetter(computerChoice);
             setGuessedLetters(()=> {
               const newGuessedLetters=[...guessedLetters];
@@ -233,9 +217,6 @@ export default function GamePage(props) {
               if (puzzleLetters.indexOf(computerChoice)>=0) {
                 let newList=[...players];
                 const consonantMultiplier = (puzzleLetters.filter(letter=>letter===computerChoice)).length;
-                // console.log("GAMEPAGE.JS COMPUTERPLAYERBEHAVIOR HITORMISS' CONSONANTMULTIPLIER: ", consonantMultiplier)
-                // console.log("GAMEPAGE.JS COMPUTERPLAYERBEHAVIOR HITORMISS' NEWSPIN.VALUE: ", newSpin.value)
-                // console.log("GAMEPAGE.JS COMPUTERPLAYERBEHAVIOR HITORMISS' NEWSPIN.PRIZE: ", newSpin.prize)
                 newList[currentPlayerNumber].score+=(newSpin.value*consonantMultiplier);
                 if (newSpin.prize && currentPlayer.prizes.indexOf(newSpin.prize)<0) {
                   newList[currentPlayerNumber].prizes.push(newSpin.prize);
@@ -258,8 +239,6 @@ export default function GamePage(props) {
       };
     };
   }, [currentPlayer, guessedLetters.length, statusMessage]);
-  /*** */
-
 
   winner(()=> {
     if (puzzleLetters.every(letter=>guessedLetters.indexOf(letter)>=0)) {
@@ -291,7 +270,6 @@ export default function GamePage(props) {
     setTimeout(stopSpinning, timer());
     const badNews= ()=> {
       if (newSpin.type==="bankrupt") {
-        // console.log("NEWSPIN WAS A 'BANKRUPT'")
         setStatusMessage(`${currentPlayer.name} just went BANKRUPT! (OUCH!)`);
         setTimeout(setStatusMessage, 3000, "");
         let newList=[...players];
@@ -303,7 +281,6 @@ export default function GamePage(props) {
       } else if (newSpin.type==="loseturn") {
         setStatusMessage(`${currentPlayer.name} just lost their turn! (sorry...)`);
         setTimeout(setStatusMessage, 3000, "");
-        // console.log("NEWSPIN WAS A 'LOSETURN'")
         changeTurn();
         return
       } else {
@@ -323,8 +300,6 @@ export default function GamePage(props) {
   };
 
   const solveIt = () => {
-    // console.log("GAMEPAGE.JS' SOLVEIT IN PROGRESS");
-    // solveInput.current.focus();
     setAttemptToSolve(true);
   };
 
@@ -338,7 +313,6 @@ export default function GamePage(props) {
   };
 
   const changeScore = () => {
-    // console.log("GAMEPAGE.JS' CHANGESCORE PLAYER'S INFO: ", players[currentPlayerNumber])
     let newList=[...players];
     newList[currentPlayerNumber].score+=(wheelValue*consonantMultiplier);
     if (wheelPrize && currentPlayer.prizes.indexOf(wheelPrize)<0) {
@@ -349,9 +323,7 @@ export default function GamePage(props) {
   };
 
   const handleConsonantGuess = (e) => {
-    // console.log("GAMEPAGE.JS HANDLECONSONANTGUESS' E BEFORE TOUPPERCASE FUNCTION: ", e)
     e=e.toUpperCase();
-    // console.log("GAMEPAGE.JS HANDLECONSONANTGUESS' E: ", e)
     setLatestConsonant(e)
     if (consonants.indexOf(e)<0) {
       setLatestGuessError("Choose a consonant.")
@@ -366,7 +338,6 @@ export default function GamePage(props) {
 
   const handleVowelGuess = (e) => {
     e=e.toUpperCase();
-    // console.log("GAMEPAGE.JS HANDLEVOWELGUESS' E: ", e)
     setLatestVowel(e);
     if (vowels.indexOf(e)<0) {
       setLatestGuessError("Choose a vowel.");
@@ -437,7 +408,6 @@ export default function GamePage(props) {
 
   const handlePuzzleGuess = (e) => {
     e.target.value=e.target.value.toUpperCase();
-    // console.log("GAMEPAGE.JS HANDLEPUZZLEGUESS' E.TARGET.VALUE: ", e.target.value)
     setGuessPuzzle(e.target.value);
     if (e.target.value==="") {
       setGuessPuzzleError("You have to guess something...");
@@ -467,21 +437,6 @@ export default function GamePage(props) {
     setShowGuessedLetters(!showGuessedLetters);
   };
 
-  // console.log("GAMEPAGE.JS' RANDOM WHEELSEGMENT: ", WheelSegments[Math.floor(Math.random()*WheelSegments.length)]);
-  // console.log("GAMEPAGE.JS WHEELSEGMENTS' RANDOM NUMBER: ", Math.floor(Math.random()*WheelSegments.length));
-  // console.log("GAMEPAGE.JS' GUESSEDLETTERS: ", guessedLetters);
-  // console.log("GAMEPAGE.JS' PLAYERS2: ", players2);
-  // console.log("GAMEPAGE.JS' TURNCOUNT: ", turnCount);
-  // console.log("GAMEPAGE.JS' PROPS.SETTINGSDATA: ", props.settingsData);
-  // console.log("GAMEPAGE.JS' PLAYERNAMES: ", playerNames);
-  // console.log("ALLLETTERS: ", allLetters);
-  // console.log("GAMEPAGE.JS' PROPS: ", props);
-  // console.log("GAMEPAGE.JS' PLAYERS: ", players);
-  // console.log("GAMEPAGE.JS' PUZZLELETTERS: ", puzzleLetters);
-  // console.log("GAMEPAGE.JS' NOMOREVOWELS: ", noMoreVowels);
-  // console.log("GAMEPAGE.JS' PROPS.WINNER: ", props.winner);
-  // console.log("CONSONANTMULTIPLIER: ", consonantMultiplier);
-
   return (
     <div className="game-page">
         <div className="board-set">
@@ -493,15 +448,14 @@ export default function GamePage(props) {
             allLetters={allLetters}
           />
           <div className="wheel-set">
-          <Wheel
-            isSpinning={isSpinning}
-            wheelInfo={wheelInfo}
-            />
-          <Pointer
-            isMoving={isSpinning}
-            />
+            <Wheel
+              isSpinning={isSpinning}
+              wheelInfo={wheelInfo}
+              />
+            <Pointer
+              isMoving={isSpinning}
+              />
           </div>
-          
         </div>
         <div className="readout">
           <p className="game-status">{statusMessage}</p>
@@ -527,7 +481,7 @@ export default function GamePage(props) {
                 placeholder="Consonant"
                 value={latestConsonant}
                 onChange={e => handleConsonantGuess(e.target.value)}/>
-                
+
                 <label className={!vowelInterface?"hidden":null} htmlFor="guess-vowel">Guess a Vowel</label>
                 <input
                 ref={vowelInput}
@@ -541,7 +495,7 @@ export default function GamePage(props) {
                 <button htmlFor={!vowelInterface?"guess-consonant":"guess-vowel"} className={vowelInterface || wheelValue?"button":"hidden"} disabled={guessDisabled} onClick={guessLetter} >Guess a Letter!</button>
                 <p className="error-message">{latestGuessError}</p>
               </form>
-            
+
               <form className={!attemptToSolve?"hidden":"center"}>
                 <label htmlFor="guess-puzzle">Guess the Puzzle</label>
                 <input
@@ -577,7 +531,7 @@ export default function GamePage(props) {
             </div>
           </div>
         </div>
-        
+
         <Players
           players={players}
           currentPlayer={currentPlayer.name}

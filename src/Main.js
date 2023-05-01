@@ -29,7 +29,6 @@ export default function Main() {
   const navigate = useNavigate();
 
   const submitSettingsForm = (formData) => {
-    // console.log("MAIN.JS SUBMITSETTINGSFORM'S FORMDATA: ", formData)
     setSettingsData(formData);
     navigate("/game_page");
   };
@@ -37,7 +36,7 @@ export default function Main() {
   const puzzleChoice = Puzzles[Math.floor(Math.random()*Puzzles.length)];
   const puzzleType = puzzleChoice.type;
   const puzzlePhrase = puzzleChoice.phrases[Math.floor(Math.random()*puzzleChoice.phrases.length)].toUpperCase()
-  // console.log("MAIN.JS' SETTINGS FORM DATA: ", settingsData)
+  
   return (
     <>
       <Header />
