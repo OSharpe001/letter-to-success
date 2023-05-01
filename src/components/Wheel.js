@@ -69,7 +69,7 @@ export default function Wheel(props) {
           <div className="segment-content">
             <div className="value">{item.text}</div>
           </div>
-          <div className="prize">{item.prize}</div>
+          {item.prize?<div className="prize">{item.prize}</div>:null}
         </li>
       )}
     </ul>

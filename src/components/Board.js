@@ -1,6 +1,4 @@
-// TODO:
-// 
-// 1-REMEMBER TO REMOVE THE "{props.puzzlePhrase}" (ON LINE 19) WHEN THE REST OF THE GAME IS FIXED
+
 
 import LetterCard from './LetterCard';
 
@@ -16,7 +14,6 @@ export default function Board(props) {
 
   return (
     <div className="board">
-      {props.puzzlePhrase}
       <div className="phrase">
         {props.puzzlePhrase.split(" ").map((word,index) =>
           <ul key={index} className="word">
