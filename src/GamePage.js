@@ -8,6 +8,7 @@ import Pointer from "./components/Pointer";
 import Players from "./components/Players";
 import doubleLeftArrow from "./assets/images/doubleLeftArrow.png";
 import doubleRightArrow from "./assets/images/doubleRightArrow.png";
+import bell from "./assets/sounds/bell.m4a";
 import { WheelSegments } from "./assets/game_data/wheelSegments";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
@@ -57,6 +58,7 @@ export default function GamePage(props) {
   const puzzleLetters = props.puzzlePhrase.split("").filter(letter=>allLetters.indexOf(letter)>-1);
   const consonantMultiplier = (puzzleLetters.filter(letter=>letter===latestConsonant)).length;
   const vowelMultiplier= (puzzleLetters.filter(letter=>letter===latestVowel)).length;
+  const correctGuessBell = new Audio(bell)
   const wheelValue = wheelInfo[1];
   const wheelPrize = wheelInfo[2];
   const wheelTiming = {
@@ -143,6 +145,9 @@ export default function GamePage(props) {
         newList[currentPlayerNumber].score-=vowelCost;
         setPlayers(newList);
         setLatestLetter(computerChoice);
+        if (puzzleLetters.indexOf(computerChoice)>=0) {
+          correctGuessBell.play();
+        };
         setGuessedLetters(() => {
             const newGuessedLetters = [...guessedLetters];
             newGuessedLetters.push(computerChoice);
@@ -201,6 +206,9 @@ export default function GamePage(props) {
           } else {
             (newSpin.prize && currentPlayer.prizes.indexOf(newSpin.prize)<0?setStatusMessage(`$${newSpin.value} and a ${newSpin.prize}`):setStatusMessage("$"+newSpin.value));
             setLatestLetter(computerChoice);
+            if (puzzleLetters.indexOf(computerChoice)>=0) {
+              correctGuessBell.play();
+            };
             setGuessedLetters(()=> {
               const newGuessedLetters=[...guessedLetters];
               newGuessedLetters.push(computerChoice);
@@ -354,6 +362,9 @@ export default function GamePage(props) {
     e.preventDefault();
     if (guessedLetters.indexOf(latestConsonant)<0 && latestConsonant!=="") {
       setLatestLetter(latestConsonant);
+      if (puzzleLetters.indexOf(latestConsonant)>=0) {
+        correctGuessBell.play();
+      };
       setTimeout(setGuessedLetters(()=> {
         const newGuessedLetters=[...guessedLetters];
         newGuessedLetters.push(latestConsonant);
@@ -366,6 +377,7 @@ export default function GamePage(props) {
         return newGuessedLetters;
       }), 1500)
       if (puzzleLetters.indexOf(latestConsonant)>=0) {
+        correctGuessBell.play();
         changeScore();
         (consonantMultiplier>1?setStatusMessage(`There are ${consonantMultiplier} ${latestConsonant}'s!`):setStatusMessage(`There is 1 ${latestConsonant}.`));
         setTimeout(setStatusMessage, 3000, "");
@@ -378,6 +390,9 @@ export default function GamePage(props) {
       setLatestConsonant("");
     } else if (guessedLetters.indexOf(latestVowel)<0 && latestVowel!=="") {
       setLatestLetter(latestVowel);
+      if (puzzleLetters.indexOf(latestVowel)>=0) {
+        correctGuessBell.play();
+      };
       setTimeout(setGuessedLetters(()=>{
         const newGuessedLetters=[...guessedLetters];
         newGuessedLetters.push(latestVowel);
@@ -394,9 +409,11 @@ export default function GamePage(props) {
         setTimeout(setStatusMessage, 3000, "");
         changeTurn();
       } else if (vowelMultiplier>1){
+        correctGuessBell.play();
         setStatusMessage(`There are ${vowelMultiplier} ${latestVowel}'s!`);
         setTimeout(setStatusMessage, 3000, "");
       } else {
+        correctGuessBell.play();
         setStatusMessage(`There is 1 ${latestVowel}.`);
         setTimeout(setStatusMessage, 3000, "");
       };

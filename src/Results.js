@@ -1,9 +1,16 @@
 import { useNavigate } from "react-router-dom";
-
+import cheering_kids from "./assets/sounds/cheering_kids.m4a";
+import cheering_crowd from "./assets/sounds/cheering_crowd.m4a";
 
 export default function Results(props) {
 
   const navigate = useNavigate();
+  const cheer1 = new Audio(cheering_kids);
+  const cheer2 = new Audio(cheering_crowd);
+  if (props.winner.name.indexOf("Computer")<0) {
+    const randomNum = Math.floor(Math.random())
+    randomNum>.5?cheer2.play():cheer1.play()
+  }
 
   const playAgain = () => {
     props.setWinner("");
