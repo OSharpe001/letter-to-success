@@ -130,7 +130,6 @@ export default function Settings(props) {
             return
         } else {
             claps.play();
-            setTimeout(claps.pause, 7500);
             let humanPlayers = [props.player1Name, props.player2Name, props.player3Name].slice(0,props.humanPlayerAmount);
             const computerPlayers=[];
             const computerPlayerNameGenerator = () => {
