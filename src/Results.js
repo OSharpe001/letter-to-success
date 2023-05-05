@@ -16,7 +16,6 @@ export default function Results(props) {
   cheerForMe(() => {
     if (winner.indexOf("Computer")<0) {
         const randomNum = Math.random();
-        // console.log("RESULTS.JS CHEERFORME RANDOMNUM VALUE: ", randomNum);
         randomNum>.5?cheer2.play():cheer1.play();
       } else {
         sad.play();
