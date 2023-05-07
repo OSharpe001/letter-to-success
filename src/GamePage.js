@@ -1,7 +1,7 @@
 // TODO:
 // 20-FIX THE AUTORESET FEATURE
 // 21-THE COMPUTER SOMETIMES SPINS AND PICKS TWICE DURING THE SAME CYCLE. I THINK IF I CAN STOP IT FROM MAKING A BLANK STATUS MESSAGE IN BETWEEN SAYING SORRY TO THE CURRENT PLAYER AND TELLING THE NEXT PLAYER THAT IT IS THEIR TURN, I CAN STOP THIS BAD BEHAVIOR
-
+//  REMEMBER TO REMOVE PUZZLE PHRASE RENDERING WHEN FINISHED TROUBLESHOOTING
 
 import Board from "./components/Board";
 import Wheel from "./components/Wheel";
@@ -98,14 +98,14 @@ export default function GamePage(props) {
   const guessPuzzleDisabled = guessPuzzleError;
 
   sounds(()=> {
-    if (latestLetter!=="" && puzzleLetters.indexOf(latestLetter)<0 && currentPlayer.indexOf("Computer")<0) {
+    if (latestLetter!=="" && puzzleLetters.indexOf(latestLetter)<0 && currentPlayer.name.indexOf("Computer")<0) {
       wrongGuessBuzzer.play();
       sad.play();
-    } else if (puzzleLetters.indexOf(latestLetter)>=0 && currentPlayer.indexOf("Computer")<0) {
+    } else if (puzzleLetters.indexOf(latestLetter)>=0 && currentPlayer.name.indexOf("Computer")<0) {
       correctGuessBell.play();
       shortApplause.play();
     }
-    if ((wheelType==="bankrupt" || wheelType==="loseturn") && currentPlayer.indexOf("Computer")<0) {
+    if ((wheelType==="bankrupt" || wheelType==="loseturn") && currentPlayer.name.indexOf("Computer")<0) {
       sad.play();
     }
   }, [latestLetter, wheelType]);
