@@ -9,11 +9,11 @@ import Pointer from "./components/Pointer";
 import Players from "./components/Players";
 import doubleLeftArrow from "./assets/images/doubleLeftArrow.png";
 import doubleRightArrow from "./assets/images/doubleRightArrow.png";
-// import bell from "./assets/sounds/bell.m4a";
-// import applause_2sec from "./assets/sounds/applause_2sec.m4a";
-// import full_applause from "./assets/sounds/full_applause.m4a";
-// import aww from "./assets/sounds/aww.m4a";
-// import buzzer from "./assets/sounds/buzzer.m4a";
+import bell from "./assets/sounds/bell.m4a";
+import applause_2sec from "./assets/sounds/applause_2sec.m4a";
+import full_applause from "./assets/sounds/full_applause.m4a";
+import aww from "./assets/sounds/aww.m4a";
+import buzzer from "./assets/sounds/buzzer.m4a";
 import { WheelSegments } from "./assets/game_data/wheelSegments";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
@@ -56,6 +56,7 @@ export default function GamePage(props) {
   const autoFocus = useEffect;
   const winner = useEffect;
   const computerPlayersBehavior = useEffect;
+  const sounds = useEffect;
 
   const consonants = ["B", "C", "D", "F", "G", "H", "J", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "V", "W", "X", "Y", "Z"];
   const vowels = ["A", "E", "I", "O", "U"];
@@ -63,11 +64,12 @@ export default function GamePage(props) {
   const puzzleLetters = props.puzzlePhrase.split("").filter(letter=>allLetters.indexOf(letter)>-1);
   const consonantMultiplier = (puzzleLetters.filter(letter=>letter===latestConsonant)).length;
   const vowelMultiplier= (puzzleLetters.filter(letter=>letter===latestVowel)).length;
-  // const correctGuessBell = new Audio(bell);
-  // const shortApplause = new Audio(applause_2sec);
-  // const fullApplause = new Audio(full_applause);
-  // const sad = new Audio(aww);
-  // const wrongGuessBuzzer = new Audio(buzzer);
+  const correctGuessBell = new Audio(bell);
+  const shortApplause = new Audio(applause_2sec);
+  const fullApplause = new Audio(full_applause);
+  const sad = new Audio(aww);
+  const wrongGuessBuzzer = new Audio(buzzer);
+  const wheelType = wheelInfo[0];
   const wheelValue = wheelInfo[1];
   const wheelPrize = wheelInfo[2];
   const wheelTiming = {
@@ -94,6 +96,19 @@ export default function GamePage(props) {
 
   const guessDisabled= latestGuessError;
   const guessPuzzleDisabled = guessPuzzleError;
+
+  sounds(()=> {
+    if (latestLetter!=="" && puzzleLetters.indexOf(latestLetter)<0 && currentPlayer.indexOf("Computer")<0) {
+      wrongGuessBuzzer.play();
+      sad.play();
+    } else if (puzzleLetters.indexOf(latestLetter)>=0 && currentPlayer.indexOf("Computer")<0) {
+      correctGuessBell.play();
+      shortApplause.play();
+    }
+    if ((wheelType==="bankrupt" || wheelType==="loseturn") && currentPlayer.indexOf("Computer")<0) {
+      sad.play();
+    }
+  }, [latestLetter, wheelType]);
 
 
   // ***AUTORESET IS CURRENTLY INNEFFECTIVE*** //
@@ -128,7 +143,7 @@ export default function GamePage(props) {
         };
       };
       getComputerSelection();
-//** */
+
       const guessOrPass = () => {
         if (computerSelection.length===0) {
           changeTurn();
@@ -159,8 +174,8 @@ export default function GamePage(props) {
             newGuessedLetters.sort();
             if (vowels.every(vowel => newGuessedLetters.indexOf(vowel) >= 0)) {
               setNoMoreVowels(true);
-              setTimeout(setStatusMessage, 3000, "There are no more vowels...");
-              setTimeout(setStatusMessage, 5000, "");
+              setTimeout(setStatusMessage, 1000, "There are no more vowels...");
+              setTimeout(setStatusMessage, 3000, "");
             };
             return newGuessedLetters;
           });
@@ -168,20 +183,17 @@ export default function GamePage(props) {
 
         const hitOrMiss = () => {
           if (puzzleLetters.indexOf(computerChoice) >= 0) {
-            // shortApplause.pause();
-            // correctGuessBell.pause();
-            // correctGuessBell.play();
-            // shortApplause.play();
+            correctGuessBell.play();
+            shortApplause.play();
             const vowelMultiplier = (puzzleLetters.filter(letter=>letter===computerChoice)).length;
             (vowelMultiplier>1?setStatusMessage(`There are ${vowelMultiplier} ${computerChoice}'s!`):setStatusMessage(`There is 1 ${computerChoice}.`));
             setTimeout(setStatusMessage, 3000, "");
             return
           } else {
             changeTurn();
-            // sad.play();
-            // wrongGuessBuzzer.play();
+            sad.play();
+            wrongGuessBuzzer.play();
             setStatusMessage(`There are no ${computerChoice}'s. (sorry...)`);
-            // setTimeout(setStatusMessage, 3000, "");
             return
           };
         };
@@ -202,7 +214,7 @@ export default function GamePage(props) {
         const guessOrLoseTurn= () => {
           if (newSpin.type==="bankrupt") {
             changeTurn();
-            // sad.play();
+            sad.play();
             setStatusMessage(`${currentPlayer.name} just went BANKRUPT! (OUCH!)`);
             let newList=[...players];
             newList[currentPlayerNumber].score=0;
@@ -211,7 +223,7 @@ export default function GamePage(props) {
             return
           } else if (newSpin.type==="loseturn") {
             changeTurn();
-            // sad.play();
+            sad.play();
             setStatusMessage(`${currentPlayer.name} just lost their turn! (sorry...)`);
             return
           } else {
@@ -223,16 +235,16 @@ export default function GamePage(props) {
               newGuessedLetters.sort();
               if (consonants.every(consonant => newGuessedLetters.indexOf(consonant) >= 0)) {
                 setNoMoreConsonants(true);
-                setTimeout(setStatusMessage, 5000, "There are no more consonants...");
-                setTimeout(setStatusMessage, 7000, "");
+                setTimeout(setStatusMessage, 3000, "There are no more consonants...");
+                setTimeout(setStatusMessage, 5000, "");
               };
               setTimeout(setLatestLetter, 1500, "")
               return newGuessedLetters;
             });
             const hitOrMiss = () => {
               if (puzzleLetters.indexOf(computerChoice)>=0) {
-                // correctGuessBell.play();
-                // shortApplause.play();
+                correctGuessBell.play();
+                shortApplause.play();
                 let newList=[...players];
                 const consonantMultiplier = (puzzleLetters.filter(letter=>letter===computerChoice)).length;
                 newList[currentPlayerNumber].score+=(newSpin.value*consonantMultiplier);
@@ -260,7 +272,7 @@ export default function GamePage(props) {
   winner(()=> {
     if (puzzleLetters.every(letter=>guessedLetters.indexOf(letter)>=0)) {
       setStatusMessage(`${currentPlayer.name} HAS WON!!!`);
-      // fullApplause.play();
+      fullApplause.play();
       setTimeout(props.setWinner, 3500, currentPlayer);
       setTimeout(navigate, 3501, "/results");
     } else {
@@ -376,8 +388,8 @@ export default function GamePage(props) {
         newGuessedLetters.sort();
         if (consonants.every(consonant=>newGuessedLetters.indexOf(consonant)>=0)) {
           setNoMoreConsonants(true);
-          setTimeout(setStatusMessage, 3000, "There are no more consonants...");
-          setTimeout(setStatusMessage, 5000, "");
+          setTimeout(setStatusMessage, 1000, "There are no more consonants...");
+          setTimeout(setStatusMessage, 3000, "");
         };
         return newGuessedLetters;
       }), 1500)
@@ -403,8 +415,8 @@ export default function GamePage(props) {
         newGuessedLetters.sort();
         if (vowels.every(vowel=>newGuessedLetters.indexOf(vowel)>=0)) {
           setNoMoreVowels(true);
-          setTimeout(setStatusMessage, 3000, "There are no more vowels...");
-          setTimeout(setStatusMessage, 5000, "");
+          setTimeout(setStatusMessage, 1000, "There are no more vowels...");
+          setTimeout(setStatusMessage, 3000, "");
         };
         return newGuessedLetters;
       }), 1500);
@@ -474,6 +486,7 @@ export default function GamePage(props) {
 
   return (
     <div className="game-page">
+      {props.puzzlePhrase}
         <div className="board-set">
           <Board
             puzzlePhrase={props.puzzlePhrase}
