@@ -10,5 +10,5 @@ export default function Header() {
         <Link aria-label="On Click" to="/settings" className="nav-item button">Set Up!</Link>
         </nav>
     </header>
-  )
-}
+  );
+};
