@@ -10,7 +10,7 @@
 }
 
 nav{
-  height: 60px;
+  /* height: 60px; */
   height: 7vh;
   display: flex;
   flex-direction: row;
@@ -21,6 +21,7 @@ nav{
 }
 
 a {
+  padding: 7px;
   font-size: 16pt;
   font-weight: bold;
   text-decoration: none;
@@ -78,7 +79,7 @@ li {
 }
 
 .form label {
-  margin-top: 2vh
+  margin-top: 2vh;
 }
 
 .error-message {
@@ -88,7 +89,7 @@ li {
 }
 
 .home-page {
-  height: 93vh;
+  height: 87vh;
 }
 
 .home-page h1 {
@@ -752,4 +753,41 @@ li {
 .arrow-image {
   width: 10px;
   height:2.2vh;
+}
+
+@media (max-width: 900px) {
+  .App {
+    font-size: 10pt;
+  }
+  nav{
+    /* height: 60px; */
+    height:8vh;
+  }
+  a {
+    font-size: 12pt;
+    /* border: 2px solid red; */
+  }
+  .button {
+    font-size: 12pt;
+  }
+  .settings-page {
+    height:stretch;
+    height: 105vh;
+    /* border: 2px solid red; */
+  }
+  .form input {
+    width: 40vw;
+    padding: 3px 10px;
+    margin: 1vh auto 1vh;
+    border-radius: 16px;
+    /* border: 2px solid red; */
+  }
+  /* .form input.button {
+    border: 2px solid red;
+  } */
+  .home-page {
+    height: 84vh;
+    /* border: 2px solid red; */
+  }
+
 }
