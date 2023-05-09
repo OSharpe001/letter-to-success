@@ -35,7 +35,7 @@ a h1 {
 }
 
 .button {
-  width:fit-content;
+  width: fit-content;
   font-size: 16pt;
   font-weight: bold;
   text-decoration: none;
@@ -44,13 +44,13 @@ a h1 {
   padding: 10px;
   margin: auto;
   border-radius: 20px;
-  border:ridge 2px var(--secondaryColor);
+  border: ridge 2px var(--secondaryColor);
 }
 
 a:hover, .button:hover {
   color: var(--primaryColor);
   background-color: var(--secondaryColor);
-  border:ridge 2px var(--primaryColor);
+  border: ridge 2px var(--primaryColor);
 }
 
 header .button {
@@ -62,7 +62,7 @@ li {
 }
 
 .settings-page {
-  height:93vh;
+  height: 93vh;
 }
 
 .form {
@@ -88,7 +88,7 @@ li {
 }
 
 .home-page {
-  height: 87vh;
+  height: stretch;
 }
 
 .home-page h1 {
@@ -103,7 +103,7 @@ li {
   list-style-type: none;
   animation-name: stationary;
   animation-duration: 100s;
-  animation-iteration-count: infinite ;
+  animation-iteration-count: infinite;
   animation-timing-function: linear;
   overflow: hidden;
   border-radius: 50%;
@@ -191,7 +191,7 @@ li {
 }
 
 .wheel-segment {
-  text-align:end;
+  text-align: end;
   font-weight: bold;
   width: 49%;
   position: absolute;
@@ -201,7 +201,7 @@ li {
 }
 
 .wheel-segment:nth-of-type(1) {
-  height:stretch;
+  height: stretch;
   overflow: hidden;
   background-color: rgb(201, 127, 127);
   border: 2px solid black;
@@ -209,7 +209,7 @@ li {
 }
 
 .wheel-segment:nth-of-type(2) {
-  height:stretch;
+  height: stretch;
   overflow: hidden;
   transform: rotate(27.7deg) skew(62deg);
   background-color: grey;
@@ -218,7 +218,7 @@ li {
 
 .wheel-segment:nth-of-type(3) {
   overflow: hidden;
-  height:stretch;
+  height: stretch;
   transform: rotate(55.4deg) skew(62deg);
   background-color: green;
   border: 2px solid black;
@@ -228,7 +228,7 @@ li {
   transform: rotate(83.1deg) skew(62deg);
   background-color: skyblue;
   border: 2px solid black;
-  height:stretch;
+  height: stretch;
   overflow: hidden;
 }
 
@@ -236,7 +236,7 @@ li {
   transform: rotate(110.8deg) skew(62deg);
   background-color: orange;
   border: 2px solid black;
-  height:stretch;
+  height: stretch;
   overflow: hidden;
 }
 
@@ -244,7 +244,7 @@ li {
   transform: rotate(138.5deg) skew(62deg);
   background-color: orangered;
   border: 2px solid black;
-  height:stretch;
+  height: stretch;
   overflow: hidden;
 }
 
@@ -252,7 +252,7 @@ li {
   transform: rotate(166.2deg) skew(62deg);
   background-color: yellow;
   border: 2px solid black;
-  height:stretch;
+  height: stretch;
   overflow: hidden;
 }
 
@@ -260,7 +260,7 @@ li {
   transform: rotate(193.8deg) skew(62deg);
   background-color: grey;
   border: 2px solid black;
-  height:stretch;
+  height: stretch;
   overflow: hidden;
 }
 
@@ -268,7 +268,7 @@ li {
   transform: rotate(221.5deg) skew(62deg);
   border: 2px solid black;
   background-color: greenyellow;
-  height:stretch;
+  height: stretch;
   overflow: hidden;
 }
 
@@ -276,7 +276,7 @@ li {
   transform: rotate(249.2deg) skew(62deg);
   background-color: rgb(113, 113, 239);
   border: 2px solid black;
-  height:stretch;
+  height: stretch;
   overflow: hidden;
 }
 
@@ -284,7 +284,7 @@ li {
   transform: rotate(276.9deg) skew(62deg);
   background-color: pink;
   border: 2px solid black;
-  height:stretch;
+  height: stretch;
   overflow: hidden;
 }
 
@@ -292,7 +292,7 @@ li {
   transform: rotate(304.6deg) skew(62deg);
   background-color: aqua;
   border: 2px solid black;
-  height:stretch;
+  height: stretch;
   overflow: hidden;
 }
 
@@ -300,7 +300,7 @@ li {
   transform: rotate(332.3deg) skew(62deg);
   background-color: fuchsia;
   border: 2px solid black;
-  height:stretch;
+  height: stretch;
   overflow: hidden;
 }
 
@@ -328,17 +328,17 @@ li {
   padding: 0;
   text-align: center;
   margin-top: -24%;
-  margin-left:7%;
+  margin-left: 7%;
   overflow: hidden;
   border: 3px ridge rgb(244, 178, 55);
 }
 
 .pointer {
-  font-size:40pt;
+  font-size: 40pt;
   font-weight: bold;
   margin: 0;
   height: fit-content;
-  align-self:center;
+  align-self: center;
   transform: rotate(90deg);
 }
 
@@ -351,17 +351,17 @@ li {
   border: 5px solid black;
   animation-name: spinning;
   animation-duration: 7s;
-  animation-iteration-count:infinite;
-  animation-timing-function:linear;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
   overflow: hidden;
 }
 
 .moving {
-  font-size:40pt;
+  font-size: 40pt;
   font-weight: bold;
   margin: 0;
   height: fit-content;
-  align-self:center;
+  align-self: center;
   transform: rotate(90deg);
   animation-name: moving;
   animation-duration: 7s;
@@ -372,7 +372,7 @@ li {
 .letter-turning {
   font-family: 'Times New Roman', Times, serif;
   font-size: 40pt;
-  width:1em;
+  width: 1em;
   height: 90%;
   font-weight: bold;
   background-color: rgb(250, 255, 109);
@@ -385,13 +385,13 @@ li {
 @keyframes turning {
   0% {
     transform: rotateY(180deg);
-    color:rgb(250, 255, 109);
+    color: rgb(250, 255, 109);
   }
   50% {
     transform: rotateY(180deg);
   }
   75% {
-    color:rgb(250, 255, 109);
+    color: rgb(250, 255, 109);
     background-color: rgb(250, 255, 109);
   }
   76% {
@@ -525,7 +525,7 @@ li {
 .wheel-set {
   display: flex;
   flex-direction: row;
-  height:fit-content;
+  height: fit-content;
   margin: auto;
 }
 
@@ -592,7 +592,7 @@ li {
 .phrase {
   display: flex;
   flex-direction: column;
-  margin:auto;
+  margin: auto;
   width: 90%;
 }
 
@@ -610,10 +610,10 @@ li {
 .letter-card {
   font-family: 'Times New Roman', Times, serif;
   font-size: 40pt;
-  width:1em;
+  width: 1em;
   height: 90%;
   font-weight: bold;
-  background-color:aliceblue;
+  background-color: aliceblue;
   border: 3px solid black;
 }
 
@@ -621,8 +621,8 @@ li {
   text-decoration: underline;
   font-size: 30pt;
   text-align: left;
-  width:fit-content;
-  position:relative;
+  width: fit-content;
+  position: relative;
   bottom: 1px;
   padding: 0;
   margin: 2vh 2vw;
@@ -635,7 +635,7 @@ li {
 .interface-options {
   width: 100%;
   min-height: 6vh;
-  display:inline-flex;
+  display: inline-flex;
 }
 
 .interface input {
@@ -675,7 +675,7 @@ li {
 .guessed-letters {
   width: 73%;
   text-align: center;
-  padding:0;
+  padding: 0;
   margin: 0;
 }
 
@@ -739,7 +739,7 @@ li {
 
 .arrow-image {
   width: 10px;
-  height:2.2vh;
+  height: 2.2vh;
 }
 
 @media (max-width: 900px) {
@@ -749,7 +749,7 @@ li {
   }
 
   nav{
-    height:8vh;
+    height: 8vh;
   }
 
   a {
@@ -761,7 +761,7 @@ li {
   }
 
   .settings-page {
-    height:stretch;
+    height: stretch;
     height: 105vh;
   }
 
@@ -811,8 +811,9 @@ li {
   .board {
     width: 100%;
   }
+
   .phrase {
-    width:fit-content;
+    width: fit-content;
     align-items: right;
   }
 
@@ -853,11 +854,11 @@ li {
   }
 
   .pointer {
-    font-size:20pt;
+    font-size: 20pt;
   }
 
   .moving {
-    font-size:20pt;
+    font-size: 20pt;
   }
 
   .interface {
@@ -900,7 +901,7 @@ li {
     margin-left: 0;
     width: 8ch;
     min-height: 5ch;
-    margin:0 auto;
+    margin: 0 auto;
     position: relative;
   }
 
@@ -908,7 +909,7 @@ li {
     padding: 0;
     width: 8ch;
     min-height: 5ch;
-    margin:0 auto;
+    margin: 0 auto;
     position: relative;
   }
 
@@ -916,77 +917,44 @@ li {
     padding: 0;
     width: 8ch;
     min-height: 5ch;
-    margin:0 auto;
+    margin: 0 auto;
     position: relative;
   }
 
-  /* .wheel-set {
-    display: flex;
-    flex-direction: row;
-    height:fit-content;
-    margin: auto;
-  } */
   .players {
+    width: 100%;
     margin: 1vh 0 0;
-    list-style-type: none;
-    display: flex;
-    justify-content: space-around;
-    border: 2px solid red;
-  }
-  .player {
-    border-left: 10px double black;
-    border-right: 10px double black;
-    border-top: 20px double black;
-    border-radius: 10px;
-    width: 320px;
-    border: 2px solid red;
-  }
-  .player-name {
-    padding: 1vh;
-    font-size: 20pt;
-    font-weight: bold;
-    background-color: grey;
-    border: 2px solid red;
-  }
-  .player-score {
-    font-weight: bold;
-    padding: 2vh;
-    background-color: green;
-    border: 2px solid red;
-  }
-  .player-prizes {
-    font-weight: bold;
-    padding: 20px;
-    background-color: silver;
-    border: 2px solid red;
+    padding: 0;
   }
 
-  /* .wheel-set {
-    display: flex;
-    flex-direction: row;
-    height:fit-content;
-    margin: auto;
-  } */
-  .results-page {
-    height: stretch;
+  .player {
+    width: auto;
+    min-width: 25%;
+    overflow: hidden;
   }
-  .loss {
-    width: fit-content;
-    margin: auto;
-    padding: 2vh 2vw;
-    background-color: rgb(246, 142, 142);
-    border-radius: 30px;
-    border: 15px solid red;
+
+  .player-name {
+    padding: 1vh, 1vw;
+    font-size: 10pt;
+    height: 1ch;
+    overflow: hidden;
   }
-  .results-page ul {
-    margin-left: -2vw;
+
+  .player-score {
+    padding: 1vh 0;
+  }
+
+  .player-prizes {
+    min-height: 20px;
+    padding: 1vh 0;
+    margin: 0 0 0 -4vw;
   }
 }
 
 @media (max-width: 500px) {
 
   .arrow-image {
-    height:4.2vh;
+    height: 4.2vh;
   }
 
   .guessed-letters-section {
@@ -1003,6 +971,12 @@ li {
     width: min-content;
     border-radius: 0 5px 5px 0;
     border: 1px solid black;
+  }
+
+  .player-prizes {
+    min-height: 20px;
+    padding: 1vh 0;
+    margin: 0 0 0 -10vw;
   }
 }
 
@@ -1021,10 +995,7 @@ li {
   }
 
   .guessed-letters {
-    /* width: 73%; */
-    /* display: inline-flex; */
     width: 67%;
-    overflow:auto;
-    border: 2px solid yellow;
+    overflow: auto;
   }
 }
