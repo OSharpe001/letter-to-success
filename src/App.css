@@ -10,7 +10,6 @@
 }
 
 nav{
-  /* height: 60px; */
   height: 7vh;
   display: flex;
   flex-direction: row;
@@ -194,7 +193,7 @@ li {
 .wheel-segment {
   text-align:end;
   font-weight: bold;
-  width: 50%;
+  width: 49%;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -337,7 +336,7 @@ li {
 .pointer {
   font-size:40pt;
   font-weight: bold;
-  margin: 0 0 0 0;
+  margin: 0;
   height: fit-content;
   align-self:center;
   transform: rotate(90deg);
@@ -360,7 +359,7 @@ li {
 .moving {
   font-size:40pt;
   font-weight: bold;
-  margin: 0 0 0 0;
+  margin: 0;
   height: fit-content;
   align-self:center;
   transform: rotate(90deg);
@@ -432,7 +431,7 @@ li {
     transform: rotate(var(--primaryDeg));
   }
   .5% {
-    transform: rotate(-1080deg)
+    transform: rotate(-1080deg);
   }
   20% {
     transform: rotate(-360deg);
@@ -643,7 +642,7 @@ li {
   font-size: 20px;
   text-align: center;
   width: 9ch;
-  margin: 1vh auto 1vh;
+  margin: 1vh auto;
 }
 
 .interface label {
@@ -721,18 +720,6 @@ li {
   margin: 0 auto;
 }
 
-.wheel-info {
-  min-height: 5vh;
-  font-weight: bold;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-}
-
-.wheel-info p {
-  margin: auto 0;
-}
-
 .results-page {
   height: stretch;
 }
@@ -756,38 +743,288 @@ li {
 }
 
 @media (max-width: 900px) {
+
   .App {
     font-size: 10pt;
   }
+
   nav{
-    /* height: 60px; */
     height:8vh;
   }
+
   a {
     font-size: 12pt;
-    /* border: 2px solid red; */
   }
+
   .button {
     font-size: 12pt;
   }
+
   .settings-page {
     height:stretch;
     height: 105vh;
-    /* border: 2px solid red; */
   }
+
   .form input {
     width: 40vw;
     padding: 3px 10px;
     margin: 1vh auto 1vh;
     border-radius: 16px;
-    /* border: 2px solid red; */
-  }
-  /* .form input.button {
-    border: 2px solid red;
-  } */
-  .home-page {
-    height: 84vh;
-    /* border: 2px solid red; */
   }
 
+  .home-page {
+    height: 84vh;
+  }
+
+  .home-page .wheel {
+    width: 240px;
+    height: 280px;
+  }
+
+  .home-page .wheel:hover {
+    width: 240px;
+    height: 280px;
+  }
+
+  .segment-content {
+    width: 65%;
+  }
+
+  .value {
+    margin-top: 30%;
+    margin-left: 95%;
+    font-size: 9px;
+  }
+
+  .prize {
+    width: 9ch;
+    margin-top: -23%;
+    margin-left: 8%;
+    font-size: 9px;
+  }
+
+  .board-set {
+    flex-direction: column;
+    margin-top: 20px;
+  }
+
+  .board {
+    width: 100%;
+  }
+  .phrase {
+    width:fit-content;
+    align-items: right;
+  }
+
+  .letter-card {
+    font-size: 16pt;
+    height: auto;
+    border: 2px solid black;
+  }
+
+  .letter-turning {
+    font-size: 16pt;
+    height: auto;
+    border: 2px solid black;
+  }
+
+  .word {
+    border: 2px solid black;
+  }
+
+  .puzzle-type {
+    font-size: 14pt;
+  }
+
+  .wheel {
+    width: 240px;
+    height: 280px;
+  }
+
+  .spinning {
+    width: 240px;
+    height: 280px;
+  }
+
+  .game-status {
+    font-size: 14pt;
+    min-height: 8vh;
+    margin: 1vh auto;
+  }
+
+  .pointer {
+    font-size:20pt;
+  }
+
+  .moving {
+    font-size:20pt;
+  }
+
+  .interface {
+    margin: 0 2vw;
+    padding: 5px;
+  }
+
+  .spin-solve-buy {
+    min-height: 24vh;
+  }
+
+  .interface input {
+    font-size: 16px;
+  }
+
+  .interface .left {
+    margin: 0 auto;
+  }
+
+  .interface .right {
+    margin: 0 auto;
+  }
+
+  .interface .center {
+    width: 100%;
+  }
+
+  #guess-puzzle {
+    width: 100%;
+  }
+
+  .interface-options {
+    margin-left: -.5vw;
+    min-height: 9vh;
+    align-items: center;
+  }
+
+  .spin {
+    padding: 0;
+    margin-left: 0;
+    width: 8ch;
+    min-height: 5ch;
+    margin:0 auto;
+    position: relative;
+  }
+
+  .buy{
+    padding: 0;
+    width: 8ch;
+    min-height: 5ch;
+    margin:0 auto;
+    position: relative;
+  }
+
+  .solve{
+    padding: 0;
+    width: 8ch;
+    min-height: 5ch;
+    margin:0 auto;
+    position: relative;
+  }
+
+  /* .wheel-set {
+    display: flex;
+    flex-direction: row;
+    height:fit-content;
+    margin: auto;
+  } */
+  .players {
+    margin: 1vh 0 0;
+    list-style-type: none;
+    display: flex;
+    justify-content: space-around;
+    border: 2px solid red;
+  }
+  .player {
+    border-left: 10px double black;
+    border-right: 10px double black;
+    border-top: 20px double black;
+    border-radius: 10px;
+    width: 320px;
+    border: 2px solid red;
+  }
+  .player-name {
+    padding: 1vh;
+    font-size: 20pt;
+    font-weight: bold;
+    background-color: grey;
+    border: 2px solid red;
+  }
+  .player-score {
+    font-weight: bold;
+    padding: 2vh;
+    background-color: green;
+    border: 2px solid red;
+  }
+  .player-prizes {
+    font-weight: bold;
+    padding: 20px;
+    background-color: silver;
+    border: 2px solid red;
+  }
+
+  /* .wheel-set {
+    display: flex;
+    flex-direction: row;
+    height:fit-content;
+    margin: auto;
+  } */
+  .results-page {
+    height: stretch;
+  }
+  .loss {
+    width: fit-content;
+    margin: auto;
+    padding: 2vh 2vw;
+    background-color: rgb(246, 142, 142);
+    border-radius: 30px;
+    border: 15px solid red;
+  }
+  .results-page ul {
+    margin-left: -2vw;
+  }
+}
+
+@media (max-width: 500px) {
+
+  .arrow-image {
+    height:4.2vh;
+  }
+
+  .guessed-letters-section {
+    min-height: 6vh;
+  }
+
+  .guessed-letters-section button {
+    background-color: aliceblue;
+    border-radius: 5px 0 0 5px;
+    border: 1px solid black;
+  }
+
+  .guessed-letters-label {
+    width: min-content;
+    border-radius: 0 5px 5px 0;
+    border: 1px solid black;
+  }
+}
+
+@media (max-width: 350px) {
+
+  .letter-card {
+    font-size: 14pt;
+    height: auto;
+    border: 2px solid black;
+  }
+
+  .letter-turning {
+    font-size: 14pt;
+    height: auto;
+    border: 2px solid black;
+  }
+
+  .guessed-letters {
+    /* width: 73%; */
+    /* display: inline-flex; */
+    width: 67%;
+    overflow:auto;
+    border: 2px solid yellow;
+  }
 }
