@@ -1,10 +1,10 @@
-import HomePage from "./HomePage"
-import Settings from "./Settings"
-import GamePage from "./GamePage"
-import Results from "./Results"
-import Header from "./components/Header"
-import Footer from "./components/Footer"
-import { Puzzles } from './assets/game_data/puzzles'
+import HomePage from "./HomePage";
+import Settings from "./Settings";
+import GamePage from "./GamePage";
+import Results from "./Results";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import { Puzzles } from './assets/game_data/puzzles';
 import { useNavigate } from "react-router-dom";
 import { Routes, Route } from "react-router-dom";
 import { useState } from "react";
@@ -24,7 +24,7 @@ export default function Main() {
   const [computerPlayerAmountError, setComputerPlayerAmountError] = useState("");
   const [computerDifficultyLevel, setComputerDifficultyLevel] = useState(1);
   const [computerDifficultyError, setComputerDifficultyError] = useState("");
-  const [settingsData, setSettingsData] =useState({})
+  const [settingsData, setSettingsData] =useState({});
   const [winner, setWinner] = useState("");
 
   const navigate = useNavigate();
@@ -36,8 +36,8 @@ export default function Main() {
 
   const puzzleChoice = Puzzles[Math.floor(Math.random()*Puzzles.length)];
   const puzzleType = puzzleChoice.type;
-  const puzzlePhrase = puzzleChoice.phrases[Math.floor(Math.random()*puzzleChoice.phrases.length)].toUpperCase()
-  
+  const puzzlePhrase = puzzleChoice.phrases[Math.floor(Math.random()*puzzleChoice.phrases.length)].toUpperCase();
+
   return (
     <>
       <Header />
