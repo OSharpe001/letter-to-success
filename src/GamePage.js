@@ -608,7 +608,7 @@ export default function GamePage(props) {
                   alt="double right arrow"/>
                 </button>
               }
-              <p className={showGuessedLetters?null:"hidden"}>Guessed Letters:</p>
+              <p className={showGuessedLetters?"guessed-letters-label":"hidden"}>Guessed Letters:</p>
               <p className={showGuessedLetters?"guessed-letters":"hidden"}>{guessedLetters}</p>
             </div>
           </div>
