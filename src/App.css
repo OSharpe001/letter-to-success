@@ -98,8 +98,8 @@ li {
 
 .wheel {
   margin: 1vh auto;
-  width: 34.43vw;
-  height: 37vw;
+  width: 516px;
+  height: 554px;
   list-style-type: none;
   animation-name: stationary;
   animation-duration: 100s;
@@ -164,8 +164,8 @@ li {
 
 .home-page .wheel {
   margin: 10vh auto 0;
-  width: 34.43vw;
-  height: 37vw;
+  width: 516px;
+  height: 554px;
   background-color: black;
   list-style-type: none;
   border-radius: 50%;
@@ -178,8 +178,8 @@ li {
 
 .home-page .wheel:hover {
   margin: 10vh auto 0;
-  width: 34.43vw;
-  height: 37vw;
+  width: 516px;
+  height: 554px;
   background-color: black;
   list-style-type: none;
   border-radius: 50%;
@@ -344,8 +344,8 @@ li {
 
 .spinning {
   margin:  1vh auto;
-  width: 34.43vw;
-  height: 37vw;
+  width: 516px;
+  height: 554px;
   list-style-type: none;
   border-radius: 50%;
   border: 5px solid black;
