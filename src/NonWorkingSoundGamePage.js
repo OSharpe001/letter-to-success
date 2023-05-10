@@ -10,14 +10,15 @@ import Pointer from "./components/Pointer";
 import Players from "./components/Players";
 import doubleLeftArrow from "./assets/images/doubleLeftArrow.png";
 import doubleRightArrow from "./assets/images/doubleRightArrow.png";
-// import bell from "./assets/sounds/bell.m4a";
-// import applause_2sec from "./assets/sounds/applause_2sec.m4a";
-// import full_applause from "./assets/sounds/full_applause.m4a";
-// import aww from "./assets/sounds/aww.m4a";
-// import buzzer from "./assets/sounds/buzzer.m4a";
+import bell from "./assets/sounds/bell.m4a";
+import applause_2sec from "./assets/sounds/applause_2sec.m4a";
+import full_applause from "./assets/sounds/full_applause.m4a";
+import aww from "./assets/sounds/aww.m4a";
+import buzzer from "./assets/sounds/buzzer.m4a";
 import { WheelSegments } from "./assets/game_data/wheelSegments";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+// import { Howl, Howler } from "howler";
 
 export default function GamePage(props) {
 
@@ -64,11 +65,11 @@ export default function GamePage(props) {
   const puzzleLetters = props.puzzlePhrase.split("").filter(letter=>allLetters.indexOf(letter)>-1);
   const consonantMultiplier = (puzzleLetters.filter(letter=>letter===latestConsonant)).length;
   const vowelMultiplier= (puzzleLetters.filter(letter=>letter===latestVowel)).length;
-  // const correctGuessBell = new Audio(bell);
-  // const shortApplause = new Audio(applause_2sec);
-  // const fullApplause = new Audio(full_applause);
-  // const sad = new Audio(aww);
-  // const wrongGuessBuzzer = new Audio(buzzer);
+  const correctGuessBell = new Audio(bell);
+  const shortApplause = new Audio(applause_2sec);
+  const fullApplause = new Audio(full_applause);
+  const sad = new Audio(aww);
+  const wrongGuessBuzzer = new Audio(buzzer);
   const wheelValue = wheelInfo[1];
   const wheelPrize = wheelInfo[2];
   const wheelTiming = {
@@ -95,6 +96,41 @@ export default function GamePage(props) {
 
   const guessDisabled= latestGuessError;
   const guessPuzzleDisabled = guessPuzzleError;
+
+  // const sfx = {
+  //   bell: new Howl({
+  //     src: ["./assets/sounds/bell.m4a"],
+  //     onend: () => console.log("FINISHED PLAYING THE BELL SOUND")
+  //   }),
+  //   short_applause: new Howl({
+  //     src: ["./assets/sounds/applause_2sec.m4a"],
+  //     onend: () => console.log("FINISHED PLAYING THE SHORT APPLAUSE SOUND")
+  //   }),
+  //   full_applause: new Howl({
+  //     src: ["./assets/sounds/full_applause.m4a"],
+  //     autoplay: true,
+  //     onend: () => console.log("FINISHED PLAYING THE FULL APPLAUSE SOUND")
+  //   }),
+  //   sad: new Howl({
+  //     src: ["./assets/sounds/aww.m4a"],
+  //     onend: () => console.log("FINISHED PLAYING THE SAD SOUND")
+  //   }),
+  //   buzzer: new Howl({
+  //     src: ["./assets/sounds/buzzer.m4a"],
+  //     onend: () => console.log("FINISHED PLAYING THE BUZZER SOUND")
+  //   }),
+  // };
+
+  // const sound = new Howl({
+  //   src: ["./assets/sounds"],
+  //   sprite: {
+  //     bell: [0, 1000],
+  //     applause_2sec: [0, 2000],
+  //     full_applause: [0, 8000],
+  //     aww: [0, 2000],
+  //     buzzer: [0, 1000]
+  //   }
+  // });
 
 
   // ***AUTORESET IS CURRENTLY INNEFFECTIVE*** //
@@ -177,11 +213,15 @@ export default function GamePage(props) {
 
         const hitOrMiss = () => {
           if (puzzleLetters.indexOf(computerChoice) >= 0) {
-            // correctGuessBell.play();
-            // shortApplause.play();
-            // if (correctGuessBell.isPlaying) {
-            //   console.log("WE GOT ONE (IN COMPUTER BEHAVIOR)");
-            // };
+            // sfx.bell.play();
+            // sfx.short_applause.play();
+            // sound.play("bell");
+            // sound.play("applause_2sec");
+            correctGuessBell.play();
+            shortApplause.play();
+            if (correctGuessBell.isPlaying) {
+              console.log("WE GOT ONE (IN COMPUTER BEHAVIOR)");
+            };
             const vowelMultiplier = (puzzleLetters.filter(letter=>letter===computerChoice)).length;
             (vowelMultiplier>1?setStatusMessage(`There are ${vowelMultiplier} ${computerChoice}'s!`):setStatusMessage(`There is 1 ${computerChoice}.`));
             setTimeout(setStatusMessage, 3000, "");
@@ -189,8 +229,12 @@ export default function GamePage(props) {
             return
           } else {
             changeTurn();
-            // sad.play();
-            // wrongGuessBuzzer.play();
+            // Howler.sfx.sad.play();
+            // sfx.buzzer.play();
+            // sound.play("aww");
+            // sound.play("buzzer");
+            sad.play();
+            wrongGuessBuzzer.play();
             setStatusMessage(`There are no ${computerChoice}'s. (sorry...)`);
             return
           };
@@ -214,7 +258,9 @@ export default function GamePage(props) {
           if (newSpin.type==="bankrupt") {
             // console.log(`${currentPlayer.name} just went 'BANKRUPT'`)
             changeTurn();
-            // sad.play();
+            // sfx.sad.play();
+            // sound.play("aww");
+            sad.play();
             setStatusMessage(`${currentPlayer.name} just went BANKRUPT! (OUCH!)`);
             let newList=[...players];
             newList[currentPlayerNumber].score=0;
@@ -224,7 +270,9 @@ export default function GamePage(props) {
           } else if (newSpin.type==="loseturn") {
             // console.log(`${currentPlayer.name} just hit a 'LOSETURN'`)
             changeTurn();
-            // sad.play();
+            // sfx.sad.play();
+            // sound.play("aww");
+            sad.play();
             setStatusMessage(`${currentPlayer.name} just lost their turn! (sorry...)`);
             return
           } else {
@@ -245,11 +293,15 @@ export default function GamePage(props) {
             });
             const hitOrMiss = () => {
               if (puzzleLetters.indexOf(computerChoice)>=0) {
-                // correctGuessBell.play();
-                // shortApplause.play();
-                // if (correctGuessBell.isPlaying) {
-                //   console.log("WE GOT ONE (IN COMPUTER BEHAVIOR2)");
-                // };
+                // sfx.bell.play();
+                // sfx.short_applause.play();
+                // sound.play("bell");
+                // sound.play("applause_2sec");
+                correctGuessBell.play();
+                shortApplause.play();
+                if (correctGuessBell.isPlaying) {
+                  console.log("WE GOT ONE (IN COMPUTER BEHAVIOR2)");
+                };
                 let newList=[...players];
                 const consonantMultiplier = (puzzleLetters.filter(letter=>letter===computerChoice)).length;
                 // console.log("GAMEPAGE.JS COMPUTERPLAYERBEHAVIOR HITORMISS' CONSONANTMULTIPLIER: ", consonantMultiplier)
@@ -281,7 +333,9 @@ export default function GamePage(props) {
   winner(()=> {
     if (puzzleLetters.every(letter=>guessedLetters.indexOf(letter)>=0)) {
       setStatusMessage(`${currentPlayer.name} HAS WON!!!`);
-      // fullApplause.play();
+      // sfx.full_applause.play();
+      // sound.play("full_applause");
+      fullApplause.play();
       setTimeout(props.setWinner, 3500, currentPlayer);
       setTimeout(navigate, 3501, "/results");
     } else {
@@ -312,7 +366,9 @@ export default function GamePage(props) {
       if (newSpin.type==="bankrupt") {
         // console.log("NEWSPIN WAS A 'BANKRUPT'")
         changeTurn();
-        // sad.play();
+        // sfx.sad.play();
+        // sound.play("aww");
+        sad.play();
         setStatusMessage(`${currentPlayer.name} just went BANKRUPT! (OUCH!)`);
         let newList=[...players];
         newList[currentPlayerNumber].score=0;
@@ -322,12 +378,15 @@ export default function GamePage(props) {
       } else if (newSpin.type==="loseturn") {
         // console.log("NEWSPIN WAS A 'LOSETURN'")
         changeTurn();
-        // sad.play();
+        // sfx.sad.play();
+        // sound.play("aww");
+        sad.play();
         setStatusMessage(`${currentPlayer.name} just lost their turn! (sorry...)`);
         return
       } else {
         (newSpin.prize && currentPlayer.prizes.indexOf(newSpin.prize)<0?setStatusMessage(`$${newSpin.value} and a ${newSpin.prize}`):setStatusMessage("$"+newSpin.value));
         consonantInput.current.focus();
+        // setTimeout(setStatusMessage, 3500, "");
         // setTimeout(console.log, 3000, "5")
       }
     }
@@ -413,19 +472,27 @@ export default function GamePage(props) {
         return newGuessedLetters;
       }), 1500)
       if (puzzleLetters.indexOf(latestConsonant)>=0) {
-        // correctGuessBell.play();
-        // shortApplause.play();
-        // if (correctGuessBell.isPlaying) {
-        //   console.log("WE GOT ONE (IN GUESS LETTER)");
-        // };
+        // sfx.bell.play();
+        // sfx.short_applause.play();
+        // sound.play("bell");
+        // sound.play("applause_2sec");
+        correctGuessBell.play();
+        shortApplause.play();
+        if (correctGuessBell.isPlaying) {
+          console.log("WE GOT ONE (IN GUESS LETTER)");
+        };
         changeScore();
         (consonantMultiplier>1?setStatusMessage(`There are ${consonantMultiplier} ${latestConsonant}'s!`):setStatusMessage(`There is 1 ${latestConsonant}.`));
         setTimeout(setStatusMessage, 3000, "");
         // setTimeout(console.log, 3000, "8")
       } else {
         changeTurn();
-        // sad.play();
-        // wrongGuessBuzzer.play();
+        // sfx.sad.play();
+        // sfx.buzzer.play();
+        // sound.play("aww");
+        // sound.play("buzzer");
+        sad.play();
+        wrongGuessBuzzer.play();
         setStatusMessage(`There are no ${latestConsonant}'s. (sorry...)`);
       };
       setPauseControls(true);
@@ -446,24 +513,36 @@ export default function GamePage(props) {
       }), 1500);
       if (puzzleLetters.indexOf(latestVowel)<0) {
         changeTurn();
-        // sad.play();
-        // wrongGuessBuzzer.play();
+        // sfx.sad.play();
+        // sfx.buzzer.play();
+        // sound.play("aww");
+        // sound.play("buzzer");
+        sad.play();
+        wrongGuessBuzzer.play();
         setStatusMessage(`There are no ${latestVowel}'s. (sorry...)`);
       } else if (vowelMultiplier>1){
-        // correctGuessBell.play();
-        // shortApplause.play();
-        // if (correctGuessBell.isPlaying) {
-        //   console.log("WE GOT ONE (IN GUESS LETTER2)");
-        // };
+        // sfx.bell.play();
+        // sfx.short_applause.play();
+        // sound.play("bell");
+        // sound.play("applause_2sec");
+        correctGuessBell.play();
+        shortApplause.play();
+        if (correctGuessBell.isPlaying) {
+          console.log("WE GOT ONE (IN GUESS LETTER2)");
+        };
         setStatusMessage(`There are ${vowelMultiplier} ${latestVowel}'s!`);
         setTimeout(setStatusMessage, 2000, "");
         // setTimeout(console.log, 2000, "10")
       } else {
-        // correctGuessBell.play();
-        // shortApplause.play();
-        // if (correctGuessBell.isPlaying) {
-        //   console.log("WE GOT ONE (IN GUESS LETTER3)");
-        // };
+        // sfx.bell.play();
+        // sfx.short_applause.play();
+        // sound.play("bell");
+        // sound.play("applause_2sec");
+        correctGuessBell.play();
+        shortApplause.play();
+        if (correctGuessBell.isPlaying) {
+          console.log("WE GOT ONE (IN GUESS LETTER3)");
+        };
         setStatusMessage(`There is 1 ${latestVowel}.`);
         setTimeout(setStatusMessage, 2000, "");
         // setTimeout(console.log, 2000, "11")
@@ -495,8 +574,12 @@ export default function GamePage(props) {
       setTimeout(setGuessedLetters, 1500, [...new Set(filteredGuessPuzzle)]);
     } else if (guessPuzzle.length>0) {
       changeTurn();
-      // sad.play();
-      // wrongGuessBuzzer.play();
+      // sfx.sad.play();
+      // sfx.buzzer.play();
+      // sound.play("aww");
+      // sound.play("buzzer");
+      sad.play();
+      wrongGuessBuzzer.play();
       setGuessPuzzle("");
       setAttemptToSolve(false);
       setStatusMessage(`Sorry ${currentPlayer.name}, that is not the correct answer.`);
