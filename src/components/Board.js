@@ -3,7 +3,6 @@ import LetterCard from './LetterCard';
 export default function Board(props) {
 
   return (
-    
     <div className="board">
       <div className="phrase">
         {props.puzzlePhrase.split(" ").map((word,index) =>

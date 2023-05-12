@@ -1,6 +1,10 @@
+// import full_applause from "./assets/sounds/full_applause.m4a";
+
 export default function Settings(props) {
 
     const playerNameError = "Human players need a unique name."
+
+    // const claps = new Audio(full_applause);
 
     const handleHumanPlayerAmountChange = (e) => {
         props.setHumanPlayerAmount(e.target.value);
@@ -125,6 +129,7 @@ export default function Settings(props) {
             setSubmissionErrors();
             return
         } else {
+            // claps.play();
             let humanPlayers = [props.player1Name, props.player2Name, props.player3Name].slice(0,props.humanPlayerAmount);
             const computerPlayers=[];
             const computerPlayerNameGenerator = () => {
