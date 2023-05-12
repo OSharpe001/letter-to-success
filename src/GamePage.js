@@ -53,7 +53,7 @@ export default function GamePage(props) {
   const solveInput=useRef();
 
   const navigate = useNavigate();
-  const autoReset = useEffect;
+  // const autoReset = useEffect;
   const autoFocus = useEffect;
   const winner = useEffect;
   const computerPlayersBehavior = useEffect;
@@ -95,15 +95,21 @@ export default function GamePage(props) {
 
   const guessDisabled= latestGuessError;
   const guessPuzzleDisabled = guessPuzzleError;
+  // const resetSound = () => {
+  //   sad.currentTime=0;
+  //   wrongGuessBuzzer.currentTime=0;
+  //   correctGuessBell.currentTime=0;
+  //   shortApplause.currentTime=0;
+  // }
 
 
   // ***AUTORESET IS CURRENTLY INNEFFECTIVE*** //
-  autoReset(()=> {
-    // console.log('THE USEEFFECT HOOK "AUTORESET" WAS JUST TRIGGERRED');
-    if (!playerNames[1]) {
-      navigate("/settings");
-    };
-  }, players);
+  // autoReset(()=> {
+  //   // console.log('THE USEEFFECT HOOK "AUTORESET" WAS JUST TRIGGERRED');
+  //   if (!playerNames[1]) {
+  //     navigate("/settings");
+  //   };
+  // }, players);
 
   autoFocus(()=> {
     if (vowelInterface) {
@@ -177,11 +183,9 @@ export default function GamePage(props) {
 
         const hitOrMiss = () => {
           if (puzzleLetters.indexOf(computerChoice) >= 0) {
+            // resetSound();
             // correctGuessBell.play();
             // shortApplause.play();
-            // if (correctGuessBell.isPlaying) {
-            //   console.log("WE GOT ONE (IN COMPUTER BEHAVIOR)");
-            // };
             const vowelMultiplier = (puzzleLetters.filter(letter=>letter===computerChoice)).length;
             (vowelMultiplier>1?setStatusMessage(`There are ${vowelMultiplier} ${computerChoice}'s!`):setStatusMessage(`There is 1 ${computerChoice}.`));
             setTimeout(setStatusMessage, 3000, "");
@@ -189,6 +193,7 @@ export default function GamePage(props) {
             return
           } else {
             changeTurn();
+            // resetSound();
             // sad.play();
             // wrongGuessBuzzer.play();
             setStatusMessage(`There are no ${computerChoice}'s. (sorry...)`);
@@ -214,6 +219,7 @@ export default function GamePage(props) {
           if (newSpin.type==="bankrupt") {
             // console.log(`${currentPlayer.name} just went 'BANKRUPT'`)
             changeTurn();
+            // resetSound();
             // sad.play();
             setStatusMessage(`${currentPlayer.name} just went BANKRUPT! (OUCH!)`);
             let newList=[...players];
@@ -224,6 +230,7 @@ export default function GamePage(props) {
           } else if (newSpin.type==="loseturn") {
             // console.log(`${currentPlayer.name} just hit a 'LOSETURN'`)
             changeTurn();
+            // resetSound();
             // sad.play();
             setStatusMessage(`${currentPlayer.name} just lost their turn! (sorry...)`);
             return
@@ -245,11 +252,9 @@ export default function GamePage(props) {
             });
             const hitOrMiss = () => {
               if (puzzleLetters.indexOf(computerChoice)>=0) {
+                // resetSound();
                 // correctGuessBell.play();
                 // shortApplause.play();
-                // if (correctGuessBell.isPlaying) {
-                //   console.log("WE GOT ONE (IN COMPUTER BEHAVIOR2)");
-                // };
                 let newList=[...players];
                 const consonantMultiplier = (puzzleLetters.filter(letter=>letter===computerChoice)).length;
                 // console.log("GAMEPAGE.JS COMPUTERPLAYERBEHAVIOR HITORMISS' CONSONANTMULTIPLIER: ", consonantMultiplier)
@@ -281,6 +286,7 @@ export default function GamePage(props) {
   winner(()=> {
     if (puzzleLetters.every(letter=>guessedLetters.indexOf(letter)>=0)) {
       setStatusMessage(`${currentPlayer.name} HAS WON!!!`);
+      // resetSound();
       // fullApplause.play();
       setTimeout(props.setWinner, 3500, currentPlayer);
       setTimeout(navigate, 3501, "/results");
@@ -312,6 +318,7 @@ export default function GamePage(props) {
       if (newSpin.type==="bankrupt") {
         // console.log("NEWSPIN WAS A 'BANKRUPT'")
         changeTurn();
+        // resetSound();
         // sad.play();
         setStatusMessage(`${currentPlayer.name} just went BANKRUPT! (OUCH!)`);
         let newList=[...players];
@@ -322,6 +329,7 @@ export default function GamePage(props) {
       } else if (newSpin.type==="loseturn") {
         // console.log("NEWSPIN WAS A 'LOSETURN'")
         changeTurn();
+        // resetSound();
         // sad.play();
         setStatusMessage(`${currentPlayer.name} just lost their turn! (sorry...)`);
         return
@@ -413,17 +421,16 @@ export default function GamePage(props) {
         return newGuessedLetters;
       }), 1500)
       if (puzzleLetters.indexOf(latestConsonant)>=0) {
+        // resetSound();
         // correctGuessBell.play();
         // shortApplause.play();
-        // if (correctGuessBell.isPlaying) {
-        //   console.log("WE GOT ONE (IN GUESS LETTER)");
-        // };
         changeScore();
         (consonantMultiplier>1?setStatusMessage(`There are ${consonantMultiplier} ${latestConsonant}'s!`):setStatusMessage(`There is 1 ${latestConsonant}.`));
         setTimeout(setStatusMessage, 3000, "");
         // setTimeout(console.log, 3000, "8")
       } else {
         changeTurn();
+        // resetSound();
         // sad.play();
         // wrongGuessBuzzer.play();
         setStatusMessage(`There are no ${latestConsonant}'s. (sorry...)`);
@@ -446,24 +453,21 @@ export default function GamePage(props) {
       }), 1500);
       if (puzzleLetters.indexOf(latestVowel)<0) {
         changeTurn();
+        // resetSound();
         // sad.play();
         // wrongGuessBuzzer.play();
         setStatusMessage(`There are no ${latestVowel}'s. (sorry...)`);
       } else if (vowelMultiplier>1){
+        // resetSound();
         // correctGuessBell.play();
         // shortApplause.play();
-        // if (correctGuessBell.isPlaying) {
-        //   console.log("WE GOT ONE (IN GUESS LETTER2)");
-        // };
         setStatusMessage(`There are ${vowelMultiplier} ${latestVowel}'s!`);
         setTimeout(setStatusMessage, 2000, "");
         // setTimeout(console.log, 2000, "10")
       } else {
+        // resetSound();
         // correctGuessBell.play();
         // shortApplause.play();
-        // if (correctGuessBell.isPlaying) {
-        //   console.log("WE GOT ONE (IN GUESS LETTER3)");
-        // };
         setStatusMessage(`There is 1 ${latestVowel}.`);
         setTimeout(setStatusMessage, 2000, "");
         // setTimeout(console.log, 2000, "11")
@@ -495,6 +499,7 @@ export default function GamePage(props) {
       setTimeout(setGuessedLetters, 1500, [...new Set(filteredGuessPuzzle)]);
     } else if (guessPuzzle.length>0) {
       changeTurn();
+      // resetSound();
       // sad.play();
       // wrongGuessBuzzer.play();
       setGuessPuzzle("");
