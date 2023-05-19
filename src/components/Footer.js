@@ -10,7 +10,7 @@ export default function Footer() {
 
     <footer>
       <nav>
-        <Link aria-label="On Click" to="/settings" className="nav-item button">O. Sharpe's Portfolio</Link>
+        <Link aria-label="On Click" to="https://osharpesportfolio.vercel.app" className="nav-item button">O. Sharpe's Portfolio</Link>
         </nav>
     </footer>
   );
