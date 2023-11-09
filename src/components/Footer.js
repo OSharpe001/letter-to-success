@@ -6,7 +6,7 @@ export default function Footer() {
 
     <footer>
       <nav>
-        <Link aria-label="On Click" to="https://osharpesportfolio.netlify.app" className="nav-item button">O. Sharpe's Portfolio</Link>
+        <Link aria-label="On Click" target="_blank" to="https://osharpesportfolio.netlify.app" className="nav-item button">O. Sharpe's Portfolio</Link>
         </nav>
     </footer>
   );
