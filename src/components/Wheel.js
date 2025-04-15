@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 export default function Wheel(props) {
 
-  const [latestWheelNumber, setLatestWheelNumber] = useState("wheeel1");
+  const [latestWheelNumber, setLatestWheelNumber] = useState("wheel1");
 
   const wheelNumber= useEffect;
   wheelNumber(()=> {
