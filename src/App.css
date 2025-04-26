@@ -57,6 +57,19 @@ header .button {
   margin: 0;
 }
 
+.soundButton {
+  height: 7vh;
+  width: 60px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+}
+
+.speaker {
+  height: 60%;
+}
+
 li {
   list-style: none;
 }
