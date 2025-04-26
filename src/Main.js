@@ -1,10 +1,5 @@
-import HomePage from "./HomePage";
-import Settings from "./Settings";
-import GamePage from "./GamePage";
-import Results from "./Results";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import { Puzzles } from './assets/game_data/puzzles';
+import { HomePage, Settings, GamePage, Results } from "./Pages";
+import { Header, Footer } from "./components";
 import { useNavigate } from "react-router-dom";
 import { Routes, Route } from "react-router-dom";
 import { useState } from "react";
@@ -26,6 +21,7 @@ export default function Main() {
   const [computerDifficultyError, setComputerDifficultyError] = useState("");
   const [settingsData, setSettingsData] =useState({});
   const [winner, setWinner] = useState("");
+  const [sound, setSound] = useState(true);
 
   const navigate = useNavigate();
 
@@ -34,13 +30,16 @@ export default function Main() {
     navigate("/game_page");
   };
 
-  const puzzleChoice = Puzzles[Math.floor(Math.random()*Puzzles.length)];
-  const puzzleType = puzzleChoice.type;
-  const puzzlePhrase = puzzleChoice.phrases[Math.floor(Math.random()*puzzleChoice.phrases.length)].toUpperCase();
+  const toggleSound = () => {
+    setSound(!sound);
+  };
 
   return (
     <>
-      <Header />
+      <Header
+            sound={sound}
+            toggleSound={toggleSound}
+          />
         <Routes>
             <Route path="/" element={<HomePage />}/>
             <Route path="/settings" element={<Settings
@@ -69,13 +68,12 @@ export default function Main() {
                                               setComputerDifficultyLevel={setComputerDifficultyLevel}
                                               computerDifficultyError={computerDifficultyError}
                                               setComputerDifficultyError={setComputerDifficultyError}
+                                              sound={sound}
                                               />}/>
             <Route path="/game_page" element={<GamePage
                                                 settingsData={settingsData}
-                                                puzzlePhrase={puzzlePhrase}
-                                                puzzleType={puzzleType}
-                                                winner={winner}
                                                 setWinner={setWinner}
+                                                sound={sound}
                                                 />}/>
             <Route path="/results" element={<Results
                                               winner={winner}
