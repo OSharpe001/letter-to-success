@@ -1,24 +1,24 @@
 import LetterCard from './LetterCard';
 
-export default function Board(props) {
+export default function Board({ puzzlePhrase, puzzleType, guessedLetters, latestLetter, allLetters }) {
 
   return (
     <div className="board">
       <div className="phrase">
-        {props.puzzlePhrase.split(" ").map((word,index) =>
+        {puzzlePhrase.split(" ").map((word,index) =>
           <ul key={index} className="word">
             {word.split("").map((letter,index) =>
               <li key={index}>
                 <LetterCard
-                  letter={props.guessedLetters.indexOf(letter)>=0 || props.allLetters.indexOf(letter)<0?letter:" "}
-                  latestLetter={props.latestLetter}
+                  letter={guessedLetters.indexOf(letter)>=0 || allLetters.indexOf(letter)<0?letter:" "}
+                  latestLetter={latestLetter}
                 />
               </li>
             )}
           </ul>
         )}
       </div>
-      <h3 className="puzzle-type">{props.puzzleType}</h3>
+      <h3 className="puzzle-type">{puzzleType}</h3>
     </div>
   );
 };

@@ -1,15 +1,15 @@
 import {WheelSegments} from '../assets/game_data/wheelSegments'
 import { useEffect, useState } from "react";
 
-export default function Wheel(props) {
+export default function Wheel({ isSpinning, wheelInfo }) {
 
   const [latestWheelNumber, setLatestWheelNumber] = useState("wheel1");
 
   const wheelNumber= useEffect;
   wheelNumber(()=> {
-    if (props.wheelInfo) {
-      if (props.wheelInfo[0]==="cash") {
-        switch(props.wheelInfo[1]) {
+    if (wheelInfo) {
+      if (wheelInfo[0]==="cash") {
+        switch(wheelInfo[1]) {
           case 600:
             setLatestWheelNumber("wheel1");
             break;
@@ -47,17 +47,17 @@ export default function Wheel(props) {
             setLatestWheelNumber("wheel1");
             break;
         }
-      } else if (props.wheelInfo[0]==="bankrupt") {
+      } else if (wheelInfo[0]==="bankrupt") {
         setLatestWheelNumber("wheel12");
-      } else if (props.wheelInfo[0]==="loseturn") {
+      } else if (wheelInfo[0]==="loseturn") {
         setLatestWheelNumber("wheel6");
       };
     };
-  }, props.wheelInfo)
+  }, wheelInfo)
 
   return (
 
-    <ul className={props.isSpinning?"spinning": "wheel "+latestWheelNumber}>
+    <ul className={isSpinning?"spinning": "wheel "+latestWheelNumber}>
       {WheelSegments.map(item =>
         <li  key={item.text} className="wheel-segment">
           <div className="segment-content">
