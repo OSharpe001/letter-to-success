@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Board, Wheel, Pointer, Players } from "../components";
 import { doubleLeftArrow, doubleRightArrow } from "../assets/images";
 import { WheelSegments } from "../assets/game_data/wheelSegments";
