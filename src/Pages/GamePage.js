@@ -243,9 +243,14 @@ export default function GamePage({ settingsData, setWinner, sound }) {
 
   winner(() => {
     if (puzzleLetters.every(letter => guessedLetters.indexOf(letter) >= 0)) {
-      sound && correctBell.play();
-      sound && longApplause.play();
-      sound && cheeringCrowd.play();
+      if (currentPlayer.name.indexOf("Computer")<0) {
+          sound && correctBell.play();
+          sound && longApplause.play();
+          sound && cheeringCrowd.play();
+      } else {
+        sound && correctBell.play();
+        sound && sadCrowd.play();
+      };
       setStatusMessage(`${currentPlayer.name} HAS WON!!!`);
       setTimeout(setWinner, 3500, currentPlayer);
       setTimeout(navigate, 3501, "/results");
