@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 
-// export default function Results(props) {
 export default function Results({ setWinner, winner }) {
 
   const navigate = useNavigate();
