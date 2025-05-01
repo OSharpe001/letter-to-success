@@ -1,33 +1,34 @@
 import { useNavigate } from "react-router-dom";
 
-export default function Results(props) {
+// export default function Results(props) {
+export default function Results({ setWinner, winner }) {
 
   const navigate = useNavigate();
 
   const playAgain = () => {
-    props.setWinner("");
+    setWinner("");
     navigate("/settings");
   };
 
   const backHome = () => {
-    props.setWinner("");
+    setWinner("");
     navigate("/");
   };
 
   return (
     <div className="results-page">
-      {props.winner.name.indexOf("Computer")<0?
+      {winner.name.indexOf("Computer")<0?
         <>
           <br/>
-          <h1>Congratulations, {props.winner.name}!</h1>
+          <h1>Congratulations, {winner.name}!</h1>
           <br/>
-          <h2>You have won ${props.winner.score}</h2>
+          <h2>You have won ${winner.score}</h2>
           <br/>
-          {props.winner.prizes.length?
+          {winner.prizes.length?
             <>
               <h2>and these are your prizes:</h2>
               <br/>
-              {props.winner.prizes.map((prize, index) => <h3 key={index} className="winner's_prizes">- A {prize}</h3>)}
+              {winner.prizes.map((prize, index) => <h3 key={index} className="winner's_prizes">- A {prize}</h3>)}
             </>
             :
             <><h3>Sorry. You didn't win any prizes, this time.</h3><br/></>
@@ -37,16 +38,16 @@ export default function Results(props) {
         <div className="loss">
           <h1><strong>Sorry, humans. You've Lost!</strong></h1>
         <br/>
-          <h1>{props.winner.name} has won ${props.winner.score}!</h1>
+          <h1>{winner.name} has won ${winner.score}!</h1>
           <br/>
-          {props.winner.prizes.length?
+          {winner.prizes.length?
             <>
-              <h2>{props.winner.name}'s  prizes:</h2>
+              <h2>{winner.name}'s  prizes:</h2>
               <br/>
-              {props.winner.prizes.map((prize, index) => <h3 key={index} className="winner's_prizes">- A {prize}</h3>)}
+              {winner.prizes.map((prize, index) => <h3 key={index} className="winner's_prizes">- A {prize}</h3>)}
             </>
             :
-            <><h3>{props.winner.name} didn't win any prizes, this time.</h3><br/></>
+            <><h3>{winner.name} didn't win any prizes, this time.</h3><br/></>
           }
         </div>
       }
