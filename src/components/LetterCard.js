@@ -1,7 +1,7 @@
-export default function LetterCard(props) {
+export default function LetterCard({ latestLetter, letter}) {
 
   return (
 
-    <div className={props.latestLetter===props.letter?"letter-turning":"letter-card"}>{props.letter}</div>
+    <div className={latestLetter===letter?"letter-turning":"letter-card"}>{letter}</div>
   )
 }
