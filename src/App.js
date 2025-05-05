@@ -26,24 +26,24 @@ function App() {
     <div className="App">
       {/* <Main /> */}
       <Header
-        sound={sound}
-        toggleSound={toggleSound}
-      />
+            sound={sound}
+            toggleSound={toggleSound}
+          />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/settings" element={<Settings
-          submitForm={submitSettingsForm}
-          sound={sound}
-        />} />
+                                                submitForm={submitSettingsForm}
+                                                sound={sound}
+                                              />} />
         <Route path="/game_page" element={<GamePage
-          settingsData={settingsData}
-          setWinner={setWinner}
-          sound={sound}
-        />} />
+                                                settingsData={settingsData}
+                                                setWinner={setWinner}
+                                                sound={sound}
+                                              />} />
         <Route path="/results" element={<Results
-          winner={winner}
-          setWinner={setWinner}
-        />} />
+                                              winner={winner}
+                                              setWinner={setWinner}
+                                            />} />
       </Routes>
       <Footer />
     </div>

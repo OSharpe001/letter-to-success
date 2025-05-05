@@ -17,6 +17,7 @@ export default function Settings({ submitForm, sound }) {
     const [computerDifficultyError, setComputerDifficultyError] = useState("");
 
     const playerNameError = "Human players need a unique name.";
+
     const cheeringKids = new Audio(cheering_kids);
 
     const handleHumanPlayerAmountChange = (e) => {
