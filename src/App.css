@@ -1,15 +1,47 @@
-.App {
+@import url('https://fonts.googleapis.com/css?family=Oregano:300,400&display=swap');
+
+* {
   margin: 0;
-  padding: 0;
-  text-align: center;
-  font-size: 16pt;
   --primaryColor: rgb(32, 78, 32);
   --secondaryColor: rgb(247, 230, 196);
-  background-color: var(--secondaryColor);
   --primaryDeg: 0deg;
 }
 
-nav{
+html {
+  min-height: 100vh;
+  height: max-content;
+  width: 100vw;
+  background-color: var(--secondaryColor);
+}
+
+.App {
+  height: fit-content;
+  width: 100vw;
+  margin: 0;
+  padding: 8vh 0 0;
+  text-align: center;
+  font-size: 16pt;
+}
+
+header,
+footer {
+  width: 100vw;
+  height: max-content;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: var(--primaryColor);
+}
+
+header {
+  position: absolute;
+  top: 0;
+}
+
+nav {
+  margin: 3px auto;
+  width: max-content;
   height: 7vh;
   display: flex;
   flex-direction: row;
@@ -20,7 +52,6 @@ nav{
 }
 
 a {
-  padding: 7px;
   font-size: 16pt;
   font-weight: bold;
   text-decoration: none;
@@ -29,32 +60,32 @@ a {
   background-color: var(--primaryColor);
 }
 
-a h1 {
-  padding: 0;
+.title {
+  font-family: 'Oregano', sans-serif;
+  font-size: 30pt;
+  padding: 3px 7px;
   margin: 0;
 }
 
 .button {
+  font-family: 'Oregano', sans-serif;
   width: fit-content;
-  font-size: 16pt;
+  font-size: 20pt;
   font-weight: bold;
   text-decoration: none;
   color: var(--secondaryColor);
   background-color: var(--primaryColor);
-  padding: 10px;
+  padding: 3px 7px;
   margin: auto;
   border-radius: 20px;
   border: ridge 2px var(--secondaryColor);
 }
 
-a:hover, .button:hover {
+a:hover,
+.button:hover {
   color: var(--primaryColor);
   background-color: var(--secondaryColor);
   border: ridge 2px var(--primaryColor);
-}
-
-header .button {
-  margin: 0;
 }
 
 .soundButton {
@@ -68,19 +99,32 @@ header .button {
 
 .speaker {
   height: 60%;
+  width: auto;
 }
 
 li {
   list-style: none;
 }
 
-.settings-page {
-  height: 93vh;
+.settingsPage {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* padding: 0; */
+  min-height: fit-content;
+  height: 100vh;
 }
 
 .form {
+  width: max-content;
+  height: max-content;
+  margin: auto;
+  padding: 0 30px;
   display: flex;
   flex-direction: column;
+  border-radius: 20px;
+  border: none;
+  box-shadow: -3px 3px 10px gray;
 }
 
 .form input {
@@ -91,6 +135,8 @@ li {
 }
 
 .form label {
+  font-family: "Oregano", sans-serif;
+  font-size: 20pt;
   margin-top: 2vh;
 }
 
@@ -100,11 +146,13 @@ li {
   min-height: 3vh;
 }
 
-.home-page {
-  height: stretch;
+.homePage {
+  height: max-content;
 }
 
-.home-page h1 {
+.homePage h1 {
+  font-family: 'Oregano', sans-serif;
+  font-size: 45pt;
   margin: 0;
   padding: 3vh 0 0;
 }
@@ -175,146 +223,104 @@ li {
   --primaryDeg: 346.1deg;
 }
 
-.home-page .wheel {
-  margin: 10vh auto 0;
-  width: 516px;
-  height: 554px;
+.homePage .wheel, .homePage .wheel:hover {
+  margin: 10vh auto;
+  width: calc(50vw * .93);
+  height: 50vw;
   background-color: black;
   list-style-type: none;
   border-radius: 50%;
   border: 5px solid black;
-  animation-name: homepage_wheel;
-  animation-duration: 100s;
-  animation-iteration-count: infinite ;
+  animation-iteration-count: infinite;
   animation-timing-function: linear;
 }
 
-.home-page .wheel:hover {
-  margin: 10vh auto 0;
-  width: 516px;
-  height: 554px;
-  background-color: black;
-  list-style-type: none;
-  border-radius: 50%;
-  border: 5px solid black;
+  .homePage .wheel {
+  animation-name: homepage_wheel;
+  animation-duration: 100s;
+}
+
+.homePage .wheel:hover {
   animation-name: spinning;
   animation-duration: 5s;
-  animation-iteration-count: infinite ;
-  animation-timing-function: linear;
 }
 
 .wheel-segment {
+  height: stretch;
+  width: 49%;
+  overflow: hidden;
   text-align: end;
   font-weight: bold;
-  width: 49%;
   position: absolute;
   top: 50%;
   left: 50%;
   transform-origin: 0% 0%;
+  border: 2px solid black;
 }
 
 .wheel-segment:nth-of-type(1) {
-  height: stretch;
-  overflow: hidden;
-  background-color: rgb(201, 127, 127);
-  border: 2px solid black;
   transform: rotate(0) skew(62deg);
+  background-color: rgb(201, 127, 127);
 }
 
 .wheel-segment:nth-of-type(2) {
-  height: stretch;
-  overflow: hidden;
   transform: rotate(27.7deg) skew(62deg);
   background-color: grey;
-  border: 2px solid black;
 }
 
 .wheel-segment:nth-of-type(3) {
-  overflow: hidden;
-  height: stretch;
   transform: rotate(55.4deg) skew(62deg);
   background-color: green;
-  border: 2px solid black;
 }
 
 .wheel-segment:nth-of-type(4) {
   transform: rotate(83.1deg) skew(62deg);
   background-color: skyblue;
-  border: 2px solid black;
-  height: stretch;
-  overflow: hidden;
 }
 
 .wheel-segment:nth-of-type(5) {
   transform: rotate(110.8deg) skew(62deg);
   background-color: orange;
-  border: 2px solid black;
-  height: stretch;
-  overflow: hidden;
 }
 
 .wheel-segment:nth-of-type(6) {
   transform: rotate(138.5deg) skew(62deg);
   background-color: orangered;
-  border: 2px solid black;
-  height: stretch;
-  overflow: hidden;
 }
 
 .wheel-segment:nth-of-type(7) {
   transform: rotate(166.2deg) skew(62deg);
   background-color: yellow;
-  border: 2px solid black;
-  height: stretch;
-  overflow: hidden;
 }
 
 .wheel-segment:nth-of-type(8) {
   transform: rotate(193.8deg) skew(62deg);
   background-color: grey;
-  border: 2px solid black;
-  height: stretch;
-  overflow: hidden;
 }
 
 .wheel-segment:nth-of-type(9) {
   transform: rotate(221.5deg) skew(62deg);
-  border: 2px solid black;
   background-color: greenyellow;
-  height: stretch;
-  overflow: hidden;
 }
 
 .wheel-segment:nth-of-type(10) {
   transform: rotate(249.2deg) skew(62deg);
   background-color: rgb(113, 113, 239);
-  border: 2px solid black;
-  height: stretch;
-  overflow: hidden;
 }
 
 .wheel-segment:nth-of-type(11) {
   transform: rotate(276.9deg) skew(62deg);
   background-color: pink;
-  border: 2px solid black;
-  height: stretch;
-  overflow: hidden;
 }
 
 .wheel-segment:nth-of-type(12) {
   transform: rotate(304.6deg) skew(62deg);
   background-color: aqua;
-  border: 2px solid black;
-  height: stretch;
-  overflow: hidden;
 }
 
 .wheel-segment:nth-of-type(13) {
   transform: rotate(332.3deg) skew(62deg);
   background-color: fuchsia;
-  border: 2px solid black;
-  height: stretch;
-  overflow: hidden;
 }
 
 .segment-content {
@@ -325,10 +331,17 @@ li {
 }
 
 .value {
+  font-family: 'Oregano', sans-serif;
+  font-size: 19pt;
+  -webkit-text-fill-color: black;
+  -webkit-text-stroke-color: white;
+  -webkit-text-stroke-width: .3px;
+  text-shadow: 1px 1px black;
   width: 10rem;
   transform: rotate(105deg);
-  margin-top: 27%;
+  margin-top: 25%;
   margin-left: 80%;
+  padding: 0 5px 0 0;
   align-self: center;
   text-align: center;
   overflow: hidden;
@@ -337,8 +350,8 @@ li {
 .prize {
   background-color: rgb(246, 202, 93);
   transform: rotate(155deg) skew(37deg);
-  width: 56%;
-  padding: 0;
+  width: min-content;
+  padding: 0 10px;
   text-align: center;
   margin-top: -24%;
   margin-left: 7%;
@@ -356,7 +369,7 @@ li {
 }
 
 .spinning {
-  margin:  1vh auto;
+  margin: 1vh auto;
   width: 516px;
   height: 554px;
   list-style-type: none;
@@ -378,7 +391,7 @@ li {
   transform: rotate(90deg);
   animation-name: moving;
   animation-duration: 7s;
-  animation-iteration-count: infinite ;
+  animation-iteration-count: infinite;
   animation-timing-function: linear;
 }
 
@@ -400,21 +413,26 @@ li {
     transform: rotateY(180deg);
     color: rgb(250, 255, 109);
   }
+
   50% {
     transform: rotateY(180deg);
   }
+
   75% {
     color: rgb(250, 255, 109);
     background-color: rgb(250, 255, 109);
   }
+
   76% {
     color: black;
     background-color: white;
   }
+
   85% {
     background-color: white;
 
   }
+
   100% {
     transform: rotateY(360deg);
     background-color: white;
@@ -425,6 +443,7 @@ li {
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }
@@ -434,6 +453,7 @@ li {
   0% {
     transform: rotate(var(--primaryDeg));
   }
+
   100% {
     transform: rotate(var(--primaryDeg));
   }
@@ -443,12 +463,15 @@ li {
   0% {
     transform: rotate(var(--primaryDeg));
   }
+
   .5% {
     transform: rotate(-1080deg);
   }
+
   20% {
     transform: rotate(-360deg);
   }
+
   100% {
     transform: rotate(var(--primaryDeg));
   }
@@ -458,69 +481,91 @@ li {
   0% {
     transform: rotate(110deg);
   }
+
   2.5% {
     transform: rotate(70deg);
   }
+
   5% {
     transform: rotate(110deg);
   }
+
   7.5% {
     transform: rotate(70deg);
   }
+
   10% {
     transform: rotate(110deg);
   }
+
   12.5% {
     transform: rotate(70deg);
   }
+
   15% {
     transform: rotate(110deg);
   }
+
   17.5% {
     transform: rotate(70deg);
   }
+
   20% {
     transform: rotate(110deg);
   }
+
   25% {
     transform: rotate(70deg);
   }
+
   30% {
     transform: rotate(110deg);
   }
+
   35% {
     transform: rotate(70deg);
   }
+
   40% {
     transform: rotate(110deg);
   }
+
   45% {
     transform: rotate(70deg);
   }
+
   50% {
     transform: rotate(110deg);
   }
+
   55% {
     transform: rotate(70deg);
   }
+
   60% {
     transform: rotate(110deg);
   }
+
   65% {
     transform: rotate(70deg);
   }
+
   70% {
     transform: rotate(110deg);
   }
+
   75% {
     transform: rotate(70deg);
   }
+
   80% {
     transform: rotate(110deg);
   }
+
   90% {
     transform: rotate(70deg);
   }
+
   100% {
     transform: rotate(90deg);
   }
@@ -577,7 +622,7 @@ li {
 }
 
 .player-name {
-  padding: 1vh;
+  padding: auto;
   font-size: 20pt;
   font-weight: bold;
   background-color: grey;
@@ -686,10 +731,21 @@ li {
 }
 
 .guessed-letters {
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: space-evenly;
   width: 73%;
   text-align: center;
   padding: 0;
   margin: 0;
+}
+
+.guessedChar {
+  width: 1.2ch;
+  height: min-content;
+  align-self: center;
+  border: 2px solid black;
+  box-shadow: -2px 2px darkgray;
 }
 
 .spin {
@@ -698,13 +754,13 @@ li {
   margin-left: 6vw;
 }
 
-.buy{
+.buy {
   width: 15vw;
   position: absolute;
   margin-left: 68vw;
 }
 
-.solve{
+.solve {
   width: 15vw;
   position: absolute;
   margin-left: 38vw;
@@ -734,7 +790,7 @@ li {
 }
 
 .results-page {
-  height: stretch;
+  min-height: 90vh;
 }
 
 .loss {
@@ -761,21 +817,34 @@ li {
     font-size: 10pt;
   }
 
-  nav{
-    height: 8vh;
+  nav {
+    height: max-content;
   }
 
-  a {
+  a, .title {
     font-size: 12pt;
+  }
+
+  .homePage h1 {
+    margin-top: 10vh;
+    font-size: 18pt;
   }
 
   .button {
     font-size: 12pt;
   }
 
-  .settings-page {
-    height: stretch;
-    height: 105vh;
+  .settingsPage {
+    min-height: 100vh;
+    max-width: 100vw;
+  }
+
+  .form {
+    padding: 20px 10px
+  }
+
+  .form label {
+    font-size: 16pt;
   }
 
   .form input {
@@ -785,18 +854,18 @@ li {
     border-radius: 16px;
   }
 
-  .home-page {
+  .homePage {
     height: 84vh;
   }
 
-  .home-page .wheel {
-    width: 240px;
-    height: 280px;
+  .homePage .wheel, .homePage .wheel:hover, .spinning, .wheel {
+    width: calc(60vw - 70px);
+    height: calc(60vw - 30px);
+    border: 2px solid black;
   }
 
-  .home-page .wheel:hover {
-    width: 240px;
-    height: 280px;
+  .wheel-segment {
+    border: 1px solid black;
   }
 
   .segment-content {
@@ -804,6 +873,8 @@ li {
   }
 
   .value {
+    -webkit-text-stroke-width: .1px;
+    text-shadow: .5px .5px black;
     margin-top: 30%;
     margin-left: 95%;
     font-size: 9px;
@@ -848,16 +919,6 @@ li {
 
   .puzzle-type {
     font-size: 14pt;
-  }
-
-  .wheel {
-    width: 240px;
-    height: 280px;
-  }
-
-  .spinning {
-    width: 240px;
-    height: 280px;
   }
 
   .game-status {
@@ -918,7 +979,7 @@ li {
     position: relative;
   }
 
-  .buy{
+  .buy {
     padding: 0;
     width: 8ch;
     min-height: 5ch;
@@ -926,7 +987,7 @@ li {
     position: relative;
   }
 
-  .solve{
+  .solve {
     padding: 0;
     width: 8ch;
     min-height: 5ch;
@@ -949,7 +1010,7 @@ li {
   .player-name {
     padding: 1vh, 1vw;
     font-size: 10pt;
-    height: 1ch;
+    height: fit-content;
     overflow: hidden;
   }
 
@@ -995,20 +1056,29 @@ li {
 
 @media (max-width: 350px) {
 
+  .homePage h1 {
+    margin-top: 0;
+  }
+
+  .homePage .wheel, .homePage .wheel:hover, .wheel, .spinning {
+    width: calc(100vw - 60px);
+    height: calc(100vw - 20px);
+  }
+
   .letter-card {
     font-size: 14pt;
-    height: auto;
-    border: 2px solid black;
   }
 
   .letter-turning {
     font-size: 14pt;
-    height: auto;
-    border: 2px solid black;
   }
 
   .guessed-letters {
     width: 67%;
     overflow: auto;
+  }
+
+  .player-name {
+    font-size: 8pt;
   }
 }
