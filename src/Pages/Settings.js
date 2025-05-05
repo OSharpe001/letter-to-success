@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Footer } from "../components";
 import { cheering_kids } from "../assets/sounds";
 
 export default function Settings({ submitForm, sound }) {
@@ -19,6 +20,7 @@ export default function Settings({ submitForm, sound }) {
     const playerNameError = "Human players need a unique name.";
 
     const cheeringKids = new Audio(cheering_kids);
+    cheeringKids.volume = .8;
 
     const handleHumanPlayerAmountChange = (e) => {
         setHumanPlayerAmount(e.target.value);
@@ -164,107 +166,111 @@ export default function Settings({ submitForm, sound }) {
     };
 
     return (
-        <form
-            className="form settings-page"
-            onSubmit={handleSubmit}
-        >
-            <h1>Initial Settings</h1>
-            <label htmlFor="number-of-human-players" >How many human players?</label>
-            <input
-                type="number"
-                min="1"
-                max="3"
-                name="number-of-human-players"
-                id="number-of-human-players"
-                value={humanPlayerAmount}
-                onChange={e => handleHumanPlayerAmountChange(e)}
-            />
-            <p className="error-message">{humanPlayerAmountError}</p>
+        <div
+            className="settingsPage">
+            <form
+                className="form"
+                onSubmit={handleSubmit}
+            >
+                <h1>Initial Settings</h1>
+                <label htmlFor="number-of-human-players" >How many human players?</label>
+                <input
+                    type="number"
+                    min="1"
+                    max="3"
+                    name="number-of-human-players"
+                    id="number-of-human-players"
+                    value={humanPlayerAmount}
+                    onChange={e => handleHumanPlayerAmountChange(e)}
+                />
+                <p className="error-message">{humanPlayerAmountError}</p>
 
-            <label htmlFor="player1name" >First player's name?</label>
-            <input
-                type="text"
-                minLength="1"
-                max="7"
-                name="player1name"
-                id="player1name"
-                value={player1Name}
-                onChange={handleP1NameChange}
-            />
-            <p className="error-message">{player1NameError}</p>
+                <label htmlFor="player1name" >First player's name?</label>
+                <input
+                    type="text"
+                    minLength="1"
+                    max="7"
+                    name="player1name"
+                    id="player1name"
+                    value={player1Name}
+                    onChange={handleP1NameChange}
+                />
+                <p className="error-message">{player1NameError}</p>
 
-            {humanPlayerAmount > 1 ?
-                <>
-                    <label htmlFor="player2name" >Second player's name?</label>
-                    <input
-                        type="text"
-                        minLength="1"
-                        max="7"
-                        name="player2name"
-                        id="player2name"
-                        value={player2Name}
-                        onChange={handleP2NameChange}
-                    />
-                    <p className="error-message">{player2NameError}</p>
-                </>
-                : null}
+                {humanPlayerAmount > 1 ?
+                    <>
+                        <label htmlFor="player2name" >Second player's name?</label>
+                        <input
+                            type="text"
+                            minLength="1"
+                            max="7"
+                            name="player2name"
+                            id="player2name"
+                            value={player2Name}
+                            onChange={handleP2NameChange}
+                        />
+                        <p className="error-message">{player2NameError}</p>
+                    </>
+                    : null}
 
-            {humanPlayerAmount > 2 ?
-                <>
-                    <label htmlFor="player3name" >Third player's name?</label>
-                    <input
-                        type="text"
-                        minLength="1"
-                        max="7"
-                        name="player3name"
-                        id="player3name"
-                        value={player3Name}
-                        onChange={handleP3NameChange}
-                    />
-                    <p className="error-message">{player3NameError}</p>
-                </>
-                : null}
+                {humanPlayerAmount > 2 ?
+                    <>
+                        <label htmlFor="player3name" >Third player's name?</label>
+                        <input
+                            type="text"
+                            minLength="1"
+                            max="7"
+                            name="player3name"
+                            id="player3name"
+                            value={player3Name}
+                            onChange={handleP3NameChange}
+                        />
+                        <p className="error-message">{player3NameError}</p>
+                    </>
+                    : null}
 
-            {humanPlayerAmount < 3 ?
-                <>
-                    <label htmlFor="number-of-computer-players" >How many computer players?</label>
-                    <input
-                        type="number"
-                        min={humanPlayerAmount < 2 ? 1 : 0}
-                        max={3 - humanPlayerAmount}
-                        name="number-of-computer-players"
-                        id="number-of-computer-players"
-                        value={computerPlayerAmount}
-                        onChange={e => handleComputerPlayerAmountChange(e)}
-                    />
-                    <p className="error-message">{computerPlayerAmountError}</p>
-                </>
-                : null}
+                {humanPlayerAmount < 3 ?
+                    <>
+                        <label htmlFor="number-of-computer-players" >How many computer players?</label>
+                        <input
+                            type="number"
+                            min={humanPlayerAmount < 2 ? 1 : 0}
+                            max={3 - humanPlayerAmount}
+                            name="number-of-computer-players"
+                            id="number-of-computer-players"
+                            value={computerPlayerAmount}
+                            onChange={e => handleComputerPlayerAmountChange(e)}
+                        />
+                        <p className="error-message">{computerPlayerAmountError}</p>
+                    </>
+                    : null}
 
-            {computerPlayerAmount > 0 ?
-                <>
-                    <label htmlFor="computer-difficulty-level" >Computer player(s) difficulty level?</label>
-                    <input
-                        type="number"
-                        min="1"
-                        max="10"
-                        name="computer-difficulty-level"
-                        id="computer-difficulty-level"
-                        value={computerDifficultyLevel}
-                        onChange={(e) => handleComputerDifficultyChange(e)}
-                    />
-                    <p className="error-message">{computerDifficultyError}</p>
-                </>
-                : null}
+                {computerPlayerAmount > 0 ?
+                    <>
+                        <label htmlFor="computer-difficulty-level" >Computer player(s) difficulty level?</label>
+                        <input
+                            type="number"
+                            min="1"
+                            max="10"
+                            name="computer-difficulty-level"
+                            id="computer-difficulty-level"
+                            value={computerDifficultyLevel}
+                            onChange={(e) => handleComputerDifficultyChange(e)}
+                        />
+                        <p className="error-message">{computerDifficultyError}</p>
+                    </>
+                    : null}
 
-            <input
-                style={disabled ? { border: "1px solid #999999", backgroundColor: "#cccccc", color: "#666666", cursor: "not-allowed" } : null}
-                disabled={disabled}
-                className="button"
-                type="submit"
-                value="Let's Begin!"
-                aria-label="On Click"
-            />
-        </form>
+                <input
+                    style={disabled ? { border: "1px solid #999999", backgroundColor: "#cccccc", color: "#666666", cursor: "not-allowed" } : null}
+                    disabled={disabled}
+                    className="button"
+                    type="submit"
+                    value="Let's Begin!"
+                    aria-label="On Click"
+                />
+            </form>
+            <Footer />
+        </div>
     );
 };
