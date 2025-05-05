@@ -243,10 +243,10 @@ export default function GamePage({ settingsData, setWinner, sound }) {
 
   winner(() => {
     if (puzzleLetters.every(letter => guessedLetters.indexOf(letter) >= 0)) {
-      if (currentPlayer.name.indexOf("Computer")<0) {
-          sound && correctBell.play();
-          sound && longApplause.play();
-          sound && cheeringCrowd.play();
+      if (currentPlayer.name.indexOf("Computer") < 0) {
+        sound && correctBell.play();
+        sound && longApplause.play();
+        sound && cheeringCrowd.play();
       } else {
         sound && correctBell.play();
         sound && sadCrowd.play();
@@ -546,7 +546,7 @@ export default function GamePage({ settingsData, setWinner, sound }) {
               </button>
             }
             <p className={showGuessedLetters ? "guessed-letters-label" : "hidden"}>Guessed Letters:</p>
-            <p className={showGuessedLetters ? "guessed-letters" : "hidden"}>{guessedLetters}</p>
+            <p className={showGuessedLetters ? "guessed-letters" : "hidden"}>{guessedLetters.map(char => <p className="guessedChar">{char}</p>)}</p>
           </div>
         </div>
       </div>
