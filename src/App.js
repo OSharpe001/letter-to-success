@@ -24,7 +24,6 @@ function App() {
 
   return (
     <div className="App">
-      {/* <Main /> */}
       <Header
             sound={sound}
             toggleSound={toggleSound}
