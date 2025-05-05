@@ -1,5 +1,5 @@
 import { HomePage, Settings, GamePage, Results } from "./Pages";
-import { Header, Footer } from "./components";
+import { Header } from "./components";
 import { useNavigate } from "react-router-dom";
 import { Routes, Route } from "react-router-dom";
 import { useState } from "react";
@@ -44,7 +44,6 @@ function App() {
                                               setWinner={setWinner}
                                             />} />
       </Routes>
-      <Footer />
     </div>
   );
 }

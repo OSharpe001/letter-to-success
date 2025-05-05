@@ -1,4 +1,6 @@
+import { Footer } from "../components";
 import { useNavigate } from "react-router-dom";
+
 
 export default function Results({ setWinner, winner }) {
 
@@ -55,6 +57,7 @@ export default function Results({ setWinner, winner }) {
           <br/>
           <br/>
           <button className="button" onClick={backHome}>Back to Home</button>
+          <Footer />
     </div>
   );
 };
