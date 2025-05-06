@@ -110,7 +110,7 @@ li {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  /* padding: 0; */
+  padding: 0;
   min-height: fit-content;
   height: 100vh;
 }
@@ -223,7 +223,8 @@ li {
   --primaryDeg: 346.1deg;
 }
 
-.homePage .wheel, .homePage .wheel:hover {
+.homePage .wheel,
+.homePage .wheel:hover {
   margin: 10vh auto;
   width: calc(50vw * .93);
   height: 50vw;
@@ -235,7 +236,7 @@ li {
   animation-timing-function: linear;
 }
 
-  .homePage .wheel {
+.homePage .wheel {
   animation-name: homepage_wheel;
   animation-duration: 100s;
 }
@@ -821,7 +822,8 @@ li {
     height: max-content;
   }
 
-  a, .title {
+  a,
+  .title {
     font-size: 12pt;
   }
 
@@ -854,11 +856,10 @@ li {
     border-radius: 16px;
   }
 
-  .homePage {
-    height: 84vh;
-  }
-
-  .homePage .wheel, .homePage .wheel:hover, .spinning, .wheel {
+  .homePage .wheel,
+  .homePage .wheel:hover,
+  .spinning,
+  .wheel {
     width: calc(60vw - 70px);
     height: calc(60vw - 30px);
     border: 2px solid black;
@@ -1060,15 +1061,15 @@ li {
     margin-top: 0;
   }
 
-  .homePage .wheel, .homePage .wheel:hover, .wheel, .spinning {
+  .homePage .wheel,
+  .homePage .wheel:hover,
+  .wheel,
+  .spinning {
     width: calc(100vw - 60px);
     height: calc(100vw - 20px);
   }
 
-  .letter-card {
-    font-size: 14pt;
-  }
-
+  .letter-card,
   .letter-turning {
     font-size: 14pt;
   }
