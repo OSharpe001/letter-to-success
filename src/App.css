@@ -791,8 +791,11 @@ li {
   margin: 0 auto;
 }
 
-.results-page {
-  min-height: 90vh;
+.resultsPage {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 92vh;
 }
 
 .loss {
@@ -804,7 +807,7 @@ li {
   border: 15px solid red;
 }
 
-.results-page ul {
+.resultsPage ul {
   margin-left: -2vw;
 }
 
