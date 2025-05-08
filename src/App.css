@@ -861,8 +861,8 @@ li {
   .homePage .wheel:hover,
   .spinning,
   .wheel {
-    width: calc(60vw - 70px);
-    height: calc(60vw - 30px);
+    width: calc(60vw * .85);
+    height: 60vw;
     border: 2px solid black;
   }
 
@@ -883,9 +883,6 @@ li {
   }
 
   .prize {
-    width: 9ch;
-    margin-top: -23%;
-    margin-left: 8%;
     font-size: 9px;
   }
 
@@ -1066,8 +1063,13 @@ li {
   .homePage .wheel:hover,
   .wheel,
   .spinning {
-    width: calc(100vw - 60px);
-    height: calc(100vw - 20px);
+    width: calc(85vw * .82);
+    height: 85vw;
+  }
+
+  .prize {
+    margin-top: -29%;
+    margin-left: 2%;
   }
 
   .letter-card,
