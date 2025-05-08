@@ -733,6 +733,7 @@ li {
 
 .guessed-letters {
   display: inline-flex;
+  flex-wrap: wrap;
   flex-direction: row;
   justify-content: space-evenly;
   width: 73%;
