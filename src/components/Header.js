@@ -6,7 +6,7 @@ export default function Header({ sound, toggleSound }) {
   return (
     <header>
       <nav>
-        <Link aria-label="On Click" to="/" className="nav-item"><h1 className="nav-item title">Letter To Success!</h1></Link>
+        <Link aria-label="On Click" to="/" className="nav-item"><p className="nav-item title">Letter To Success!</p></Link>
       </nav>
       <button onClick={toggleSound} className="soundButton">
         {sound ?
