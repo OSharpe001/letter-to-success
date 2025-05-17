@@ -17,8 +17,8 @@ html {
 .App {
   height: fit-content;
   width: 100vw;
-  margin: 0;
-  padding: 8vh 0 0;
+  margin: 8vh 0 0;
+  padding: 0;
   text-align: center;
   font-size: 16pt;
 }
@@ -26,7 +26,6 @@ html {
 header,
 footer {
   width: 100vw;
-  height: max-content;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -37,6 +36,12 @@ footer {
 header {
   position: absolute;
   top: 0;
+  min-height: max-content;
+  height: 8vh;
+}
+
+footer {
+  height: max-content;
 }
 
 nav {
@@ -76,7 +81,7 @@ a {
   color: var(--secondaryColor);
   background-color: var(--primaryColor);
   padding: 3px 7px;
-  margin: auto;
+  margin: 0;
   border-radius: 20px;
   border: ridge 2px var(--secondaryColor);
 }
@@ -147,7 +152,19 @@ li {
 }
 
 .homePage {
+  text-align: center;
   height: max-content;
+  min-height: 93vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: white;
+}
+
+.vid {
+  margin: 0;
+  padding: 0;
+  align-self: center;
 }
 
 .homePage h1 {
@@ -221,29 +238,6 @@ li {
 
 .wheel13 {
   --primaryDeg: 346.1deg;
-}
-
-.homePage .wheel,
-.homePage .wheel:hover {
-  margin: 10vh auto;
-  width: calc(50vw * .93);
-  height: 50vw;
-  background-color: black;
-  list-style-type: none;
-  border-radius: 50%;
-  border: 5px solid black;
-  animation-iteration-count: infinite;
-  animation-timing-function: linear;
-}
-
-.homePage .wheel {
-  animation-name: homepage_wheel;
-  animation-duration: 100s;
-}
-
-.homePage .wheel:hover {
-  animation-name: spinning;
-  animation-duration: 5s;
 }
 
 .wheel-segment {
@@ -437,16 +431,6 @@ li {
   100% {
     transform: rotateY(360deg);
     background-color: white;
-  }
-}
-
-@keyframes homepage_wheel {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
   }
 }
 
@@ -860,8 +844,6 @@ li {
     border-radius: 16px;
   }
 
-  .homePage .wheel,
-  .homePage .wheel:hover,
   .spinning,
   .wheel {
     width: calc(60vw * .85);
@@ -1062,8 +1044,6 @@ li {
     margin-top: 0;
   }
 
-  .homePage .wheel,
-  .homePage .wheel:hover,
   .wheel,
   .spinning {
     width: calc(85vw * .82);
