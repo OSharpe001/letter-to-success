@@ -29,7 +29,9 @@ function App() {
             toggleSound={toggleSound}
           />
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<HomePage
+                                        sound={sound}
+                                      />} />
         <Route path="/settings" element={<Settings
                                                 submitForm={submitSettingsForm}
                                                 sound={sound}
