@@ -1,4 +1,3 @@
-export { default as climbing_icon_2 } from "./climbing_icon_2.png";
 export { default as climbing_icon_3 } from "./climbing_icon_3.png";
 export { default as climbing_icon } from "./climbing_icon.png";
 export { default as doubleLeftArrow } from "./doubleLeftArrow.png";
