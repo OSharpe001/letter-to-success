@@ -7,7 +7,7 @@ import './App.css';
 
 function App() {
 
-  const [settingsData, setSettingsData] = useState({});
+  const [settingsData, setSettingsData] = useState("");
   const [winner, setWinner] = useState("");
   const [sound, setSound] = useState(true);
 
