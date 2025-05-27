@@ -5,7 +5,7 @@ export default function Players({ players, currentPlayer}) {
   return (
 
     <ul className="players">
-        {players.map(player =>
+        {players && players.map(player =>
             <li key = {player.name} className={player.name===currentPlayer?"player turn":"player"}>
                 <PlayerCard
                     name={player.name}
