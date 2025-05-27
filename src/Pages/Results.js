@@ -1,8 +1,13 @@
+/* eslint-disable no-unused-vars */
 import { Footer } from "../components";
+import { newCar1, newCar2, newCar3, newCar4, newCar5, nightPlane } from "../assets/images";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 
 export default function Results({ setWinner, winner }) {
+
+  const [currentCar, setCurrentCar] = useState([newCar1, newCar2, newCar3, newCar4, newCar5][Math.floor(Math.random() * 5)]);
 
   const navigate = useNavigate();
 
@@ -16,48 +21,51 @@ export default function Results({ setWinner, winner }) {
     navigate("/");
   };
 
+  useEffect(() => {
+    !winner && setTimeout(navigate, 100, ("/settings"));
+  }, [winner, navigate]);
+
   return (
     <div className="resultsPage">
-      {winner.name.indexOf("Computer") < 0 ?
-        <>
-          <br />
-          <h1>Congratulations, {winner.name}!</h1>
-          <br />
-          <h2>You have won ${winner.score}</h2>
-          <br />
-          {winner.prizes.length ?
-            <>
-              <h2>and these are your prizes:</h2>
-              <br />
-              {winner.prizes.map((prize, index) => <h3 key={index} className="winner's_prizes">- A {prize}</h3>)}
-            </>
-            :
-            <><h3>Sorry. You didn't win any prizes, this time.</h3><br /></>
-          }
-        </>
-        :
-        <div className="loss">
-          <h1><strong>Sorry, humans. You've Lost!</strong></h1>
-          <br />
-          <h1>{winner.name} has won ${winner.score}!</h1>
-          <br />
-          {winner.prizes.length ?
-            <>
-              <h2>{winner.name}'s  prizes:</h2>
-              <br />
-              {winner.prizes.map((prize, index) => <h3 key={index} className="winner's_prizes">- A {prize}</h3>)}
-            </>
-            :
-            <><h3>{winner.name} didn't win any prizes, this time.</h3><br /></>
-          }
-        </div>
-      }
-      <div>
-        <br />
-        <button className="button" onClick={playAgain}>Play Again!</button>
+      <div id="bkgnd" className="resultsPageLeftBkgnd">
+        {<img className={`resultsPageLeftBkgndCar ${winner.prizes && winner.prizes.includes("New Car!") ? null : "hidden"}`} src={currentCar} alt="A new car" />}
+      </div>
+      <div id="bkgnd" className="resultsPageRightBkgnd">
+        {<img className={`resultsPageRightBkgndPlane ${winner.prizes && winner.prizes.includes("Trip to Jamaica!") ? null : "hidden"}`} src={nightPlane} alt="An airplane" />}
+      </div>
+      <div className="results">
+        {winner && winner.name.indexOf("Computer") < 0 ?
+          <>
+            <h1>Congratulations, {winner.name}!</h1>
+            <h2>You have won ${winner.score}</h2>
+            {winner.prizes && winner.prizes.length ?
+              <>
+                <h2>and these are your prizes:</h2>
+                {winner.prizes.map((prize, index) => <h3 key={index} className="winner's_prizes">- A {prize}</h3>)}
+              </>
+              :
+              <><h3>Sorry. You didn't win any prizes, this time.</h3></>
+            }
+          </>
+          :
+          <div className="loss">
+            <h1><strong>Sorry, humans. You've Lost!</strong></h1>
+            <h1>{winner.name} has won ${winner.score}!</h1>
+            {winner.prizes && winner.prizes.length ?
+              <>
+                <h2>{winner.name}'s  prizes:</h2>
+                {winner.prizes.map((prize, index) => <h3 key={index} className="winner's_prizes">- A {prize}</h3>)}
+              </>
+              :
+              <><h3>{winner.name} didn't win any prizes, this time.</h3></>
+            }
+          </div>
+        }
+        <div>
+          <button className="button" onClick={playAgain}>Play Again!</button>
 
-        <br />
-        <button className="button" onClick={backHome}>Back to Home</button>
+          <button className="button" onClick={backHome}>Back to Home</button>
+        </div>
       </div>
       <Footer />
     </div>
