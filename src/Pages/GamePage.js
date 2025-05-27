@@ -9,7 +9,14 @@ import { useNavigate } from "react-router-dom";
 
 export default function GamePage({ settingsData, setWinner, sound }) {
 
-  const playerNames = [...settingsData.humanPlayers, ...settingsData.computerPlayers];
+  const consonantInput = useRef();
+  const vowelInput = useRef();
+  const solveInput = useRef();
+
+  const navigate = useNavigate();
+  const autoFocus = useEffect;
+  const winner = useEffect;
+  const computerPlayersBehavior = useEffect;
 
   const [puzzleChoice, setPuzzleChoice] = useState(Puzzles[Math.floor(Math.random() * Puzzles.length)]);
   const [puzzleType, setPuzzleType] = useState(puzzleChoice.type);
@@ -41,22 +48,13 @@ export default function GamePage({ settingsData, setWinner, sound }) {
   const [guessPuzzleError, setGuessPuzzleError] = useState("");
   const [pauseControls, setPauseControls] = useState(false);
   const [latestLetter, setLatestLetter] = useState("");
-  const [players, setPlayers] = useState(playerNames.map(player => (
+  const [players, setPlayers] = useState(settingsData && [...settingsData.humanPlayers, ...settingsData.computerPlayers].map(player => (
     {
       "name": player,
       "score": 0,
       "prizes": []
     }
   )));
-
-  const consonantInput = useRef();
-  const vowelInput = useRef();
-  const solveInput = useRef();
-
-  const navigate = useNavigate();
-  const autoFocus = useEffect;
-  const winner = useEffect;
-  const computerPlayersBehavior = useEffect;
 
   const consonants = ["B", "C", "D", "F", "G", "H", "J", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "V", "W", "X", "Y", "Z"];
   const vowels = ["A", "E", "I", "O", "U"];
@@ -83,10 +81,10 @@ export default function GamePage({ settingsData, setWinner, sound }) {
   };
   const vowelCost = 250;
 
-  const currentPlayerNumber = [(turnCount) % (playerNames.length)];
+  const currentPlayerNumber = [(turnCount) % (players.length)];
   const currentPlayer = players[currentPlayerNumber];
-  const computersTurn = currentPlayer.name.indexOf("Computer") === 0
-  const nextPlayer = players[(turnCount + 1) % (playerNames.length)];
+  const computersTurn = currentPlayer && currentPlayer.name.indexOf("Computer") === 0
+  const nextPlayer = players[(turnCount + 1) % (players.length)];
 
   const guessDisabled = latestGuessError;
   const guessPuzzleDisabled = guessPuzzleError;
@@ -101,10 +99,14 @@ export default function GamePage({ settingsData, setWinner, sound }) {
   }, [vowelInterface, wheelValue, attemptToSolve]);
 
   computerPlayersBehavior(() => {
+    if (!players) {
+      setTimeout(navigate, 100, ("/settings"));
+    };
+
     if (!computersTurn || (puzzleLetters.every(letter => guessedLetters.indexOf(letter) >= 0)) || !!statusMessage) {
       return
     } else {
-      const smartPlay = Math.floor(Math.random() * 10) > settingsData.computerDifficultyLevel ? "off" : "on";
+      const smartPlay = settingsData && Math.floor(Math.random() * 10) > settingsData.computerDifficultyLevel ? "off" : "on";
 
       let computerSelection;
       let computerChoice;
@@ -138,12 +140,12 @@ export default function GamePage({ settingsData, setWinner, sound }) {
       getComputerChoice();
 
       if (computerChoice && vowels.indexOf(computerChoice) >= 0) {
-        let newList = [...players];
+        let newList = players && [...players];
         newList[currentPlayerNumber].score -= vowelCost;
         setPlayers(newList);
         setLatestLetter(computerChoice);
         setGuessedLetters(() => {
-          const newGuessedLetters = [...guessedLetters];
+          const newGuessedLetters = guessedLetters && [...guessedLetters];
           newGuessedLetters.push(computerChoice);
           newGuessedLetters.sort();
           if (vowels.every(vowel => newGuessedLetters.indexOf(vowel) >= 0)) {
@@ -190,7 +192,7 @@ export default function GamePage({ settingsData, setWinner, sound }) {
             sound && sadCrowd.play();
             changeTurn();
             setStatusMessage(`${currentPlayer.name} just went BANKRUPT! (OUCH!)`);
-            let newList = [...players];
+            let newList = players && [...players];
             newList[currentPlayerNumber].score = 0;
             newList[currentPlayerNumber].prizes = [];
             setPlayers(newList);
@@ -201,10 +203,10 @@ export default function GamePage({ settingsData, setWinner, sound }) {
             setStatusMessage(`${currentPlayer.name} just lost their turn! (sorry...)`);
             return
           } else {
-            (newSpin.prize && currentPlayer.prizes.indexOf(newSpin.prize) < 0 ? setStatusMessage(`$${newSpin.value} and a ${newSpin.prize}`) : setStatusMessage("$" + newSpin.value));
+            (newSpin.prize && (currentPlayer && currentPlayer.prizes.indexOf(newSpin.prize) < 0 ? setStatusMessage(`$${newSpin.value} and a ${newSpin.prize}`) : setStatusMessage("$" + newSpin.value)));
             setLatestLetter(computerChoice);
             setGuessedLetters(() => {
-              const newGuessedLetters = [...guessedLetters];
+              const newGuessedLetters = guessedLetters && [...guessedLetters];
               newGuessedLetters.push(computerChoice);
               newGuessedLetters.sort();
               if (consonants.every(consonant => newGuessedLetters.indexOf(consonant) >= 0)) {
@@ -217,7 +219,7 @@ export default function GamePage({ settingsData, setWinner, sound }) {
             });
             const hitOrMiss = () => {
               if (puzzleLetters.indexOf(computerChoice) >= 0) {
-                let newList = [...players];
+                let newList = players && [...players];
                 const consonantMultiplier = (puzzleLetters.filter(letter => letter === computerChoice)).length;
                 newList[currentPlayerNumber].score += (newSpin.value * consonantMultiplier);
                 if (newSpin.prize && currentPlayer.prizes.indexOf(newSpin.prize) < 0) {
@@ -281,7 +283,7 @@ export default function GamePage({ settingsData, setWinner, sound }) {
         sound && sadCrowd.play();
         changeTurn();
         setStatusMessage(`${currentPlayer.name} just went BANKRUPT! (OUCH!)`);
-        let newList = [...players];
+        let newList = players && [...players];
         newList[currentPlayerNumber].score = 0;
         newList[currentPlayerNumber].prizes = [];
         setPlayers(newList);
@@ -300,7 +302,7 @@ export default function GamePage({ settingsData, setWinner, sound }) {
   };
 
   const buyVowel = () => {
-    let newList = [...players];
+    let newList = players && [...players];
     newList[currentPlayerNumber].score -= vowelCost;
     setPlayers(newList);
     setVowelInterface(true);
@@ -318,7 +320,7 @@ export default function GamePage({ settingsData, setWinner, sound }) {
   };
 
   const changeScore = () => {
-    let newList = [...players];
+    let newList = players && [...players];
     newList[currentPlayerNumber].score += (wheelValue * consonantMultiplier);
     if (wheelPrize && currentPlayer.prizes.indexOf(wheelPrize) < 0) {
       newList[currentPlayerNumber].prizes.push(wheelPrize)
@@ -360,7 +362,7 @@ export default function GamePage({ settingsData, setWinner, sound }) {
     if (guessedLetters.indexOf(latestConsonant) < 0 && latestConsonant !== "") {
       setLatestLetter(latestConsonant);
       setTimeout(setGuessedLetters(() => {
-        const newGuessedLetters = [...guessedLetters];
+        const newGuessedLetters = guessedLetters && [...guessedLetters];
         newGuessedLetters.push(latestConsonant);
         newGuessedLetters.sort();
         if (consonants.every(consonant => newGuessedLetters.indexOf(consonant) >= 0)) {
@@ -387,7 +389,7 @@ export default function GamePage({ settingsData, setWinner, sound }) {
     } else if (guessedLetters.indexOf(latestVowel) < 0 && latestVowel !== "") {
       setLatestLetter(latestVowel);
       setTimeout(setGuessedLetters(() => {
-        const newGuessedLetters = [...guessedLetters];
+        const newGuessedLetters = guessedLetters && [...guessedLetters];
         newGuessedLetters.push(latestVowel);
         newGuessedLetters.sort();
         if (vowels.every(vowel => newGuessedLetters.indexOf(vowel) >= 0)) {
@@ -483,7 +485,7 @@ export default function GamePage({ settingsData, setWinner, sound }) {
           <div className="interface-options">
             <button className={(guessedLetters.length > 0 && statusMessage) || wheelValue || vowelInterface || noMoreConsonants || isSpinning || attemptToSolve || pauseControls || computersTurn ? "hidden" : "button spin"} onClick={spinIt} >Spin It!</button>
             <button className={(guessedLetters.length > 0 && statusMessage) || wheelValue || vowelInterface || isSpinning || attemptToSolve || pauseControls || computersTurn ? "hidden" : "button solve"} onClick={solveIt} >Attempt to Solve!</button>
-            <button className={(guessedLetters.length > 0 && statusMessage) || wheelValue || currentPlayer.score < 250 || vowelInterface || noMoreVowels || isSpinning || attemptToSolve || pauseControls || computersTurn ? "hidden" : "button buy"} onClick={buyVowel} >Buy a Vowel!</button>
+            <button className={(guessedLetters.length > 0 && statusMessage) || wheelValue || (currentPlayer && currentPlayer.score < 250) || vowelInterface || noMoreVowels || isSpinning || attemptToSolve || pauseControls || computersTurn ? "hidden" : "button buy"} onClick={buyVowel} >Buy a Vowel!</button>
           </div>
 
           <div className="spin-solve-buy">
@@ -552,7 +554,7 @@ export default function GamePage({ settingsData, setWinner, sound }) {
 
       <Players
         players={players}
-        currentPlayer={currentPlayer.name}
+        currentPlayer={currentPlayer && currentPlayer.name}
       />
     </div>
   );
