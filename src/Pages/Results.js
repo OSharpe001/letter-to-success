@@ -28,10 +28,26 @@ export default function Results({ setWinner, winner }) {
   return (
     <div className="resultsPage">
       <div id="bkgnd" className="resultsPageLeftBkgnd">
-        {<img className={`resultsPageLeftBkgndCar ${winner.prizes && winner.prizes.includes("New Car!") ? null : "hidden"}`} src={currentCar} alt="A new car" />}
+        {<img
+          className={`resultsPageLeftBkgndCar
+            ${winner.prizes && winner.prizes.includes("New Car!") ?
+              null
+            :
+              "hidden"}`}
+          src={currentCar}
+          alt="A new car"
+        />}
       </div>
       <div id="bkgnd" className="resultsPageRightBkgnd">
-        {<img className={`resultsPageRightBkgndPlane ${winner.prizes && winner.prizes.includes("Trip to Jamaica!") ? null : "hidden"}`} src={nightPlane} alt="An airplane" />}
+        {<img
+          className={`resultsPageRightBkgndPlane
+            ${winner.prizes && winner.prizes.includes("Trip to Jamaica!") ?
+              null
+            :
+              "hidden"}`}
+          src={nightPlane}
+          alt="An airplane"
+        />}
       </div>
       <div className="results">
         {winner && winner.name.indexOf("Computer") < 0 ?
@@ -63,7 +79,6 @@ export default function Results({ setWinner, winner }) {
         }
         <div>
           <button className="button" onClick={playAgain}>Play Again!</button>
-
           <button className="button" onClick={backHome}>Back to Home</button>
         </div>
       </div>
