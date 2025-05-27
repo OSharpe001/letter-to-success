@@ -558,6 +558,7 @@ li {
 
 .game-page {
   height: fit-content;
+  padding-top: 2vh;
 }
 
 .board-set {
@@ -779,7 +780,114 @@ li {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  min-height: 97vh;
+  /* overflow: hidden;background-color: radial-gradient(blue, black); */
+}
+
+.results button {
+  margin: 3vh auto;
+  display: block;
+}
+
+.results {
+  font-family: "Oregano", sans-serif;
+  font-size: 1.5em;
+  text-shadow: -3px 3px aliceBlue;
   min-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#bkgnd {
+  position: absolute;
+  top: 0;
+  width: 50%;
+  min-height: 100%;
+  background-repeat: none;
+  background-size: cover;
+  background-position: bottom center;
+  z-index: -1;
+}
+
+.resultsPageLeftBkgnd {
+  left: 0;
+  background-image: url("./assets/images/suburbanStreet.png");
+}
+
+.resultsPageLeftBkgndCar {
+  position: absolute;
+  top: 60%;
+  left: -40vw;
+  width: 40%;
+  animation: driveIn 6s ease-out 1 forwards;
+}
+
+@keyframes driveIn {
+  0% {
+    width: 15%;
+    left: -40vw;
+  }
+
+  25% {
+    width: 15%;
+    left: -40vw;
+  }
+
+  26% {
+    width: 15%;
+    left: -20vw;
+  }
+
+  90% {
+    width: 40%;
+    left: 25vw;
+  }
+
+  100% {
+    left: 25vw;
+  }
+}
+
+.resultsPageRightBkgnd {
+  right: 0;
+  background-image: url("./assets/images/islandNight3.png");
+  overflow: hidden;
+}
+
+.resultsPageRightBkgndPlane {
+  position: absolute;
+  top: 50%;
+  left: -40%;
+  width: 20%;
+  transform: rotate(30deg) rotateX(30deg);
+  animation: takeOff 4s linear 1 forwards;
+}
+
+@keyframes takeOff {
+  0% {
+    top: 50%;
+    left: -40%;
+  }
+
+  32% {
+    top: 50%;
+    left: -40%;
+  }
+
+  33% {
+    left: -20%;
+  }
+
+  90% {
+    top: 55%;
+    left: 80%;
+  }
+
+  100% {
+    top: 55%;
+    left: 80%;
+  }
 }
 
 .loss {
@@ -791,7 +899,7 @@ li {
   border: 15px solid red;
 }
 
-.resultsPage ul {
+.results ul {
   margin-left: -2vw;
 }
 
