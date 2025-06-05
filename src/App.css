@@ -1,0 +1,1179 @@
+@import url('https://fonts.googleapis.com/css?family=Oregano:300,400&display=swap');
+
+* {
+  margin: 0;
+  --primaryColor: rgb(32, 78, 32);
+  --secondaryColor: rgb(247, 230, 196);
+  --primaryDeg: 0deg;
+}
+
+html {
+  min-height: 100vh;
+  height: max-content;
+  width: 100vw;
+  background-color: var(--secondaryColor);
+}
+
+.App {
+  height: fit-content;
+  width: 100vw;
+  margin: 8vh 0 0;
+  padding: 0;
+  text-align: center;
+  font-size: 16pt;
+}
+
+header,
+footer {
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: var(--primaryColor);
+}
+
+header {
+  position: absolute;
+  top: 0;
+  min-height: max-content;
+  height: 8vh;
+}
+
+footer {
+  height: max-content;
+}
+
+nav {
+  margin: 3px auto;
+  width: max-content;
+  height: 7vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  color: var(--secondaryColor);
+  background-color: var(--primaryColor);
+}
+
+a {
+  font-size: 16pt;
+  font-weight: bold;
+  text-decoration: none;
+  border-radius: 20px;
+  color: var(--secondaryColor);
+  background-color: var(--primaryColor);
+}
+
+.title {
+  font-family: 'Oregano', sans-serif;
+  font-size: 30pt;
+  padding: 3px 7px;
+  margin: 0;
+}
+
+.button {
+  font-family: 'Oregano', sans-serif;
+  width: fit-content;
+  font-size: 20pt;
+  font-weight: bold;
+  text-decoration: none;
+  color: var(--secondaryColor);
+  background-color: var(--primaryColor);
+  padding: 3px 7px;
+  margin: 0;
+  border-radius: 20px;
+  border: ridge 2px var(--secondaryColor);
+}
+
+a:hover,
+.button:hover {
+  color: var(--primaryColor);
+  background-color: var(--secondaryColor);
+  border: ridge 2px var(--primaryColor);
+}
+
+.soundButton {
+  height: 7vh;
+  width: 60px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+}
+
+.speaker {
+  height: 60%;
+  width: auto;
+}
+
+li {
+  list-style: none;
+}
+
+.settingsPage {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0;
+  min-height: fit-content;
+  height: 100vh;
+}
+
+.form {
+  width: max-content;
+  height: max-content;
+  margin: auto;
+  padding: 0 30px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  border: none;
+  box-shadow: -3px 3px 10px gray;
+}
+
+.form input {
+  text-align: center;
+  align-self: center;
+  width: 20vw;
+  margin: 1vh auto 1vh;
+}
+
+.form label {
+  font-family: "Oregano", sans-serif;
+  font-size: 20pt;
+  margin-top: 2vh;
+}
+
+.error-message {
+  color: red;
+  margin: 0 0 3vh;
+  min-height: 3vh;
+}
+
+.homePage {
+  text-align: center;
+  height: max-content;
+  min-height: 93vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: white;
+}
+
+.vid {
+  margin: 0;
+  padding: 0;
+  align-self: center;
+}
+
+.homePage h1 {
+  font-family: 'Oregano', sans-serif;
+  font-size: 45pt;
+  margin: 0;
+  padding: 3vh 0 0;
+}
+
+.wheel {
+  margin: 1vh auto;
+  width: 516px;
+  height: 554px;
+  list-style-type: none;
+  animation-name: stationary;
+  animation-duration: 100s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 5px solid black;
+}
+
+.wheel1 {
+  --primaryDeg: 13.8deg;
+}
+
+.wheel2 {
+  --primaryDeg: 41.5deg;
+}
+
+.wheel3 {
+  --primaryDeg: 69.2deg;
+}
+
+.wheel4 {
+  --primaryDeg: 96.9deg;
+}
+
+.wheel5 {
+  --primaryDeg: 124.6deg;
+}
+
+.wheel6 {
+  --primaryDeg: 152.3deg;
+}
+
+.wheel7 {
+  --primaryDeg: 180deg;
+}
+
+.wheel8 {
+  --primaryDeg: 207.7deg;
+}
+
+.wheel9 {
+  --primaryDeg: 235.3deg;
+}
+
+.wheel10 {
+  --primaryDeg: 263deg;
+}
+
+.wheel11 {
+  --primaryDeg: 290.7deg;
+}
+
+.wheel12 {
+  --primaryDeg: 318.4deg;
+}
+
+.wheel13 {
+  --primaryDeg: 346.1deg;
+}
+
+.wheel-segment {
+  height: stretch;
+  width: 49%;
+  overflow: hidden;
+  text-align: end;
+  font-weight: bold;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-origin: 0% 0%;
+  border: 2px solid black;
+}
+
+.wheel-segment:nth-of-type(1) {
+  transform: rotate(0) skew(62deg);
+  background-color: rgb(201, 127, 127);
+}
+
+.wheel-segment:nth-of-type(2) {
+  transform: rotate(27.7deg) skew(62deg);
+  background-color: grey;
+}
+
+.wheel-segment:nth-of-type(3) {
+  transform: rotate(55.4deg) skew(62deg);
+  background-color: green;
+}
+
+.wheel-segment:nth-of-type(4) {
+  transform: rotate(83.1deg) skew(62deg);
+  background-color: skyblue;
+}
+
+.wheel-segment:nth-of-type(5) {
+  transform: rotate(110.8deg) skew(62deg);
+  background-color: orange;
+}
+
+.wheel-segment:nth-of-type(6) {
+  transform: rotate(138.5deg) skew(62deg);
+  background-color: orangered;
+}
+
+.wheel-segment:nth-of-type(7) {
+  transform: rotate(166.2deg) skew(62deg);
+  background-color: yellow;
+}
+
+.wheel-segment:nth-of-type(8) {
+  transform: rotate(193.8deg) skew(62deg);
+  background-color: grey;
+}
+
+.wheel-segment:nth-of-type(9) {
+  transform: rotate(221.5deg) skew(62deg);
+  background-color: greenyellow;
+}
+
+.wheel-segment:nth-of-type(10) {
+  transform: rotate(249.2deg) skew(62deg);
+  background-color: rgb(113, 113, 239);
+}
+
+.wheel-segment:nth-of-type(11) {
+  transform: rotate(276.9deg) skew(62deg);
+  background-color: pink;
+}
+
+.wheel-segment:nth-of-type(12) {
+  transform: rotate(304.6deg) skew(62deg);
+  background-color: aqua;
+}
+
+.wheel-segment:nth-of-type(13) {
+  transform: rotate(332.3deg) skew(62deg);
+  background-color: fuchsia;
+}
+
+.segment-content {
+  transform: skew(-62deg);
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+}
+
+.value {
+  font-family: 'Oregano', sans-serif;
+  font-size: 19pt;
+  -webkit-text-fill-color: black;
+  -webkit-text-stroke-color: white;
+  -webkit-text-stroke-width: .3px;
+  text-shadow: 1px 1px black;
+  width: 10rem;
+  transform: rotate(105deg);
+  margin-top: 27%;
+  margin-left: 80%;
+  padding: 0 5px 0 0;
+  align-self: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+.prize {
+  background-color: rgb(246, 202, 93);
+  transform: rotate(155deg) skew(37deg);
+  width: min-content;
+  padding: 0 10px;
+  text-align: center;
+  margin-top: -24%;
+  margin-left: 7%;
+  overflow: hidden;
+  border: 3px ridge rgb(244, 178, 55);
+}
+
+.pointer {
+  font-size: 40pt;
+  font-weight: bold;
+  margin: 0;
+  height: fit-content;
+  align-self: center;
+  transform: rotate(90deg);
+}
+
+.spinning {
+  margin: 1vh auto;
+  width: 516px;
+  height: 554px;
+  list-style-type: none;
+  border-radius: 50%;
+  border: 5px solid black;
+  animation-name: spinning;
+  animation-duration: 7s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  overflow: hidden;
+}
+
+.moving {
+  font-size: 40pt;
+  font-weight: bold;
+  margin: 0;
+  height: fit-content;
+  align-self: center;
+  transform: rotate(90deg);
+  animation-name: moving;
+  animation-duration: 7s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+.letter-turning {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 40pt;
+  width: 1em;
+  height: 90%;
+  font-weight: bold;
+  background-color: rgb(250, 255, 109);
+  border: 3px solid black;
+  animation-name: turning;
+  animation-duration: 2.2s;
+  animation-timing-function: linear;
+}
+
+@keyframes turning {
+  0% {
+    transform: rotateY(180deg);
+    color: rgb(250, 255, 109);
+  }
+
+  50% {
+    transform: rotateY(180deg);
+  }
+
+  75% {
+    color: rgb(250, 255, 109);
+    background-color: rgb(250, 255, 109);
+  }
+
+  76% {
+    color: black;
+    background-color: white;
+  }
+
+  85% {
+    background-color: white;
+
+  }
+
+  100% {
+    transform: rotateY(360deg);
+    background-color: white;
+  }
+}
+
+@keyframes stationary {
+  0% {
+    transform: rotate(var(--primaryDeg));
+  }
+
+  100% {
+    transform: rotate(var(--primaryDeg));
+  }
+}
+
+@keyframes spinning {
+  0% {
+    transform: rotate(var(--primaryDeg));
+  }
+
+  .5% {
+    transform: rotate(-1080deg);
+  }
+
+  20% {
+    transform: rotate(-360deg);
+  }
+
+  100% {
+    transform: rotate(var(--primaryDeg));
+  }
+}
+
+@keyframes moving {
+  0% {
+    transform: rotate(110deg);
+  }
+
+  2.5% {
+    transform: rotate(70deg);
+  }
+
+  5% {
+    transform: rotate(110deg);
+  }
+
+  7.5% {
+    transform: rotate(70deg);
+  }
+
+  10% {
+    transform: rotate(110deg);
+  }
+
+  12.5% {
+    transform: rotate(70deg);
+  }
+
+  15% {
+    transform: rotate(110deg);
+  }
+
+  17.5% {
+    transform: rotate(70deg);
+  }
+
+  20% {
+    transform: rotate(110deg);
+  }
+
+  25% {
+    transform: rotate(70deg);
+  }
+
+  30% {
+    transform: rotate(110deg);
+  }
+
+  35% {
+    transform: rotate(70deg);
+  }
+
+  40% {
+    transform: rotate(110deg);
+  }
+
+  45% {
+    transform: rotate(70deg);
+  }
+
+  50% {
+    transform: rotate(110deg);
+  }
+
+  55% {
+    transform: rotate(70deg);
+  }
+
+  60% {
+    transform: rotate(110deg);
+  }
+
+  65% {
+    transform: rotate(70deg);
+  }
+
+  70% {
+    transform: rotate(110deg);
+  }
+
+  75% {
+    transform: rotate(70deg);
+  }
+
+  80% {
+    transform: rotate(110deg);
+  }
+
+  90% {
+    transform: rotate(70deg);
+  }
+
+  100% {
+    transform: rotate(90deg);
+  }
+}
+
+.game-page {
+  height: fit-content;
+  padding-top: 2vh;
+}
+
+.board-set {
+  display: flex;
+  flex-direction: row;
+}
+
+.wheel-set {
+  display: flex;
+  flex-direction: row;
+  height: fit-content;
+  margin: auto;
+}
+
+.interface {
+  text-align: left;
+  margin: 0 3vw;
+  padding: 10px;
+  border-radius: 16px;
+  border: 20px ridge green;
+}
+
+.game-status {
+  font-size: 30pt;
+  font-weight: bold;
+  min-height: 5vh;
+  margin: 2vh auto;
+}
+
+.players {
+  margin: 1vh 0 0;
+  list-style-type: none;
+  display: flex;
+  justify-content: space-around;
+}
+
+.player {
+  border-left: 10px double black;
+  border-right: 10px double black;
+  border-top: 20px double black;
+  border-radius: 10px;
+  width: 320px;
+}
+
+.turn {
+  background-color: rgb(67, 196, 67);
+}
+
+.player-name {
+  padding: auto;
+  font-size: 20pt;
+  font-weight: bold;
+  background-color: grey;
+}
+
+.player-score {
+  font-weight: bold;
+  padding: 2vh;
+  background-color: green;
+}
+
+.player-prizes {
+  font-weight: bold;
+  padding: 20px;
+  background-color: silver;
+}
+
+.board {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 55%;
+}
+
+.phrase {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: 90%;
+}
+
+.word {
+  display: flex;
+  flex-direction: row;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: fit-content;
+  background-color: black;
+  border: 4px solid black;
+}
+
+.letter-card {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 40pt;
+  width: 1em;
+  height: 90%;
+  font-weight: bold;
+  background-color: aliceblue;
+  border: 3px solid black;
+}
+
+.puzzle-type {
+  text-decoration: underline;
+  font-size: 30pt;
+  text-align: left;
+  width: fit-content;
+  position: relative;
+  bottom: 1px;
+  padding: 0;
+  margin: 2vh 2vw;
+}
+
+.hidden {
+  display: none;
+}
+
+.interface-options {
+  width: 100%;
+  min-height: 6vh;
+  display: inline-flex;
+}
+
+.interface input {
+  font-size: 20px;
+  text-align: center;
+  width: 9ch;
+  margin: 1vh auto;
+}
+
+.interface label {
+  margin: 0 0 1vh;
+  font-weight: bold;
+}
+
+#guess-puzzle {
+  width: 40ch;
+}
+
+.spin-solve-buy {
+  min-height: 21vh;
+  display: flex;
+  flex-direction: row;
+}
+
+.guessed-letters-section {
+  width: 100%;
+  min-height: 3vh;
+  display: flex;
+  flex-direction: row;
+}
+
+.guessed-letters-section p {
+  margin: 0;
+  padding: 0;
+}
+
+.guessed-letters {
+  display: inline-flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 73%;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+}
+
+.guessedChar {
+  width: 1.2ch;
+  height: min-content;
+  align-self: center;
+  border: 2px solid black;
+  box-shadow: -2px 2px darkgray;
+}
+
+.spin {
+  width: 15vw;
+  position: absolute;
+  margin-left: 6vw;
+}
+
+.buy {
+  width: 15vw;
+  position: absolute;
+  margin-left: 68vw;
+}
+
+.solve {
+  width: 15vw;
+  position: absolute;
+  margin-left: 38vw;
+}
+
+.interface .left {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin-left: 4vw;
+  min-width: 20vw;
+}
+
+.interface .right {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin-left: 68vw;
+  min-width: 17vw;
+}
+
+.interface .center {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.resultsPage {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 97vh;
+  /* overflow: hidden;background-color: radial-gradient(blue, black); */
+}
+
+.results button {
+  margin: 3vh auto;
+  display: block;
+}
+
+.results {
+  font-family: "Oregano", sans-serif;
+  font-size: 1.5em;
+  text-shadow: -3px 3px aliceBlue;
+  min-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#bkgnd {
+  position: absolute;
+  top: 0;
+  width: 50%;
+  min-height: 100%;
+  background-repeat: none;
+  background-size: cover;
+  background-position: bottom center;
+  z-index: -1;
+}
+
+.resultsPageLeftBkgnd {
+  left: 0;
+  background-image: url("./assets/images/suburbanStreet.png");
+}
+
+.resultsPageLeftBkgndCar {
+  position: absolute;
+  top: 60%;
+  left: -40vw;
+  width: 40%;
+  animation: driveIn 6s ease-out 1 forwards;
+}
+
+@keyframes driveIn {
+  0% {
+    width: 15%;
+    left: -40vw;
+  }
+
+  25% {
+    width: 15%;
+    left: -40vw;
+  }
+
+  26% {
+    width: 15%;
+    left: -20vw;
+  }
+
+  90% {
+    width: 40%;
+    left: 25vw;
+  }
+
+  100% {
+    left: 25vw;
+  }
+}
+
+.resultsPageRightBkgnd {
+  right: 0;
+  background-image: url("./assets/images/islandNight3.png");
+  overflow: hidden;
+}
+
+.resultsPageRightBkgndPlane {
+  position: absolute;
+  top: 50%;
+  left: -40%;
+  width: 20%;
+  transform: rotate(30deg) rotateX(30deg);
+  animation: takeOff 4s linear 1 forwards;
+}
+
+@keyframes takeOff {
+  0% {
+    top: 50%;
+    left: -40%;
+  }
+
+  32% {
+    top: 50%;
+    left: -40%;
+  }
+
+  33% {
+    left: -20%;
+  }
+
+  90% {
+    top: 55%;
+    left: 80%;
+  }
+
+  100% {
+    top: 55%;
+    left: 80%;
+  }
+}
+
+.loss {
+  width: fit-content;
+  margin: auto;
+  padding: 2vh 2vw;
+  background-color: rgb(246, 142, 142);
+  border-radius: 30px;
+  border: 15px solid red;
+}
+
+.results ul {
+  margin-left: -2vw;
+}
+
+.arrow-image {
+  width: 10px;
+  height: 2.2vh;
+}
+
+@media (max-width: 900px) {
+
+  .App {
+    font-size: 10pt;
+  }
+
+  nav {
+    height: max-content;
+  }
+
+  a,
+  .title {
+    font-size: 12pt;
+  }
+
+  .homePage h1 {
+    margin-top: 10vh;
+    font-size: 18pt;
+  }
+
+  .button {
+    font-size: 12pt;
+  }
+
+  .settingsPage {
+    min-height: 100vh;
+    max-width: 100vw;
+  }
+
+  .form {
+    padding: 20px 10px
+  }
+
+  .form label {
+    font-size: 16pt;
+  }
+
+  .form input {
+    width: 40vw;
+    padding: 3px 10px;
+    margin: 1vh auto 1vh;
+    border-radius: 16px;
+  }
+
+  .spinning,
+  .wheel {
+    width: calc(60vw * .85);
+    height: 60vw;
+    border: 2px solid black;
+  }
+
+  .wheel-segment {
+    border: 1px solid black;
+  }
+
+  .segment-content {
+    width: 65%;
+  }
+
+  .value {
+    -webkit-text-stroke-width: .1px;
+    text-shadow: .5px .5px black;
+    margin-top: 30%;
+    margin-left: 95%;
+    font-size: 9px;
+  }
+
+  .prize {
+    font-size: 9px;
+  }
+
+  .board-set {
+    flex-direction: column;
+    margin-top: 20px;
+  }
+
+  .board {
+    width: 100%;
+  }
+
+  .phrase {
+    width: fit-content;
+    align-items: right;
+  }
+
+  .letter-card {
+    font-size: 16pt;
+    height: auto;
+    border: 2px solid black;
+  }
+
+  .letter-turning {
+    font-size: 16pt;
+    height: auto;
+    border: 2px solid black;
+  }
+
+  .word {
+    border: 2px solid black;
+  }
+
+  .puzzle-type {
+    font-size: 14pt;
+  }
+
+  .game-status {
+    font-size: 14pt;
+    min-height: 8vh;
+    margin: 1vh auto;
+  }
+
+  .pointer {
+    font-size: 20pt;
+  }
+
+  .moving {
+    font-size: 20pt;
+  }
+
+  .interface {
+    margin: 0 2vw;
+    padding: 5px;
+  }
+
+  .spin-solve-buy {
+    min-height: 24vh;
+  }
+
+  .interface input {
+    font-size: 16px;
+  }
+
+  .interface .left {
+    margin: 0 auto;
+  }
+
+  .interface .right {
+    margin: 0 auto;
+  }
+
+  .interface .center {
+    width: 100%;
+  }
+
+  #guess-puzzle {
+    width: 100%;
+  }
+
+  .interface-options {
+    margin-left: -.5vw;
+    min-height: 9vh;
+    align-items: center;
+  }
+
+  .spin {
+    padding: 0;
+    margin-left: 0;
+    width: 8ch;
+    min-height: 5ch;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .buy {
+    padding: 0;
+    width: 8ch;
+    min-height: 5ch;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .solve {
+    padding: 0;
+    width: 8ch;
+    min-height: 5ch;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .players {
+    width: 100%;
+    margin: 1vh 0 0;
+    padding: 0;
+  }
+
+  .player {
+    width: auto;
+    min-width: 25%;
+    overflow: hidden;
+  }
+
+  .player-name {
+    padding: 1vh, 1vw;
+    font-size: 10pt;
+    height: fit-content;
+    overflow: hidden;
+  }
+
+  .player-score {
+    padding: 1vh 0;
+  }
+
+  .player-prizes {
+    min-height: 20px;
+    padding: 1vh 0;
+    margin: 0 0 0 -4vw;
+  }
+}
+
+@media (max-width: 500px) {
+
+  .arrow-image {
+    height: 4.2vh;
+  }
+
+  .guessed-letters-section {
+    min-height: 6vh;
+  }
+
+  .guessed-letters-section button {
+    background-color: aliceblue;
+    border-radius: 5px 0 0 5px;
+    border: 1px solid black;
+  }
+
+  .guessed-letters-label {
+    width: min-content;
+    border-radius: 0 5px 5px 0;
+    border: 1px solid black;
+  }
+
+  .player-prizes {
+    min-height: 20px;
+    padding: 1vh 0;
+    margin: 0 0 0 -10vw;
+  }
+}
+
+@media (max-width: 350px) {
+
+  .homePage h1 {
+    margin-top: 0;
+  }
+
+  .wheel,
+  .spinning {
+    width: calc(85vw * .82);
+    height: 85vw;
+  }
+
+  .prize {
+    margin-top: -29%;
+    margin-left: 2%;
+  }
+
+  .letter-card,
+  .letter-turning {
+    font-size: 14pt;
+  }
+
+  .guessed-letters {
+    width: 67%;
+    overflow: auto;
+  }
+
+  .player-name {
+    font-size: 8pt;
+  }
+}
