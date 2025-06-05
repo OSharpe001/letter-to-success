@@ -241,7 +241,7 @@ li {
 }
 
 .wheel-segment {
-  height: stretch;
+  height: 100%;
   width: 49%;
   overflow: hidden;
   text-align: end;
@@ -354,7 +354,8 @@ li {
   border: 3px ridge rgb(244, 178, 55);
 }
 
-.pointer {
+.pointer, .moving {
+  font-family: sans-serif;
   font-size: 40pt;
   font-weight: bold;
   margin: 0;
@@ -378,16 +379,7 @@ li {
 }
 
 .moving {
-  font-size: 40pt;
-  font-weight: bold;
-  margin: 0;
-  height: fit-content;
-  align-self: center;
-  transform: rotate(90deg);
-  animation-name: moving;
-  animation-duration: 7s;
-  animation-iteration-count: infinite;
-  animation-timing-function: linear;
+  animation: moving 7s linear infinite;
 }
 
 .letter-turning {
