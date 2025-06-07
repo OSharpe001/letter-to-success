@@ -5,3 +5,4 @@ export { default as buzzer } from "./buzzer.mp3";
 export { default as cheering_crowd } from "./cheering_crowd.mp3";
 export { default as cheering_kids } from "./cheering_kids.mp3";
 export { default as short_applause } from "./short_applause.mp3";
+export { default as fireworks } from "./fireworks.mp3";

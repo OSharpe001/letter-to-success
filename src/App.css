@@ -773,7 +773,6 @@ li {
   flex-direction: column;
   justify-content: space-between;
   min-height: 97vh;
-  /* overflow: hidden;background-color: radial-gradient(blue, black); */
 }
 
 .results button {
@@ -789,6 +788,7 @@ li {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  overflow: hidden;
 }
 
 #bkgnd {
@@ -879,6 +879,117 @@ li {
   100% {
     top: 55%;
     left: 80%;
+  }
+}
+
+.fireworks1,
+.fireworks2,
+.fireworks3 {
+  position: absolute;
+  top: 45%;
+  left: 49.5%;
+  width: 10px;
+  height: 10px;
+  animation: fireworks 4s ease-out infinite;
+  background-size: 10px 10px;
+  background-repeat: no-repeat;
+  background-position: 95% 30%, 0 90%, 100% 10%, 10% 0, 50% 50%, 30% 30%, 0 50%, 80% 25%, 50% 10%, 100% 50%, 100% 100%, 80% 80%, 20% 85%, 0 25%, 55% 65%, 85% 0, 50% 100%, 0 100%, 10% 70%, 70% 70%;
+  background-image: radial-gradient(rgb(0, 255, 170), black),
+    radial-gradient(yellow, black),
+    radial-gradient(red, black),
+    radial-gradient(rgb(255, 0, 149), black),
+    radial-gradient(rgb(153, 0, 255), black),
+    radial-gradient(rgb(255, 0, 149), black),
+    radial-gradient(rgb(255, 0, 170), black),
+    radial-gradient(rgb(0, 255, 170), black),
+    radial-gradient(rgb(153, 0, 255), black),
+    radial-gradient(rgb(255, 0, 149), black),
+    radial-gradient(rgb(0, 174, 255), black),
+    radial-gradient(rgb(0, 255, 170), black),
+    radial-gradient(rgb(153, 0, 255), black),
+    radial-gradient(rgb(255, 0, 149), black),
+    radial-gradient(rgb(200, 255, 0), black),
+    radial-gradient(rgb(0, 255, 170), black),
+    radial-gradient(rgb(0, 140, 255), black),
+    radial-gradient(rgb(255, 217, 0), black),
+    radial-gradient(rgb(166, 255, 0), black);
+}
+
+.fireworks2 {
+  top: 30%;
+  left: 25%;
+  animation-delay: .5s;
+  background-image: radial-gradient(red, black),
+    radial-gradient(yellow, black),
+    radial-gradient(rgb(0, 255, 170), black),
+    radial-gradient(rgb(153, 0, 255), black),
+    radial-gradient(rgb(255, 0, 149), black),
+    radial-gradient(rgb(0, 174, 255), black),
+    radial-gradient(rgb(0, 255, 170), black),
+    radial-gradient(rgb(153, 0, 255), black),
+    radial-gradient(rgb(255, 0, 149), black),
+    radial-gradient(rgb(255, 0, 149), black),
+    radial-gradient(rgb(153, 0, 255), black),
+    radial-gradient(rgb(255, 0, 149), black),
+    radial-gradient(rgb(255, 0, 170), black),
+    radial-gradient(rgb(200, 255, 0), black),
+    radial-gradient(rgb(0, 255, 170), black),
+    radial-gradient(rgb(0, 140, 255), black),
+    radial-gradient(rgb(255, 217, 0), black),
+    radial-gradient(rgb(166, 255, 0), black);
+}
+
+.fireworks3 {
+  top: 30%;
+  left: 75%;
+  animation-delay: .5s;
+  background-image: radial-gradient(yellow, black),
+    radial-gradient(red, black),
+    radial-gradient(rgb(153, 0, 255), black),
+    radial-gradient(rgb(255, 0, 149), black),
+    radial-gradient(rgb(255, 0, 170), black),
+    radial-gradient(rgb(200, 255, 0), black),
+    radial-gradient(rgb(0, 255, 170), black),
+    radial-gradient(rgb(0, 140, 255), black),
+    radial-gradient(rgb(255, 217, 0), black),
+    radial-gradient(rgb(166, 255, 0), black),
+    radial-gradient(rgb(255, 0, 149), black),
+    radial-gradient(rgb(0, 255, 170), black),
+    radial-gradient(rgb(153, 0, 255), black),
+    radial-gradient(rgb(255, 0, 149), black),
+    radial-gradient(rgb(0, 174, 255), black),
+    radial-gradient(rgb(0, 255, 170), black),
+    radial-gradient(rgb(153, 0, 255), black),
+    radial-gradient(rgb(255, 0, 149), black);
+}
+
+@keyframes fireworks {
+  0% {
+    transform: translateY(60vh);
+  }
+
+  50% {
+    width: 10px;
+    height: 10px;
+    opacity: 1;
+  }
+
+  80% {
+    width: 10px;
+    height: 10px;
+    opacity: 1;
+  }
+
+  99% {
+    width: 250px;
+    height: 250px;
+    opacity: .3;
+  }
+
+  100% {
+    width: 250px;
+    height: 250px;
+    opacity: 0;
   }
 }
 

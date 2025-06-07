@@ -44,6 +44,7 @@ function App() {
         <Route path="/results" element={<Results
                                               winner={winner}
                                               setWinner={setWinner}
+                                              sound={sound}
                                             />} />
       </Routes>
     </div>

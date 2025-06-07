@@ -1,13 +1,16 @@
 /* eslint-disable no-unused-vars */
 import { Footer } from "../components";
 import { newCar1, newCar2, newCar3, newCar4, newCar5, nightPlane } from "../assets/images";
+import { fireworks } from "../assets/sounds"
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 
-export default function Results({ setWinner, winner }) {
+export default function Results({ setWinner, winner, sound }) {
 
   const [currentCar, setCurrentCar] = useState([newCar1, newCar2, newCar3, newCar4, newCar5][Math.floor(Math.random() * 5)]);
+  const [blazingFireworks, setBlazingFireworks] = useState(new Audio(fireworks));
+  blazingFireworks.volume = .1;
 
   const navigate = useNavigate();
 
@@ -22,8 +25,9 @@ export default function Results({ setWinner, winner }) {
   };
 
   useEffect(() => {
+    (sound && (winner && winner.name.indexOf("Computer") < 0)) && blazingFireworks.play();
     !winner && setTimeout(navigate, 100, ("/settings"));
-  }, [winner, navigate]);
+  }, [winner, sound, blazingFireworks, navigate]);
 
   return (
     <div className="resultsPage">
@@ -49,6 +53,13 @@ export default function Results({ setWinner, winner }) {
           alt="An airplane"
         />}
       </div>
+      {winner && winner.name.indexOf("Computer") < 0 &&
+        <>
+          <div className="fireworks1"></div>
+          <div className="fireworks2"></div>
+          <div className="fireworks3"></div>
+        </>
+      }
       <div className="results">
         {winner && winner.name.indexOf("Computer") < 0 ?
           <>
