@@ -65,19 +65,19 @@ export default function GamePage({ settingsData, setWinner, sound }) {
   const wheelValue = wheelInfo[1];
   const wheelPrize = wheelInfo[2];
   const wheelTiming = {
-    1000: 6800,
-    "bankrupt": 6350,
-    2500: 5900,
-    950: 5450,
-    750: 5000,
-    500: 4550,
-    800: 4150,
-    "loseturn": 3750,
-    1000000: 3300,
-    650: 2900,
-    900: 2500,
-    700: 2050,
-    600: 1635
+    1000: 6550,
+    "bankrupt": 6100,
+    2500: 5675,
+    950: 5250,
+    750: 4800,
+    500: 4400,
+    800: 3950,
+    "loseturn": 3550,
+    1000000: 3100,
+    650: 2650,
+    900: 2200,
+    700: 1800,
+    600: 1425
   };
   const vowelCost = 250;
 
@@ -497,7 +497,6 @@ export default function GamePage({ settingsData, setWinner, sound }) {
                 type="text"
                 name="guess-consonant"
                 id="guess-consonant"
-
                 placeholder="Consonant"
                 value={latestConsonant}
                 onChange={e => handleConsonantGuess(e.target.value)} />
