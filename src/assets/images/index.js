@@ -16,3 +16,7 @@ export { default as newCar4 } from "./newCar4.png";
 export { default as newCar5 } from "./newCar5.png";
 export { default as nightPlane } from "./nightPlane.png";
 export { default as suburbanStreet } from "./suburbanStreet.png";
+
+export { default as LTSCarDecal } from "./LTSCarDecal.png";
+export { default as LTSVacaDecal } from "./LTSVacaDecal.png";
+export { default as wheel } from "./LTSWheel.png";
