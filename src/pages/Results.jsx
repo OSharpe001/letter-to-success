@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { Footer } from "../components";
 import { newCar1, newCar2, newCar3, newCar4, newCar5, nightPlane } from "../assets/images";
-import { fireworks } from "../assets/sounds"
+import { fireworks } from "../assets/sounds";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -36,7 +36,7 @@ export default function Results({ setWinner, winner, sound }) {
           className={`resultsPageLeftBkgndCar
             ${winner.prizes && winner.prizes.includes("New Car!") ?
               null
-            :
+              :
               "hidden"}`}
           src={currentCar}
           alt="A new car"
@@ -47,7 +47,7 @@ export default function Results({ setWinner, winner, sound }) {
           className={`resultsPageRightBkgndPlane
             ${winner.prizes && winner.prizes.includes("Trip to Jamaica!") ?
               null
-            :
+              :
               "hidden"}`}
           src={nightPlane}
           alt="An airplane"
