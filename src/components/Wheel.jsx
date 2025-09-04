@@ -1,8 +1,8 @@
 import { wheel } from "../assets/images";
 import { useEffect, useState } from "react";
 
-export default function Wheel({ isSpinning, wheelInfo }) {
 
+export default function Wheel({ isSpinning, wheelInfo }) {
   const [latestWheelNumber, setLatestWheelNumber] = useState("wheel1");
 
   const wheelNumber = useEffect;
@@ -46,14 +46,14 @@ export default function Wheel({ isSpinning, wheelInfo }) {
           default:
             setLatestWheelNumber("wheel1");
             break;
-        }
+        };
       } else if (wheelInfo[0] === "bankrupt") {
         setLatestWheelNumber("wheel12");
       } else if (wheelInfo[0] === "loseturn") {
         setLatestWheelNumber("wheel6");
       };
     };
-  }, wheelInfo)
+  }, [wheelInfo]);
 
   return (
     <img className={isSpinning ? "spinning" : "wheel " + latestWheelNumber} src={wheel} alt="Letter To Success wheel" />

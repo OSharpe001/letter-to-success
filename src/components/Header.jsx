@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom";
 import { whiteMuteSpeaker, whiteSpeaker } from "../assets/images";
 
+
 export default function Header({ sound, toggleSound }) {
 
   return (
     <header>
       <nav>
-        <Link aria-label="On Click" to="/" className="nav-item"><p className="nav-item title">Letter To Success!</p></Link>
+        <Link aria-label="On Click" to="/"><p className="title">Letter To Success!</p></Link>
       </nav>
       <button onClick={toggleSound} className="soundButton">
         {sound ?
@@ -24,7 +25,7 @@ export default function Header({ sound, toggleSound }) {
         }
       </button>
       <nav>
-        <Link aria-label="On Click" to="/settings" className="nav-item button">Set Up!</Link>
+        <Link aria-label="On Click" to="/settings" className="button">Set Up!</Link>
       </nav>
     </header>
   );
