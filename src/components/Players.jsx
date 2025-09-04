@@ -13,7 +13,7 @@ export default function Players({ players, currentPlayer }) {
                     prizes={player.prizes}
                 />
             </li>
-        )};
+        )}
     </ul>
   );
 };

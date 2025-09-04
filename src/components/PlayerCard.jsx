@@ -8,7 +8,7 @@ export default function PlayerCard({ name, score, prizes }) {
           <ul>
             {prizes.map((prize,index) => {
             return <li key={index}>{prize}</li>
-            })};
+            })}
           </ul>
         </div>
     </>
