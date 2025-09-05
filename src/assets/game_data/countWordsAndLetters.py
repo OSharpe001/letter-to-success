@@ -3590,3 +3590,5 @@ print(f"{mostLettersPuzzle} - has {mostLetters} letters.")
 print(f"{mostWordsPuzzle} - has {mostWords} words.")
 
 # python3 countWordsAndLetters.py
+
+# Longest Puzzle: "Wheel Of Fortune Debuts On Nighttime Television"
