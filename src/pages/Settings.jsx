@@ -1,9 +1,10 @@
 import { useState } from "react";
+
 import { Footer } from "../components";
 import { cheering_kids } from "../assets/sounds";
 
-export default function Settings({ submitForm, sound }) {
 
+export default function Settings({ submitForm, sound }) {
     const [humanPlayerAmount, setHumanPlayerAmount] = useState(1);
     const [computerPlayerAmount, setComputerPlayerAmount] = useState(0);
     const [player1Name, setPlayer1Name] = useState("");
@@ -53,7 +54,7 @@ export default function Settings({ submitForm, sound }) {
     const handleComputerPlayerAmountChange = (e) => {
         setComputerPlayerAmount(e.target.value);
         if (!humanPlayerAmount || parseInt(humanPlayerAmount) > 3) {
-            setComputerPlayerAmountError("Please set proper amount of Human Players, first.")
+            setComputerPlayerAmountError("Please set proper amount of Human Players, first.");
         } else if (parseInt(e.target.value) + parseInt(humanPlayerAmount) < 2) {
             setComputerPlayerAmountError("We need at least two players");
             return;
@@ -65,13 +66,13 @@ export default function Settings({ submitForm, sound }) {
         if (parseInt(e.target.value === 0) || e.target.value === "") {
             setComputerDifficultyLevel("1");
             setComputerDifficultyError("");
-        }
+        };
     };
 
     const handleP1NameChange = (e) => {
         setPlayer1Name(e.target.value);
         if (!(e.target.value.indexOf("Computer") < 0)) {
-            setPlayer1NameError("Humans can't have that Player Name")
+            setPlayer1NameError("Humans can't have that Player Name");
         } else if (e.target.value.length > 0 && (e.target.value !== player2Name || e.target.value !== player3Name)) {
             setPlayer1NameError("");
         };
@@ -80,7 +81,7 @@ export default function Settings({ submitForm, sound }) {
     const handleP2NameChange = (e) => {
         setPlayer2Name(e.target.value);
         if (!(e.target.value.indexOf("Computer") < 0)) {
-            setPlayer2NameError("Humans can't have that Player Name")
+            setPlayer2NameError("Humans can't have that Player Name");
         } else if (e.target.value.length > 0 || e.target.value !== player1Name || e.target.value !== player3Name) {
             setPlayer2NameError("");
         };
@@ -89,7 +90,7 @@ export default function Settings({ submitForm, sound }) {
     const handleP3NameChange = (e) => {
         setPlayer3Name(e.target.value);
         if (!(e.target.value.indexOf("Computer") < 0)) {
-            setPlayer3NameError("Humans can't have that Player Name")
+            setPlayer3NameError("Humans can't have that Player Name");
         } else if (e.target.value.length > 0 || e.target.value !== player1Name || e.target.value !== player2Name) {
             setPlayer3NameError("");
         };
@@ -107,7 +108,7 @@ export default function Settings({ submitForm, sound }) {
     const disabled = !!humanPlayerAmountError || !!computerPlayerAmountError || !!player1NameError || !!player2NameError || !!player3NameError || !!computerDifficultyError;
     const gotRequiredInfo = !!humanPlayerAmount && (parseInt(humanPlayerAmount) + parseInt(computerPlayerAmount) < 4) && (parseInt(humanPlayerAmount) + parseInt(computerPlayerAmount) > 1) && (player1Name !== "")
         && (parseInt(humanPlayerAmount) < 2 || (player2Name !== "" && player2Name !== player1Name)) && (parseInt(humanPlayerAmount) < 3 || (player3Name !== "" && player3Name !== player2Name && player3Name !== player1Name))
-        && (!!computerDifficultyLevel || computerPlayerAmount === 0)
+        && (!!computerDifficultyLevel || computerPlayerAmount === 0);
     const clearForm = () => {
         setHumanPlayerAmount(1);
         setComputerPlayerAmount(0);
@@ -119,7 +120,7 @@ export default function Settings({ submitForm, sound }) {
 
     const setSubmissionErrors = () => {
         if (humanPlayerAmount === 0) {
-            setHumanPlayerAmountError("We need at least one Human Player.")
+            setHumanPlayerAmountError("We need at least one Human Player.");
         };
         if (player1Name === "") {
             setPlayer1NameError(playerNameError);
@@ -131,18 +132,18 @@ export default function Settings({ submitForm, sound }) {
             setPlayer3NameError(playerNameError);
         };
         if (parseInt(humanPlayerAmount) + parseInt(computerPlayerAmount) < 2) {
-            setComputerPlayerAmountError("We need at least two players.")
+            setComputerPlayerAmountError("We need at least two players.");
         };
         if (computerDifficultyLevel < 1 || computerDifficultyLevel > 10) {
-            setComputerDifficultyError("Pick a number from 1 - 10.")
-        }
+            setComputerDifficultyError("Pick a number from 1 - 10.");
+        };
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if (!gotRequiredInfo) {
             setSubmissionErrors();
-            return
+            return;
         } else {
             sound && cheeringKids.play();
             setTimeout(() => {

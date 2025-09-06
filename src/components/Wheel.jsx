@@ -1,5 +1,6 @@
-import { wheel } from "../assets/images";
 import { useEffect, useState } from "react";
+
+import { wheel } from "../assets/images";
 
 
 export default function Wheel({ isSpinning, wheelInfo }) {

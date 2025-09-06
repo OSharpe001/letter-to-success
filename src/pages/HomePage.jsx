@@ -1,9 +1,10 @@
-import { Footer } from "../components";
 import { useState } from "react";
+
+import { Footer } from "../components";
 import vid from "../assets/video/LetterToSuccessHomePage.mp4";
 
-export default function HomePage({ sound }) {
 
+export default function HomePage({ sound }) {
   const [videoIsPlaying, setVideoIsPlaying] = useState(false);
 
   const playVid = () => {

@@ -1,5 +1,6 @@
 import LetterCard from './LetterCard';
 
+
 export default function Board({ puzzlePhrase, puzzleType, guessedLetters, latestLetter, allLetters }) {
 
   return (

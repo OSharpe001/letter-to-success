@@ -1,12 +1,13 @@
-import { HomePage, Settings, GamePage, Results } from "./pages";
-import { Header } from "./components";
 import { useNavigate } from "react-router-dom";
 import { Routes, Route } from "react-router-dom";
 import { useState } from "react";
+
+import { HomePage, Settings, GamePage, Results } from "./pages";
+import { Header } from "./components";
 import './App.css';
 
-function App() {
 
+export default function App() {
   const [settingsData, setSettingsData] = useState("");
   const [winner, setWinner] = useState("");
   const [sound, setSound] = useState(true);
@@ -49,6 +50,4 @@ function App() {
       </Routes>
     </div>
   );
-}
-
-export default App;
+};

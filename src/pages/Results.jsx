@@ -1,15 +1,14 @@
-/* eslint-disable no-unused-vars */
-import { Footer } from "../components";
-import { newCar1, newCar2, newCar3, newCar4, newCar5, nightPlane } from "../assets/images";
-import { fireworks } from "../assets/sounds";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { Footer } from "../components";
+import { newCar1, newCar2, newCar3, newCar4, newCar5, nightPlane } from "../assets/images";
+import { fireworks } from "../assets/sounds";
+
 
 export default function Results({ setWinner, winner, sound }) {
-
-  const [currentCar, setCurrentCar] = useState([newCar1, newCar2, newCar3, newCar4, newCar5][Math.floor(Math.random() * 5)]);
-  const [blazingFireworks, setBlazingFireworks] = useState(new Audio(fireworks));
+  const [currentCar] = useState([newCar1, newCar2, newCar3, newCar4, newCar5][Math.floor(Math.random() * 5)]);
+  const [blazingFireworks] = useState(new Audio(fireworks));
   blazingFireworks.volume = .1;
 
   const navigate = useNavigate();
@@ -68,7 +67,7 @@ export default function Results({ setWinner, winner, sound }) {
             {winner.prizes && winner.prizes.length ?
               <>
                 <h2>and these are your prizes:</h2>
-                {winner.prizes.map((prize, index) => <h3 key={index} className="winner's_prizes">- A {prize}</h3>)}
+                {winner.prizes.map((prize, index) => <h3 key={index}>- A {prize}</h3>)}
               </>
               :
               <><h3>Sorry. You didn't win any prizes, this time.</h3></>
@@ -81,7 +80,7 @@ export default function Results({ setWinner, winner, sound }) {
             {winner.prizes && winner.prizes.length ?
               <>
                 <h2>{winner.name}'s  prizes:</h2>
-                {winner.prizes.map((prize, index) => <h3 key={index} className="winner's_prizes">- A {prize}</h3>)}
+                {winner.prizes.map((prize, index) => <h3 key={index}>- A {prize}</h3>)}
               </>
               :
               <><h3>{winner.name} didn't win any prizes, this time.</h3></>
